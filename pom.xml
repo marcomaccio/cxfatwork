@@ -10,6 +10,25 @@
     <description>Various Tutorials to present various aspect of Apache CXF to create SOAP Web Services and REST Web Services</description>
     <url>http://docs.maccio-ch.homelinux.net/tutorials/cxfatwork</url>
 
+    <organization>
+    <name>MARMAC</name>
+    <url>http://www.marmac.name</url>
+    </organization>
+
+    <inceptionYear>2014</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>marmac</id>
+            <name>Marco Maccio</name>
+            <roles>
+                <role>System Architect</role>
+                <role>Software Designer</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
