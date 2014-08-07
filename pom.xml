@@ -10,6 +10,10 @@
     <description>Various Tutorials to present various aspect of Apache CXF to create SOAP Web Services and REST Web Services</description>
     <url>http://docs.maccio-ch.homelinux.net/tutorials/cxfatwork</url>
 
+    <modules>
+        <module>cxf-rs</module>
+    </modules>
+
     <organization>
     <name>MARMAC</name>
     <url>http://www.marmac.name</url>
@@ -44,7 +48,7 @@
         <maven-graph-plugin.version>1.9</maven-graph-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
-
+        <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
         <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
         <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
@@ -134,6 +138,33 @@
                 <version>${maven-dependency-plugin.version}</version>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -207,22 +238,23 @@
       <outputDirectory>${basedir}/target/site</outputDirectory>
       <plugins>
         <!-- Java doc plugin -->
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <version>${maven-javadoc-plugin.version}</version>
-              <configuration>
-                  <aggregate>true</aggregate>
-                  <show>private</show>
-                  <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-                  <docletArtifact>
-                      <groupId>org.umlgraph</groupId>
-                      <artifactId>umlgraph</artifactId>
-                      <version>${umlgraph.version}</version>
-                  </docletArtifact>
-                  <failOnError>false</failOnError>
-              </configuration>
-          </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc-plugin.version}</version>
+            <configuration>
+                <aggregate>true</aggregate>
+                <show>private</show>
+                <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+                <docletArtifact>
+                    <groupId>org.umlgraph</groupId>
+                    <artifactId>umlgraph</artifactId>
+                    <version>${umlgraph.version}</version>
+                </docletArtifact>
+                <failOnError>false</failOnError>
+            </configuration>
+
+        </plugin>
 
         <!-- Source Xref -->
         <plugin>
