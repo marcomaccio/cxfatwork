@@ -9,8 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>name.marmac.tutorials</groupId>
     <artifactId>cxf-rs-osgi-jaxrs</artifactId>
+
+    <name>CXF @ WORK : CXF TUTORIALS :: CXF-RS OSGI + JAXRS EXAMPLES</name>
+    <description>Present a Contract First approach to create an blueprint osgi rest service with jaxrs implementation</description>
+    <url>cxf-rs-osgi-jaxrs</url>
+
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
