@@ -1,0 +1,36 @@
+<application xmlns="http://wadl.dev.java.net/2009/02"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:servicens="http://marmac.name/tutorials/cxfatwork/services/web/rest/api/customerservice/"
+            xmlns:customerns="http://marmac.name/tutorials/cxfatwork/model/to/customers/">
+
+    <grammars>
+        <include href="../xsd/customers.xsd" />
+        <!--<include href="../xsd/PRIException.xsd" />-->
+    </grammars>
+
+    <resources base="http://localhost:8181/cxf/cxfatwork/v1">
+
+        <!-- This will generate the Interface -->
+        <resource  path="/customerservice" id="CustomerService">
+
+            <method name="GET" id="getCustomerByQuery">
+                <request>
+                    <param name="limit"        type="xsd:int"      style="query" required="false" />
+                    <param name="customerId"   type="xsd:string"   style="query" required="false"/>
+                    <param name="firstname"    type="xsd:string"   style="query" required="false"/>
+                    <param name="createDate"   type="xsd:string"   style="query" required="false"/>
+                    <param name="lastUpdate"   type="xsd:string"   style="query" required="false"/>
+                </request>
+                <response status="200" description="Customer Validation Okay">
+                    <representation mediaType="application/xml"    element="customerns:customers"/>
+                    <representation mediaType="application/json"   element="customerns:customers"/>
+                </response>
+            </method>
+
+        </resource>
+
+
+    </resources>
+
+</application>
