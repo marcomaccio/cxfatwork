@@ -17,4 +17,56 @@
     <description>Various Tutorials to present various aspect of Apache CXF-RS to create REST Web Services</description>
     <url>cxf-rs</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <jaxb-api.version>2.2.0</jaxb-api.version>
+        <jsr311-api.version>2.2.0</jsr311-api.version>
+
+        <jetty-maven-plugin.version>7.4.0.RC0</jetty-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Apache CXF Dependencies -->
+        <dependency>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-rt-core</artifactId>
+          <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-rt-transports-http</artifactId>
+          <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+           <groupId>org.apache.cxf</groupId>
+           <artifactId>cxf-rt-transports-http-jetty</artifactId>
+           <version>${cxf.version}</version>
+        </dependency>
+        <!-- -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-databinding-aegis</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-databinding-jaxb</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-local</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+    </dependencies>
+
+    <reporting>
+          <outputDirectory>${basedir}/target/site</outputDirectory>
+    </reporting>
+
 </project>
