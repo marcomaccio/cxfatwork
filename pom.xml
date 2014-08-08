@@ -45,6 +45,7 @@
 
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
+        <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
         <maven-graph-plugin.version>1.9</maven-graph-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
@@ -59,7 +60,8 @@
         <maven-changes-plugin.version>2.9</maven-changes-plugin.version>
         <maven-pmd-plugin.version>3.0.1</maven-pmd-plugin.version>
         <maven-jaxb2-plugin.version>0.8.3</maven-jaxb2-plugin.version>
-
+        <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
+        <maven-pmd-plugin.version>3.2</maven-pmd-plugin.version>
 
         <umlgraph.version>5.6.6</umlgraph.version>
         <build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
@@ -87,6 +89,27 @@
         <log4j.version>1.2.17</log4j.version>
         <junit.version>4.11</junit.version>
 
+        <site.url>file://${env.HOME}/sitedocs/${project.artifactId}</site.url>
+        <!-- GitHub Changelog Parameters -->
+        <changelog.github.fileUri>${project.scm.url}/tree/master/%FILE%</changelog.github.fileUri>
+        <changelog.revision.github.fileUri>${project.scm.url}/commit</changelog.revision.github.fileUri>
+        <!-- @OVERRIDE ENFORCER will fail if these are not defined -->
+        <changelog.fileUri />
+        <changelog.revision.fileUri />
+
+        <scmPublish.checkoutDirectory>${project.build.directory}/scmpublish</scmPublish.checkoutDirectory>
+        <scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>
+        <scm-publish.pubScmUrl>scm:git:git@github.com:marcomaccio/cxfatwork.git</scm-publish.pubScmUrl>
+
+        <!-- Location of where "site" documentation is output; This is for  -->
+        <scm-publish.siteDocOuputDirectory>${project.build.directory}/site</scm-publish.siteDocOuputDirectory>
+
+        <!-- Overwrite from Parent Pom  -->
+        <changelog.fileUri>${changelog.github.fileUri}</changelog.fileUri>
+        <changelog.revision.fileUri>${changelog.revision.github.fileUri}</changelog.revision.fileUri>
+
+        <maven-pmd-plugin.configLocation>${project.basedir}/code-analysis/pmd.xml</maven-pmd-plugin.configLocation>
+        <pmd.skip>false</pmd.skip>
     </properties>
 
     <build>
@@ -113,6 +136,34 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
+                <executions>
+                  <execution>
+                    <id>stage-for-scm-publish</id>
+                    <phase>post-site</phase>
+                    <goals>
+                      <goal>stage</goal>
+                    </goals>
+                    <configuration>
+                      <skipDeploy>true</skipDeploy><!-- MSITE-652: configuration won't be necessary with m-site-p 3.2 -->
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <version>${maven-scm-publish-plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <checkoutDirectory>${scmPublish.checkoutDirectory}</checkoutDirectory>
+                    <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+                    <!-- Plugins defaults to "target/staging" and since the distributionManagement section is a pain in the ass for site docs, this is easier -->
+                    <content>${scm-publish.siteDocOuputDirectory}</content>
+                    <skipDeletedFiles>true</skipDeletedFiles>
+                    <pubScmUrl>${scm-publish.pubScmUrl}</pubScmUrl>
+                    <scmBranch>${scm-publish.scmBranch}</scmBranch>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -203,10 +254,15 @@
             <layout>default</layout>
         </repository>
         <site>
-            <id>marmac-m2-docs-website-dav</id>
-            <url>dav:http://docs.maccio-ch.homelinux.net/tutorials/cxfatwork</url>
+            <id>marmac-github-docs-website</id>
+            <url>https://github.com/marcomaccio/cxfatwork/tree/gh-pages</url>
         </site>
     </distributionManagement>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/marcomaccio/cxfatwork/issues</url>
+    </issueManagement>
 
     <ciManagement>
         <system>jenkins</system>
@@ -277,9 +333,14 @@
 
         <!-- Maven Project Info Reports -->
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>${maven-project-info-reports-plugin.version}</version>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <version>${maven-project-info-reports-plugin.version}</version>
+            <configuration>
+                <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+            </configuration>
+
         </plugin>
 
         <!-- Unit Test plugin -->
@@ -302,26 +363,28 @@
             <version>${maven-changes-plugin.version}</version>
         </plugin>
 
-        <!-- PMD
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-changelog-plugin</artifactId>
+          <version>${maven-changelog-plugin.version}</version>
+        </plugin>
+
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
-            <version>2.7.1</version>
+            <version>${maven-pmd-plugin.version}</version>
             <configuration>
-                <linkXRef>true</linkXRef>
-                <sourceEncoding>utf-8</sourceEncoding>
+                <skip>${pmd.skip}</skip>
+                <targetJdk>${source.java.compliancy.version}</targetJdk>
+                <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                 <minimumTokens>100</minimumTokens>
-                <targetJdk>1.5</targetJdk>
-                <rulesets>
-                    <ruleset>/rulesets/basic.xml</ruleset>
-                    <ruleset>/rulesets/braces.xml</ruleset>
-                    <ruleset>/rulesets/naming.xml</ruleset>
-                    <ruleset>/rulesets/design.xml</ruleset>
-                </rulesets>
+                <excludes>
+                    <exclude>**/generated/*.java</exclude>
+                </excludes>
+                <failOnViolation>false</failOnViolation>
             </configuration>
         </plugin>
-        -->
-
         <!-- CodeHaus maven plugins -->
 
         <!-- Cobertura Test coverage plugin -->
