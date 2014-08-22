@@ -6,12 +6,13 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>CXF @ WORK : CXF TUTORIALS</name>
+    <name>CXF @ WORK :: CXF TUTORIALS</name>
     <description>Various Tutorials to present various aspect of Apache CXF to create SOAP Web Services and REST Web Services</description>
     <url>http://docs.maccio-ch.homelinux.net/tutorials/cxfatwork</url>
 
     <modules>
-        <module>cxf-rs</module>
+        <module>cxfatwork-rs</module>
+        <module>cxfatwork-features</module>
     </modules>
 
     <organization>
@@ -52,14 +53,16 @@
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
         <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
         <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
         <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
         <maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
         <maven-surefire-report-plugin.version>2.16</maven-surefire-report-plugin.version>
-        <maven-changes-plugin.version>2.9</maven-changes-plugin.version>
-        <maven-pmd-plugin.version>3.0.1</maven-pmd-plugin.version>
+
         <maven-jaxb2-plugin.version>0.8.3</maven-jaxb2-plugin.version>
+        <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
+        <maven-changes-plugin.version>2.9</maven-changes-plugin.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
         <maven-pmd-plugin.version>3.2</maven-pmd-plugin.version>
 
@@ -75,6 +78,9 @@
         <cxf.version>2.7.6</cxf.version>
         <cxf-xjc-dv.version>2.2.12</cxf-xjc-dv.version>
 
+        <guava.version>14.0.1</guava.version>
+        <xbean-blueprint.version>3.12</xbean-blueprint.version>
+
         <jaxb2-basics.version>0.6.5</jaxb2-basics.version>
         <jaxb2-basics-annotate.version>0.6.5</jaxb2-basics-annotate.version>
         <swagger-jaxrs_2.10.version>1.3.2</swagger-jaxrs_2.10.version>
@@ -83,7 +89,36 @@
         <codehaus-jackson.version>1.9.13</codehaus-jackson.version>
         <fasterxml-jackson.version>2.2.1</fasterxml-jackson.version>
 
+        <apache-aries-transaction>1.0.0</apache-aries-transaction>
+        <apache-aries-transaction-manager.version>1.0.1</apache-aries-transaction-manager.version>
+
+        <smx-specs-jsr311-api-1.1.1.version>2.4.0</smx-specs-jsr311-api-1.1.1.version>
+        <smx-specs-stax-api-1.2.version>2.2.0</smx-specs-stax-api-1.2.version>
+
+        <smx-bundles-commons-collections.version>3.2.1_1</smx-bundles-commons-collections.version>
+        <smx-bundles-commons-httpclient.version>3.1_7</smx-bundles-commons-httpclient.version>
+        <smx-bundles-commons-dbcp.version>1.4_3</smx-bundles-commons-dbcp.version>
+        <smx-bundles-commons-lang.version>2.4_6</smx-bundles-commons-lang.version>
+        <smx-bundles-commons-pool.version>1.5.4_4</smx-bundles-commons-pool.version>
+        <smx-bundles-commons-codec.version>1.3_5</smx-bundles-commons-codec.version>
+
+        <smx-bundles-serp.version>1.14.1_1</smx-bundles-serp.version>
+        <smx-bundles-nethi.version>2.0.4_5</smx-bundles-nethi.version>
+        <smx-bundles-swagger-jaxrs.version>1.3.0_1</smx-bundles-swagger-jaxrs.version>
+        <smx-bundles-json4s.version>3.2.4_1</smx-bundles-json4s.version>
+        <smx-bundles-reflections.version>0.9.8_1</smx-bundles-reflections.version>
+        <smx-bundles-javassist.version>3.12.1.GA_2</smx-bundles-javassist.version>
+        <smx-bundles-swagger-annotation.version>1.3.0_1</smx-bundles-swagger-annotation.version>
+        <smx-bundles-swagger-core.version>1.3.0_1</smx-bundles-swagger-core.version>
+        <smx-bundles-jackson-scala.version>2.1.5_2</smx-bundles-jackson-scala.version>
+
+        <scala-library.version>2.10.2</scala-library.version>
+        <codehaus-jackson.version>1.9.13</codehaus-jackson.version>
+        <fasterxml-jackson.version>2.4.0</fasterxml-jackson.version>
+
         <javaee-web-api.version>7.0</javaee-web-api.version>
+        <swagger-jaxrs_2.10.version>1.3.2</swagger-jaxrs_2.10.version>
+
         <slf4j.version>1.6.6</slf4j.version>
         <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
         <log4j.version>1.2.17</log4j.version>
@@ -313,6 +348,7 @@
             <configuration>
                 <aggregate>true</aggregate>
                 <show>private</show>
+                <show>public</show>
                 <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
                 <docletArtifact>
                     <groupId>org.umlgraph</groupId>
