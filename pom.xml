@@ -407,29 +407,10 @@
           <version>${maven-changelog-plugin.version}</version>
         </plugin>
 
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-            <version>${maven-pmd-plugin.version}</version>
-            <configuration>
-                <skip>${pmd.skip}</skip>
-                <targetJdk>${source.java.compliancy.version}</targetJdk>
-                <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-                <minimumTokens>100</minimumTokens>
-                <excludes>
-                    <exclude>**/generated/*.java</exclude>
-                </excludes>
-                <failOnViolation>false</failOnViolation>
-            </configuration>
-        </plugin>
+
         <!-- CodeHaus maven plugins -->
 
-        <!-- Cobertura Test coverage plugin -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>cobertura-maven-plugin</artifactId>
-          <version>${cobertura-maven-plugin.version}</version>
-        </plugin>
+
 
         <!-- taglist plugin to generate to do List -->
         <plugin>
@@ -444,16 +425,7 @@
             <version>${jdepend-maven-plugin.version}</version>
         </plugin>
 
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>${findbugs-maven-plugin.version}</version>
-            <configuration>
-              <jvmArgs>-Xmx512m</jvmArgs>
-              <jvmArgs>-XX:MaxPermSize=1024m</jvmArgs>
-            </configuration>
-            <!-- Usually findbugs needs a lot of memory, change these values if needed. -->
-        </plugin>
+
 
 
         <!-- Atlassian Clover Plugin
