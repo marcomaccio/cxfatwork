@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.1.0">
+
+    <OCD name="MARMAC TUTORIALS CXFATWORK :: CUSTOMERPROVISIONING PROPERTIES"
+         id="name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs">
+
+        <AD id="propertyA"
+            type="String"
+            name="propertyA"
+            description="Property A to show how ConfigAdmin handles properties"></AD>
+
+        <AD id="propertyB"
+            type="String"
+            name="propertyB"
+            description="Property A to show how ConfigAdmin handles properties"></AD>
+    </OCD>
+
+    <Designate pid="name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs">
+        <Object ocdref="name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs"/>
+    </Designate>
+
+</MetaData>

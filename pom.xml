@@ -75,8 +75,9 @@
         <jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
         <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
 
-        <cxf.version>2.7.6</cxf.version>
+        <cxf.version>2.7.8</cxf.version>
         <cxf-xjc-dv.version>2.2.12</cxf-xjc-dv.version>
+        <cxf.dosgi.version>1.6.0</cxf.dosgi.version>
 
         <guava.version>14.0.1</guava.version>
         <xbean-blueprint.version>3.12</xbean-blueprint.version>

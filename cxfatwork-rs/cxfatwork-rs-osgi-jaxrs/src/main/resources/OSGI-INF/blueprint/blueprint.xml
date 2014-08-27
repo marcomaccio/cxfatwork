@@ -1,0 +1,143 @@
+<blueprint
+        xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+        xmlns:cxf="http://cxf.apache.org/blueprint/core"
+        xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+        xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+        xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+          http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd
+          http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd">
+
+<!-- CXF SPECIFIC CONFIGURATION - START -->
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
+<!-- CXF SPECIFIC CONFIGURATION - END -->
+
+<!-- REST SERVICE ENDPOINT CONFIGURATION - START -->
+    <!-- To browse:
+        - the services go to: http://host:port/cxf/crm/provisioning/v1
+        - the wadl go to: http://host:port/cxf/crm/provisioning/v1?_wadl
+        - the swagger api: http://host:port/cxf/crm/provisioning/v1/api-docs (as basepath set below)
+
+        where for default karaf installation:
+        - host: karaf_host_ip or karaf_host_name
+        - port: 8181
+    -->
+    <jaxrs:server id="customerprovisioning"
+                  address="/crm/provisioning/v1"
+                  bus="cxf">
+        <jaxrs:serviceBeans>
+            <ref component-id="customerProvisioningService"/>
+            <ref component-id="swaggerResourceJSON"/>
+        </jaxrs:serviceBeans>
+        <!--
+        <jaxrs:schemaLocations>
+            <jaxrs:schemaLocation>classpath:wadl/customerprovisioning.wadl</jaxrs:schemaLocation>
+            <jaxrs:schemaLocation>classpath:xsd/customers.xsd</jaxrs:schemaLocation>
+            <jaxrs:schemaLocation>classpath:xsd/KeyValueProperties.xsd</jaxrs:schemaLocation>
+            <jaxrs:schemaLocation>classpath:xsd/customerexception.xsd</jaxrs:schemaLocation>
+        </jaxrs:schemaLocations>
+        -->
+
+        <jaxrs:providers>
+            <ref component-id="jaxbProvider"/>
+            <ref component-id="jsonjaxbProvider"/>
+            <!--
+            <ref component-id="customerProvisioningExceptionProvider"/>
+            -->
+            <!-- This are the swagger components -->
+            <ref component-id="resourceWriter" />
+            <ref component-id="apiWriter" />
+        </jaxrs:providers>
+
+        <jaxrs:features>
+            <cxf:logging />
+        </jaxrs:features>
+
+    </jaxrs:server>
+
+<!-- REST SERVICE ENDPOINT CONFIGURATION - END -->
+
+<!-- PROPERTY MANAGEMENT CONFIGURATION - START -->
+    <!-- The persistence-id is matching the file cfg name,
+        it will be deployed by the *-features module into the $KARAF_HOME/etc directory
+     -->
+    <cm:property-placeholder
+            persistent-id="name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs">
+        <cm:default-properties>
+            <cm:property name="propertyA" value="{propertyA}" />
+            <cm:property name="propertyB" value="{propertyB}" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+<!-- PROPERTY MANAGEMENT CONFIGURATION - END -->
+
+<!-- CUSTOM BEAN REGISTRATION - START -->
+
+    <!-- BEAN REGISTRATION for the class that implements the CustomerProvisioningService via JAXRS -->
+    <bean id="customerProvisioningService"
+          class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
+    	<tx:transaction method="*" value="Required" />
+    </bean>
+
+    <!-- BEAN REGISTRATION for the class that maps the properties -->
+    <bean id="customerProvisioningServiceProperties"
+          class="name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties">
+        <property name="propertyA"    value="${propertyA}" />
+        <property name="propertyB"    value="${propertyB}" />
+    </bean>
+
+    <!-- BEAN REGISTRATION for the class that manage the ExceptionHandling
+	<bean id="customerProvisioningExceptionProvider"
+          class="name.marmac.tutorials.cxfatwork.services.web.rest.mappers.CustomerExceptionProviderMapper"/>
+    -->
+
+<!-- CUSTOM BEAN REGISTRATION - END -->
+
+<!-- OSGI REFERENCE TO OSGI SERVICES - START -->
+    <!--<reference id="tutorialBusinessLogicAPI" interface="name.marmac.tutorials.cxfatwork.bl.api.BusinessLogicService" />-->
+<!-- OSGI REFERENCE TO OSGI SERVICES - END -->
+
+<!-- Serialization/Deserialization Providers for the REST interfaces -->
+
+    <!-- XML Provider with JAXB2 -->
+    <bean id="jaxbProvider"
+           class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+        <property name="marshallAsJaxbElement" value="true"/>
+    </bean>
+
+    <!-- JSON Provider -->
+	<bean id="jsonjaxbProvider"
+            class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+    
+<!-- SWAGGER SPECIFIC CONFIGURATION - START -->
+    <bean id="swaggerResourceJSON"
+          class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />
+
+    <!-- Swagger writers -->
+    <bean id="resourceWriter" class="com.wordnik.swagger.jaxrs.listing.ResourceListingProvider" />
+    <bean id="apiWriter" class="com.wordnik.swagger.jaxrs.listing.ApiDeclarationProvider" />
+
+    <!-- Swagger configuration -->
+    <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
+        <property name="resourcePackage" value="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs"/>
+        <property name="version" value="${project.version}"/>
+        <property name="basePath" value="/api-docs"/>
+        <property name="title" value="CUSTOMER PROVISIONING REST API"/>
+        <property name="description" value="This is the CUSTOMER PROVISIONING Interface"/>
+        <property name="contact" value="marco.maccio@marmac.name"/>
+        <property name="license" value="Apache 2.0 License"/>
+        <property name="licenseUrl" value="http://www.apache.org/licenses/LICENSE-2.0.html"/>
+        <property name="scan" value="true"/>
+    </bean>
+
+    <!-- Exception mapper
+    <bean id="exceptionMapper" class="com.wordnik.swagger.sample.resource.SampleExceptionMapper" />
+    -->
+
+<!-- SWAGGER SPECIFIC CONFIGURATION - END -->
+
+</blueprint>
