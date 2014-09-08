@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cxfatwork-rs-osgi-jaxrs</artifactId>
+    <artifactId>cxfatwork-rs-osgi-jaxrs-api</artifactId>
     <packaging>bundle</packaging>
 
-    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS EXAMPLES :: OSGI + JAXRS IMPL</name>
+    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS EXAMPLES :: OSGI + JAXRS API</name>
     <description>Present a Contract First approach to create an blueprint osgi rest service with jaxrs implementation</description>
     <url>${project.parent.artifactId}/${project.artifactId}</url>
 
