@@ -79,13 +79,13 @@
 
     <!-- BEAN REGISTRATION for the class that implements the CustomerProvisioningService via JAXRS -->
     <bean id="customerProvisioningService"
-          class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
+          class="name.marmac.tutorials.cxfatwork.services.web.name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
     	<tx:transaction method="*" value="Required" />
     </bean>
 
     <!-- BEAN REGISTRATION for the class that maps the properties -->
     <bean id="customerProvisioningServiceProperties"
-          class="name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties">
+          class="name.marmac.tutorials.cxfatwork.services.web.name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties">
         <property name="propertyA"    value="${propertyA}" />
         <property name="propertyB"    value="${propertyB}" />
     </bean>
@@ -123,7 +123,7 @@
 
     <!-- Swagger configuration -->
     <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
-        <property name="resourcePackage" value="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs"/>
+        <property name="resourcePackage" value="name.marmac.tutorials.cxfatwork.services.web.name.marmac.tutorials.cxfatwork.services.web.jaxrs"/>
         <property name="version" value="${project.version}"/>
         <property name="basePath" value="/api-docs"/>
         <property name="title" value="CUSTOMER PROVISIONING REST API"/>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>cxfatwork-rs</artifactId>
+        <groupId>name.marmac.tutorials</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+
+    <artifactId>cxfatwork-rs-osgi-jaxrs-impl</artifactId>
+    <packaging>bundle</packaging>
+
+    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS EXAMPLES :: OSGI + JAXRS IMPL</name>
+    <description>Present a Contract First approach to create an blueprint osgi rest service with jaxrs implementation</description>
+    <url>${project.parent.artifactId}/${project.artifactId}</url>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${source.java.compliancy.version}</source>
+                    <target>${target.java.compliancy.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven-bundle-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Blueprint>OSGI-INF/blueprint/*.xml</Bundle-Blueprint>
+                        <Import-Package>
+                            org.slf4j,
+
+                            javax.ws.rs;version="[1.0,3)",
+                            javax.ws.rs.core;version="[1.0,3)",
+                            javax.ws.rs.ext;version="[1.0,3)",
+                            javax.xml.bind;version="2.2.1",
+                            javax.xml.bind.annotation;version="2.2.1",
+                            javax.xml.bind.annotation.adapters,
+                            javax.xml.namespace,
+                            javax.xml.datatype,
+                            javax.management,
+                            org.codehaus.jackson,
+                            org.codehaus.jackson.map,
+                            org.apache.cxf.jaxrs.provider;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.jaxrs.provider.json;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.jaxrs.ext;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.jaxrs.model;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.message;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.transport.http;version="[2.7.0,3.0.0)",
+
+                            org.apache.cxf.jaxrs.utils.schemas;version="[2.7.0,3.0.0)",
+                            org.codehaus.jackson.jaxrs;version="[1.9.0,2.0.0)",
+                            org.apache.commons.httpclient,
+                            org.apache.commons.httpclient.methods,
+                            org.osgi.service.blueprint,
+                            com.wordnik.swagger.jaxrs.config,
+                            com.wordnik.swagger.jaxrs.listing,
+                            com.wordnik.swagger.annotations,
+                            com.fasterxml.jackson.annotation,
+                            com.fasterxml.jackson.core,
+                            com.fasterxml.jackson.databind,
+                            com.fasterxml.jackson.jaxrs.json,
+
+                            com.fasterxml.jackson.module.jaxb,
+
+                            name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice;version=${project.version},
+                            name.marmac.tutorials.cxfatwork.model.to.customers;version=${project.version}
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- INTERNAL PROJECT DEPENDENCIES - START -->
+        <dependency>
+            <groupId>name.marmac.tutorials</groupId>
+            <artifactId>cxfatwork-rs-osgi-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>name.marmac.tutorials</groupId>
+            <artifactId>cxfatwork-rs-osgi-jaxrs-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- INTERNAL PROJECT DEPENDENCIES - START -->
+
+        <!-- EXTERNAL PROJECT DEPENDENCIES - START -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>${javaee-web-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${codehaus-jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>${fasterxml-jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${fasterxml-jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${fasterxml-jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>${fasterxml-jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wordnik</groupId>
+            <artifactId>swagger-jaxrs_2.10</artifactId>
+            <version>${swagger-jaxrs_2.10.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>jsr311-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.servicemix.specs</groupId>
+            <artifactId>org.apache.servicemix.specs.jsr311-api-1.1.1</artifactId>
+            <version>${servicemix.specs.jsr311-api-1.1.1.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.commons-httpclient</artifactId>
+            <version>${servicemix.bundles.commons-httpclient.version}</version>
+        </dependency>
+        <!-- EXTERNAL PROJECT DEPENDENCIES - END -->
+    </dependencies>
+
+</project>

@@ -5,7 +5,8 @@
             xmlns:customerns="http://marmac.name/tutorials/cxfatwork/model/to/customers/">
 
     <grammars>
-        <include href="../xsd/customers.xsd" />
+        <include href="http://marmac.name/tutorials/cxfatwork/model/to/customers/customers.xsd"
+                 xml:space="http://marmac.name/tutorials/cxfatwork/model/to/customers/" />
 
     </grammars>
 

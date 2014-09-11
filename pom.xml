@@ -88,7 +88,7 @@
         <servicemix.specs.jsr311-api-1.1.1.version>2.4.0</servicemix.specs.jsr311-api-1.1.1.version>
         <servicemix.bundles.commons-httpclient.version>3.1_7</servicemix.bundles.commons-httpclient.version>
         <codehaus-jackson.version>1.9.13</codehaus-jackson.version>
-        <fasterxml-jackson.version>2.2.1</fasterxml-jackson.version>
+        <fasterxml-jackson.version>2.4.0</fasterxml-jackson.version>
 
         <apache-aries-transaction>1.0.0</apache-aries-transaction>
         <apache-aries-transaction-manager.version>1.0.1</apache-aries-transaction-manager.version>

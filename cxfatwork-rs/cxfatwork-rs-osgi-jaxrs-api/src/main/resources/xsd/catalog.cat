@@ -1,0 +1,3 @@
+
+
+REWRITE_SYSTEM "http://marmac.name/tutorials/cxfatwork/model/to/customers/customers.xsd" "classpath:xsd/customers.xsd"

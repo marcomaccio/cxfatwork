@@ -4,7 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <modules>
+        <module>cxfatwork-rs-osgi-resources</module>
         <module>cxfatwork-rs-osgi-jaxrs-api</module>
+        <module>cxfatwork-rs-osgi-jaxrs-impl</module>
     </modules>
 
     <parent>
