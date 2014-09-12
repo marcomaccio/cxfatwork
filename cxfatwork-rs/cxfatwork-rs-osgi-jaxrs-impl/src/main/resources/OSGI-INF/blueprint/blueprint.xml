@@ -123,7 +123,7 @@
 
     <!-- Swagger configuration -->
     <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
-        <property name="resourcePackage" value="name.marmac.tutorials.cxfatwork.services.web.jaxrs"/>
+        <property name="resourcePackage" value="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs"/>
         <property name="version" value="${project.version}"/>
         <property name="basePath" value="/api-docs"/>
         <property name="title" value="CUSTOMER PROVISIONING REST API"/>
