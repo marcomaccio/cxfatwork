@@ -85,13 +85,16 @@
              description="Repository to install the Tutorials for CXF-RS"
              version="${project.version}">
 
-            <feature>cxfatwork-environment</feature>
+        <feature>cxfatwork-environment</feature>
 
-            <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-jaxrs/${project.version}</bundle>
+        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-resources/${project.version}</bundle>
+        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-jaxrs-api/${project.version}</bundle>
+        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-jaxrs-impl/${project.version}</bundle>
 
-            <configfile
-                    override="true"
-                    finalname="/etc/name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs.cfg">mvn:name.marmac.tutorials/cxfatwork-features/${project.version}/cfg</configfile>
+        <configfile
+                override="true"
+                finalname="/etc/name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs.cfg">mvn:name.marmac.tutorials/cxfatwork-features/${project.version}/cfg</configfile>
+
     </feature>
 
 </features>
