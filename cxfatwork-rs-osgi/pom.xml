@@ -13,7 +13,7 @@
     <artifactId>cxfatwork-rs-osgi</artifactId>
     <packaging>pom</packaging>
 
-    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS EXAMPLES</name>
+    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS OSGI EXAMPLES</name>
     <description>Various Tutorials to present various aspect of Apache CXF-RS to create REST Web Services</description>
     <url>cxf-rs-osgi</url>
 
