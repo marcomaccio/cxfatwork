@@ -93,7 +93,7 @@
 
         <configfile
                 override="true"
-                finalname="/etc/name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs.cfg">mvn:name.marmac.tutorials/cxfatwork-features/${project.version}/cfg</configfile>
+                finalname="/etc/name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs.cfg">mvn:name.marmac.tutorials/cxfatwork-rs-osgi-features/${project.version}/cfg</configfile>
 
     </feature>
 
