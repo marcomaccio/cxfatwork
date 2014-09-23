@@ -268,8 +268,8 @@
     </build>
 
     <scm>
-        <connection>scm:git:ssh://github.com/marcomaccio/cxfatwork.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/marcomaccio/cxfatwork.git</developerConnection>
+        <connection>scm:git:git@github.com:marcomaccio/cxfatwork.git</connection>
+        <developerConnection>scm:git:git@github.com:marcomaccio/cxfatwork.git</developerConnection>
         <url>https://github.com/marcomaccio/cxfatwork</url>
         <tag>HEAD</tag>
     </scm>
