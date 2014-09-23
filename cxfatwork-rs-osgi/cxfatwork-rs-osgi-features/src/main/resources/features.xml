@@ -81,7 +81,7 @@
 
     </feature>
 
-    <feature name="cxfatwork-rest-modules"
+    <feature name="cxfatwork-rest-osgi-modules"
              description="Repository to install the Tutorials for CXF-RS"
              version="${project.version}">
 

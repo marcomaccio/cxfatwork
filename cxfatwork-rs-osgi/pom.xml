@@ -3,11 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <module>cxfatwork-rs-osgi-resources</module>
-        <module>cxfatwork-rs-osgi-jaxrs-api</module>
-        <module>cxfatwork-rs-osgi-jaxrs-impl</module>
-    </modules>
 
     <parent>
         <groupId>name.marmac.tutorials</groupId>
@@ -15,12 +10,19 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>cxfatwork-rs</artifactId>
+    <artifactId>cxfatwork-rs-osgi</artifactId>
     <packaging>pom</packaging>
 
     <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS EXAMPLES</name>
     <description>Various Tutorials to present various aspect of Apache CXF-RS to create REST Web Services</description>
-    <url>cxf-rs</url>
+    <url>cxf-rs-osgi</url>
+
+    <modules>
+        <module>cxfatwork-rs-osgi-resources</module>
+        <module>cxfatwork-rs-osgi-jaxrs-api</module>
+        <module>cxfatwork-rs-osgi-jaxrs-impl</module>
+        <module>cxfatwork-rs-osgi-features</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

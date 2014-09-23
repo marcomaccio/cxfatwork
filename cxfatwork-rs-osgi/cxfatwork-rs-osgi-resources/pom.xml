@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>cxfatwork-rs</artifactId>
+        <artifactId>cxfatwork-rs-osgi</artifactId>
         <groupId>name.marmac.tutorials</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>

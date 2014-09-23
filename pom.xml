@@ -11,8 +11,8 @@
     <url>http://docs.maccio-ch.homelinux.net/tutorials/cxfatwork</url>
 
     <modules>
-        <module>cxfatwork-rs</module>
-        <module>cxfatwork-features</module>
+        <module>cxfatwork-rs-osgi</module>
+
     </modules>
 
     <organization>
