@@ -12,8 +12,8 @@
     <artifactId>cxfatwork-rs-osgi-jaxrs-api</artifactId>
     <packaging>bundle</packaging>
 
-    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS OSGI EXAMPLES :: JAXRS API</name>
-    <description>Present a Contract First approach to create an blueprint osgi rest service with jaxrs implementation</description>
+    <name>CXF @ WORK :: CXF-RS OSGI EXAMPLES :: JAXRS API</name>
+    <description>Present a Contract First approach to create a blueprint osgi rest service with jaxrs implementation</description>
     <url>${project.parent.artifactId}/${project.artifactId}</url>
 
     <build>

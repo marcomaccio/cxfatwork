@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cxfatwork-rs-osgi-features</artifactId>
-    <name>CXF @ WORK :: CXF TUTORIALS :: CXF-RS OSGI EXAMPLES :: KARAF FEATURES</name>
+    <name>CXF @ WORK :: CXF-RS OSGI EXAMPLES :: KARAF FEATURES</name>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
