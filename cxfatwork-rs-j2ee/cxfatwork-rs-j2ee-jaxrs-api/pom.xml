@@ -3,17 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cxfatwork-rs-osgi</artifactId>
+        <artifactId>cxfatwork-rs-j2ee</artifactId>
         <groupId>name.marmac.tutorials</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cxfatwork-rs-osgi-jaxrs-api</artifactId>
-    <packaging>bundle</packaging>
+    <artifactId>cxfatwork-rs-j2ee-jaxrs-api</artifactId>
+    <packaging>jar</packaging>
 
-    <name>CXF @ WORK :: CXF-RS OSGI EXAMPLES :: JAXRS API</name>
-    <description>Present a Contract First approach to create a blueprint osgi rest service with jaxrs implementation</description>
+    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: JAXRS API</name>
+    <description></description>
     <url>${project.parent.artifactId}</url>
 
     <build>
@@ -51,6 +51,7 @@
             </plugin>
 
             <plugin>
+                <!-- PLUGIN TO GENERATE JAVA CLASSES FROM XSD -->
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <version>${maven-jaxb2-plugin.version}</version>
@@ -64,7 +65,7 @@
                     <episodes>
                         <episode>
                             <groupId>name.marmac.tutorials</groupId>
-                            <artifactId>cxfatwork-rs-osgi-resources</artifactId>
+                            <artifactId>cxfatwork-rs-j2ee-resources</artifactId>
                             <version>${project.version}</version>
                         </episode>
                     </episodes>
@@ -81,7 +82,7 @@
                         </plugin>
                         <plugin>
                             <groupId>name.marmac.tutorials</groupId>
-                            <artifactId>cxfatwork-rs-osgi-resources</artifactId>
+                            <artifactId>cxfatwork-rs-j2ee-resources</artifactId>
                             <version>${project.version}</version>
                         </plugin>
                     </plugins>
@@ -170,127 +171,27 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>${maven-bundle-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Name>${project.name}</Bundle-Name>
-                        <Bundle-Version>${project.version}</Bundle-Version>
-
-                        <Export-Package>
-                            name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice;version=${project.version},
-                            name.marmac.tutorials.cxfatwork.model.to.customers;version=${project.version}
-                        </Export-Package>
-                        <Import-Package>
-                            org.slf4j,
-
-                            javax.ws.rs;version="[1.0,3)",
-                            javax.ws.rs.core;version="[1.0,3)",
-                            javax.ws.rs.ext;version="[1.0,3)",
-                            javax.xml.bind;version="2.2.1",
-                            javax.xml.bind.annotation;version="2.2.1",
-                            javax.xml.bind.annotation.adapters,
-                            javax.xml.namespace,
-                            javax.xml.datatype,
-
-                            org.apache.cxf.jaxrs.provider;version="[2.7.0,3.0.0)",
-                            org.apache.cxf.jaxrs.provider.json;version="[2.7.0,3.0.0)",
-                            org.apache.cxf.jaxrs.ext;version="[2.7.0,3.0.0)",
-                            org.apache.cxf.jaxrs.model;version="[2.7.0,3.0.0)",
-                            org.apache.cxf.message;version="[2.7.0,3.0.0)",
-                            org.apache.cxf.transport.http;version="[2.7.0,3.0.0)",
-                            org.apache.cxf.jaxrs.utils.schemas;version="[2.7.0,3.0.0)",
-
-                            name.marmac.tutorials.cxfatwork.model.to.customers;version=${project.version}
-                        </Import-Package>
-                    </instructions>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
     <dependencies>
-    <!-- EXTERNAL PROJECT DEPENDENCIES - START -->
+        <!-- EXTERNAL PROJECT DEPENDENCIES - START -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>${javaee-web-api.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>${codehaus-jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>${fasterxml-jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${fasterxml-jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${fasterxml-jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-            <version>${fasterxml-jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.wordnik</groupId>
-            <artifactId>swagger-jaxrs_2.10</artifactId>
-            <version>${swagger-jaxrs_2.10.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.ws.rs</groupId>
-                    <artifactId>jsr311-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.servicemix.specs</groupId>
-            <artifactId>org.apache.servicemix.specs.jsr311-api-1.1.1</artifactId>
-            <version>${servicemix.specs.jsr311-api-1.1.1.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.commons-httpclient</artifactId>
-            <version>${servicemix.bundles.commons-httpclient.version}</version>
-        </dependency>
         <!-- EXTERNAL PROJECT DEPENDENCIES - END -->
 
+
+        <!-- INTERNAL PROJECT DEPENDENCIES - START -->
         <dependency>
             <groupId>name.marmac.tutorials</groupId>
-            <artifactId>cxfatwork-rs-osgi-resources</artifactId>
+            <artifactId>cxfatwork-rs-j2ee-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- INTERNAL PROJECT DEPENDENCIES - END -->
     </dependencies>
+
 
 </project>
