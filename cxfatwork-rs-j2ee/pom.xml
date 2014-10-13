@@ -1,29 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <groupId>name.marmac.tutorials</groupId>
         <artifactId>cxfatwork</artifactId>
+        <groupId>name.marmac.tutorials</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cxfatwork-rs-osgi</artifactId>
+    <artifactId>cxfatwork-rs-j2ee</artifactId>
     <packaging>pom</packaging>
 
-    <name>CXF @ WORK :: CXF-RS OSGI EXAMPLES</name>
+    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES</name>
     <description>Various Tutorials to present various aspect of Apache CXF-RS to create REST Web Services</description>
-    <url>cxf-rs-osgi</url>
+    <url>cxf-rs-j2ee</url>
 
     <modules>
-        <module>cxfatwork-rs-osgi-resources</module>
-        <module>cxfatwork-rs-osgi-jaxrs-api</module>
-        <module>cxfatwork-rs-osgi-jaxrs-impl</module>
-        <module>cxfatwork-rs-osgi-features</module>
+        <module>cxfatwork-rs-j2ee-resources</module>
+        <module>cxfatwork-rs-j2ee-jaxrs-api</module>
+        <module>cxfatwork-rs-j2ee-jaxrs-impl</module>
 
     </modules>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,7 +30,12 @@
         <jaxb-api.version>2.2.0</jaxb-api.version>
         <jsr311-api.version>2.2.0</jsr311-api.version>
 
-        <jetty-maven-plugin.version>7.4.0.RC0</jetty-maven-plugin.version>
+        <!--
+            OLDER V. 7.4.0.RC0
+            NEWER V. 8.1.14.v20131031
+        -->
+        <jetty-maven-plugin.version>7.6.14.v20131031</jetty-maven-plugin.version>
+        <jetty.version>7.6.14.v20131031</jetty.version>
     </properties>
 
     <dependencies>
