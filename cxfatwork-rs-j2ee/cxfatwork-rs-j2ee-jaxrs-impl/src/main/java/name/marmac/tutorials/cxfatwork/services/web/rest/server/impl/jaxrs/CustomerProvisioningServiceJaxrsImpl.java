@@ -62,8 +62,9 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     /**
      *
-     * @param customerstotype
-     * @return
+     * @param customerstotype   the xml or json representation of the CustomersTOType
+     * @return                  the xml or json representation of the CustomersTOType
+     * @see name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType
      */
     @Override
     @POST
@@ -87,7 +88,8 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      * @param firstname
      * @param createDate
      * @param lastUpdate
-     * @return
+     * @return                  the xml or json representation of the CustomersTOType
+     * @see name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType
      */
     @Override
     @GET
@@ -110,6 +112,11 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         return mCustomersTOType;
     }
 
+    /**
+     *
+     * @param customerstotype
+     * @return                  the xml or json representation of the CustomersTOType
+     */
     @Override
     @PUT
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -124,6 +131,11 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         return null;
     }
 
+    /**
+     *
+     * @param customerstotype
+     * @return                  the xml or json representation of the CustomersTOType
+     */
     @Override
     @DELETE
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
