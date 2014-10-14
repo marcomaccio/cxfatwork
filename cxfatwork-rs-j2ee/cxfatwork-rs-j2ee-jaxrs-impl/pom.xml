@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cxfatwork-rs-j2ee-jaxrs-impl</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: JAXRS IMPL</name>
     <description>This module implement the Contract First Interface for CRUD REST Service  with a JAXRS Implementation</description>
