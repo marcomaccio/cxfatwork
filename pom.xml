@@ -3,7 +3,7 @@
 
     <groupId>name.marmac.tutorials</groupId>
     <artifactId>cxfatwork</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1442.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>CXF @ WORK :: CXF TUTORIALS</name>
@@ -162,7 +162,7 @@
 
     <build>
         <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
-
+        <defaultGoal>install</defaultGoal>
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>

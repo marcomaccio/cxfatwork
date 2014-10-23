@@ -7,7 +7,7 @@
     <parent>
         <groupId>name.marmac.tutorials</groupId>
         <artifactId>cxfatwork</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1442.BUILD-SNAPSHOT</version>
     </parent>
 
     <artifactId>cxfatwork-rs-osgi</artifactId>
@@ -19,8 +19,8 @@
 
     <modules>
         <module>cxfatwork-rs-osgi-resources</module>
-        <module>cxfatwork-rs-osgi-jaxrs-api</module>
-        <module>cxfatwork-rs-osgi-jaxrs-impl</module>
+        <module>cxfatwork-rs-osgi-api</module>
+        <module>cxfatwork-rs-osgi-impl-jaxrs</module>
         <module>cxfatwork-rs-osgi-features</module>
 
     </modules>

@@ -8,14 +8,14 @@
     <parent>
         <artifactId>cxfatwork-rs-osgi</artifactId>
         <groupId>name.marmac.tutorials</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1442.BUILD-SNAPSHOT</version>
     </parent>
 
 
-    <artifactId>cxfatwork-rs-osgi-jaxrs-impl</artifactId>
+    <artifactId>cxfatwork-rs-osgi-impl-jaxrs</artifactId>
     <packaging>bundle</packaging>
 
-    <name>CXF @ WORK :: CXF-RS OSGI EXAMPLES :: JAXRS IMPL</name>
+    <name>CXF @ WORK :: CXF-RS OSGI EXAMPLES :: IMPL JAXRS</name>
     <description>Present a Contract First approach to create an blueprint osgi rest service with jaxrs implementation</description>
     <url>${project.parent.artifactId}/${project.artifactId}</url>
 
@@ -109,7 +109,7 @@
 
         <dependency>
             <groupId>name.marmac.tutorials</groupId>
-            <artifactId>cxfatwork-rs-osgi-jaxrs-api</artifactId>
+            <artifactId>cxfatwork-rs-osgi-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 

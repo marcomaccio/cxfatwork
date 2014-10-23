@@ -88,8 +88,8 @@
         <feature>cxfatwork-environment</feature>
 
         <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-resources/${project.version}</bundle>
-        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-jaxrs-api/${project.version}</bundle>
-        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-jaxrs-impl/${project.version}</bundle>
+        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-api/${project.version}</bundle>
+        <bundle>mvn:name.marmac.tutorials/cxfatwork-rs-osgi-impl-jaxrs/${project.version}</bundle>
 
         <configfile
                 override="true"
