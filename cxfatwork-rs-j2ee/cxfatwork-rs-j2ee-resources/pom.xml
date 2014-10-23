@@ -17,7 +17,7 @@
     <url>${project.parent.artifactId}/${project.artifactId}</url>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
 
         <resources>
             <resource>
@@ -96,6 +96,22 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                  <archive>
+                    <manifest>
+                      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                    </manifest>
+                    <manifestEntries>
+                      <Implementation-Build>${buildNumber}</Implementation-Build>
+                    </manifestEntries>
+                  </archive>
+                </configuration>
             </plugin>
 
         </plugins>

@@ -17,6 +17,8 @@
     <url>${project.parent.artifactId}</url>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
@@ -37,6 +39,7 @@
                     <target>${target.java.compliancy.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -72,7 +75,7 @@
 
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>9092</port>
+                            <port>9091</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
@@ -139,6 +142,22 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-war-plugin</artifactId>
+               <version>${maven-war-plugin.version}</version>
+               <configuration>
+                  <archive>
+                   <!-- will put the entries into META-INF/MANIFEST.MF file -->
+                    <manifestEntries>
+                        <Implementation-Version>${project.version}</Implementation-Version>
+                        <Implementation-Build>${buildNumber}</Implementation-Build>
+                    </manifestEntries>
+                  </archive>
+               </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

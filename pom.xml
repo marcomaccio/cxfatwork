@@ -47,7 +47,9 @@
 
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
+        <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
         <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
+
         <maven-graph-plugin.version>1.9</maven-graph-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
@@ -64,11 +66,17 @@
 
         <maven-jaxb2-plugin.version>0.8.3</maven-jaxb2-plugin.version>
         <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
+        <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+        <maven-war-plugin.version>2.4</maven-war-plugin.version>
+
         <maven-changes-plugin.version>2.9</maven-changes-plugin.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
         <maven-pmd-plugin.version>3.2</maven-pmd-plugin.version>
+        <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
 
         <umlgraph.version>5.6.6</umlgraph.version>
+
+        <buildnumber-maven-plugin.version>1.3</buildnumber-maven-plugin.version>
         <build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
         <features-maven-plugin.version>2.3.3</features-maven-plugin.version>
         <taglist-maven-plugin.version>2.4</taglist-maven-plugin.version>
@@ -153,6 +161,8 @@
     </properties>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
@@ -160,6 +170,16 @@
                 <version>${wagon-webdav-jackrabbit.version}</version>
             </extension>
         </extensions>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>versions-maven-plugin</artifactId>
+                  <version>${versions-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 
         <plugins>
             <plugin>
@@ -188,6 +208,25 @@
                     </configuration>
                   </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>${maven-scm-plugin.version}</version>
+                <dependencies>
+                    <!-- P4Maven
+                    <dependency>
+                        <groupId>com.perforce</groupId>
+                        <artifactId>p4maven</artifactId>
+                        <version>[2011,2012)</version>
+                    </dependency>
+                    -->
+                </dependencies>
+
+                <configuration>
+                    <connectionType>connection</connectionType>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -228,6 +267,39 @@
                     <preparationGoals>clean verify</preparationGoals>
                     <goals>deploy</goals>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>${buildnumber-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <shortRevisionLength>10</shortRevisionLength>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>download-licenses</id>
+                        <goals>
+                            <goal>download-licenses</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -429,16 +501,21 @@
             <version>${jdepend-maven-plugin.version}</version>
         </plugin>
 
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>${versions-maven-plugin.version}</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>dependency-updates-report</report>
+                  <report>plugin-updates-report</report>
+                  <report>property-updates-report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
 
-
-
-        <!-- Atlassian Clover Plugin
-        <plugin>
-            <groupId>com.atlassian.maven.plugins</groupId>
-            <artifactId>maven-clover2-plugin</artifactId>
-            <version>3.1.10.1</version>
-        </plugin>
-        -->
        </plugins>
     </reporting>
 </project>
