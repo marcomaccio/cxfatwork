@@ -45,19 +45,23 @@
         <!-- MAVEN PLUGINS VERSIONS -->
         <wagon-webdav-jackrabbit.version>2.4</wagon-webdav-jackrabbit.version>
 
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-site-plugin.version>3.3</maven-site-plugin.version>
-        <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
-        <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
-
-        <maven-graph-plugin.version>1.9</maven-graph-plugin.version>
-        <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-        <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
+        <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+        <maven-clean-plugin.version>2.6</maven-clean-plugin.version>
+        <maven-install-plugin.version>2.5</maven-install-plugin.version>
+        <maven-deploy-plugin.version>2.8</maven-deploy-plugin.version>
         <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
+        <maven-javadoc-plugin.version>2.10</maven-javadoc-plugin.version>
+        <maven-site-plugin.version>3.4</maven-site-plugin.version>
+        <maven-source-plugin.version>2.3</maven-source-plugin.version>
+        <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
+        <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
+
+        <maven-graph-plugin.version>1.10</maven-graph-plugin.version>
+        <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
+
+
         <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
         <maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
@@ -125,14 +129,12 @@
         <smx-bundles-jackson-scala.version>2.1.5_2</smx-bundles-jackson-scala.version>
 
         <scala-library.version>2.10.2</scala-library.version>
-        <codehaus-jackson.version>1.9.13</codehaus-jackson.version>
-        <fasterxml-jackson.version>2.4.0</fasterxml-jackson.version>
 
         <javaee-web-api.version>7.0</javaee-web-api.version>
         <swagger-jaxrs_2.10.version>1.3.2</swagger-jaxrs_2.10.version>
 
-        <slf4j.version>1.6.6</slf4j.version>
-        <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
+        <slf4j.version>1.7.0</slf4j.version>
+        <slf4j-log4j12.version>1.7.6</slf4j-log4j12.version>
         <log4j.version>1.2.17</log4j.version>
         <logback.version>1.0.13</logback.version>
         <junit.version>4.11</junit.version>
