@@ -8,7 +8,7 @@
     <parent>
         <artifactId>cxfatwork-rs-osgi</artifactId>
         <groupId>name.marmac.tutorials</groupId>
-        <version>1.0.1442.BUILD-SNAPSHOT</version>
+        <version>1.0.1444.BUILD-SNAPSHOT</version>
     </parent>
 
 

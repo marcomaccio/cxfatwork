@@ -3,7 +3,7 @@
 
     <groupId>name.marmac.tutorials</groupId>
     <artifactId>cxfatwork</artifactId>
-    <version>1.0.1442.BUILD-SNAPSHOT</version>
+    <version>1.0.1444.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>CXF @ WORK :: CXF TUTORIALS</name>
