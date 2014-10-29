@@ -69,11 +69,7 @@
                                     <type>xml</type>
                                     <classifier>features</classifier>
                                 </artifact>
-                                <artifact>
-                                    <file>target/classes/name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs.cfg</file>
-                                    <type>cfg</type>
-                                </artifact>
-                            </artifacts>
+                            features</artifacts>
                         </configuration>
                     </execution>
                 </executions>

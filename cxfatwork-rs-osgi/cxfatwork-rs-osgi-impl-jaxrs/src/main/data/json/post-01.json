@@ -1,0 +1,11 @@
+{
+	"total_records":"1",
+	"customers":[
+    {
+    	"firstname":"Firstname 02",
+    	"lastname":"Lastname 02",
+    	"customerId":"SMPL-002",
+    	"createDate":"2014-10-29T12:04:37.980+01:00",
+    	"lastUpdate":"2014-10-29T12:04:37.980+01:00"
+    }]
+}

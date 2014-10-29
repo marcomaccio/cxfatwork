@@ -103,7 +103,7 @@
         <servicemix.specs.jsr311-api-1.1.1.version>2.4.0</servicemix.specs.jsr311-api-1.1.1.version>
         <servicemix.bundles.commons-httpclient.version>3.1_7</servicemix.bundles.commons-httpclient.version>
         <codehaus-jackson.version>1.9.13</codehaus-jackson.version>
-        <fasterxml-jackson.version>2.4.0</fasterxml-jackson.version>
+        <fasterxml-jackson.version>2.4.1</fasterxml-jackson.version>
 
         <apache-aries-transaction>1.0.0</apache-aries-transaction>
         <apache-aries-transaction-manager.version>1.0.1</apache-aries-transaction-manager.version>
@@ -131,7 +131,7 @@
         <scala-library.version>2.10.2</scala-library.version>
 
         <javaee-web-api.version>7.0</javaee-web-api.version>
-        <swagger-jaxrs_2.10.version>1.3.2</swagger-jaxrs_2.10.version>
+        <swagger-jaxrs_2.10.version>1.3.4</swagger-jaxrs_2.10.version>
 
         <slf4j.version>1.7.0</slf4j.version>
         <slf4j-log4j12.version>1.7.6</slf4j-log4j12.version>
@@ -528,4 +528,18 @@
 
        </plugins>
     </reporting>
+
+    <profiles>
+        <profile>
+            <id>osgi-depl-local</id>
+            <properties>
+                <deployment.host>localhost</deployment.host>
+                <deployment.port>8181</deployment.port>
+                <deployment.webContext>/cxf</deployment.webContext>
+                <deployment.servicePath>/crm/provisioning/v1</deployment.servicePath>
+                <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
+                <deployment.resourcePath>/customers</deployment.resourcePath>
+            </properties>
+        </profile>
+    </profiles>
 </project>

@@ -70,7 +70,7 @@
                     <stopPort>9999</stopPort>
 
                     <webApp>
-                        <contextPath>/cxf-rs-j2ee</contextPath>
+                        <contextPath>/cxf</contextPath>
                     </webApp>
 
                     <connectors>
@@ -213,13 +213,13 @@
           <version>2.5</version>
           <scope>provided</scope>
         </dependency>
-        <!--
+        <!--  -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>${javaee-web-api.version}</version>
         </dependency>
-        -->
+
 
         <dependency>
             <groupId>org.codehaus.jackson</groupId>

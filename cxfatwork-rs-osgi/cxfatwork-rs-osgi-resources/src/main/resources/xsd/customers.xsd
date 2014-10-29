@@ -6,18 +6,19 @@
 
     <xsd:complexType name="CustomerTOType">
         <xsd:sequence>
-            <xsd:element name="firstname"   type="xsd:string"   />
-            <xsd:element name="lastname"    type="xsd:string"   />
-            <xsd:element name="customerId"  type="xsd:string"   />
-            <xsd:element name="createDate"  type="xsd:dateTime" />
-            <xsd:element name="lastUpdate"  type="xsd:dateTime" />
+            <xsd:element name="id"          type="xsd:string"   minOccurs="0" maxOccurs="1" />
+            <xsd:element name="firstname"   type="xsd:string"   minOccurs="1" maxOccurs="1" />
+            <xsd:element name="lastname"    type="xsd:string"   minOccurs="1" maxOccurs="1" />
+            <xsd:element name="customerId"  type="xsd:string"   minOccurs="1" maxOccurs="1" />
+            <xsd:element name="createDate"  type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="lastUpdate"  type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="CustomersTOType">
         <xsd:sequence>
             <xsd:element name="total_records"   type="xsd:long" nillable="false" />
-            <xsd:element name="customers"       type="customerns:CustomerTOType" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="customer"       type="customerns:CustomerTOType" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
     </xsd:complexType>
 

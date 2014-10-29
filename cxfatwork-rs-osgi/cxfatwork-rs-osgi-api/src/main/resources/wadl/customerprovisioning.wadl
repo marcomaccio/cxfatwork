@@ -30,19 +30,32 @@
 
                 <method name="GET" id="getCustomerByQuery">
                     <request>
-                        <param name="limit"        type="xsd:int"      style="query" required="false" />
-                        <param name="customerId"   type="xsd:string"   style="query" required="false"/>
-                        <param name="firstname"    type="xsd:string"   style="query" required="false"/>
-                        <param name="createDate"   type="xsd:string"   style="query" required="false"/>
-                        <param name="lastUpdate"   type="xsd:string"   style="query" required="false"/>
+                        <param name="limit"         type="xsd:int"      style="query" required="false" />
+                        <param name="id"            type="xsd:string"   style="query" required="false"/>
+                        <param name="customerId"    type="xsd:string"   style="query" required="false"/>
+                        <param name="firstname"     type="xsd:string"   style="query" required="false"/>
+                        <param name="lastname"      type="xsd:string"   style="query" required="false"/>
+                        <param name="createDate"    type="xsd:string"   style="query" required="false"/>
+                        <param name="lastUpdate"    type="xsd:string"   style="query" required="false"/>
                     </request>
 
-                    <response status="200" description="Customer Validation Okay">
+                    <response status="200" description="Retrieve All Customers or a selection by query">
                         <representation mediaType="application/xml"    element="customerns:customers"/>
                         <representation mediaType="application/json"   element="customerns:customers"/>
                     </response>
                 </method>
 
+                <resource  path="/{id}">
+                    <param name="id" type="xsd:string" style="template" required="true"/>
+
+                    <method name="GET" id="getCustomerById">
+                        <response status="200" description="Retrieve a Customer by its system id">
+                            <representation mediaType="application/xml"    element="customerns:customers"/>
+                            <representation mediaType="application/json"   element="customerns:customers"/>
+                        </response>
+                    </method>
+
+                </resource>
 
             </resource>
 

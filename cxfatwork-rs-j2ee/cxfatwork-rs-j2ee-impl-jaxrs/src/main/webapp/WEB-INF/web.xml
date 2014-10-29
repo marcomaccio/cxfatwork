@@ -24,7 +24,7 @@
     <!-- Servlet's mappings -->
     <servlet-mapping>
     	<servlet-name>CXFServlet</servlet-name>
-    	<url-pattern>/cxf-rs-j2ee/*</url-pattern>
+    	<url-pattern>/cxf/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

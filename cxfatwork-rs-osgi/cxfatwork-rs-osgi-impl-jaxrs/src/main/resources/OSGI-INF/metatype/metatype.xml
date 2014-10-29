@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.1.0">
 
-    <OCD name="MARMAC TUTORIALS CXFATWORK :: CUSTOMERPROVISIONING PROPERTIES"
+    <OCD name="MARMAC TUTORIALS CXFATWORK :: CUSTOMER PROVISIONING PROPERTIES"
          id="name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs">
+
+        <AD id="host"
+            type="String"
+            name="Deployment Host"
+            description="Server name or vp where the service is deployed"/>
+
+        <AD id="port"
+            type="String"
+            name="Deployment Port"
+            description="Port Number at which the service reply"/>
+
+        <AD id="webContext"
+            type="String"
+            name="Web Context"
+            description="Web Context"/>
+
+        <AD id="servicePath"
+            type="String"
+            name="Service Path"
+            description="Path of the deployed service"/>
+
+        <AD id="resourcePath"
+            type="String"
+            name="Resource Path"
+            description="Path of the deployed service"/>
+
 
         <AD id="propertyA"
             type="String"
-            name="propertyA"
-            description="Property A to show how ConfigAdmin handles properties"></AD>
+            name="Property A"
+            description="Property A to show how ConfigAdmin handles properties"/>
 
         <AD id="propertyB"
             type="String"
-            name="propertyB"
-            description="Property A to show how ConfigAdmin handles properties"></AD>
+            name="Property B"
+            description="Property A to show how ConfigAdmin handles properties"/>
     </OCD>
 
     <Designate pid="name.marmac.tutorials.cxfatwork.cxfrsosgijaxrs">

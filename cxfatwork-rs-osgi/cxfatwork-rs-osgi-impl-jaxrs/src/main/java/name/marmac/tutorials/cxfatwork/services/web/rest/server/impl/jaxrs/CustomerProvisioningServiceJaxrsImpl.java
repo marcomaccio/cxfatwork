@@ -33,11 +33,12 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     private static final String QUERY_PARAM_CREATEDATE      = "createDate";
     private static final String QUERY_PARAM_LASTUPDATEDATE  = "lastUpdate";
 
+    private static final String PATH_RESOURCE               = "/customers";
     private static final String PATH_PARAM_ID			    = "id";
 
-    private CustomerProvisioningServiceProperties provisioningServiceProperties;
-    private ObjectFactory mCustomersObjectFactory;
-    private CustomersTOType mCustomersTOType;
+    private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
+    private ObjectFactory                           mCustomersObjectFactory;
+    private CustomersTOType                         mCustomersTOType;
 
     /**
      * Constructor method
@@ -49,15 +50,14 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             mCustomersObjectFactory = new ObjectFactory();
         //Create the CustomersTOType that contains a list of CustomerTOType objects
             mCustomersTOType = mCustomersObjectFactory.createCustomersTOType();
-        //Initializing a Sample data
-        this.initializeSampleData();
+
     }
     /**
      *
      * @param provisioningServiceProperties
      */
     public void setProvisioningServiceProperties(CustomerProvisioningServiceProperties provisioningServiceProperties) {
-        this.provisioningServiceProperties = provisioningServiceProperties;
+        this.mProvisioningServiceProperties = provisioningServiceProperties;
     }
 
     /**
@@ -69,15 +69,31 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/customers")
+    @Path(PATH_RESOURCE)
     @ApiOperation(value = "Create Customers",
                     notes = "It allows creating one or more Customer. In this version is enabled only the creation of One Customer per request",
                     response = CustomersTOType.class)
     public CustomersTOType createCustomers(@ApiParam(value = "CustomersTOType", required = true, allowMultiple = true)
                                            CustomersTOType customerstotype) {
-        //TODO: Implement the method
+        //get the current total record.
+        long totalrecord = mCustomersTOType.getTotalRecords();
+        long newNumberId = totalrecord + 1;
 
-        return null;
+        //take the customer from the customer list in the request
+        CustomerTOType customerToBeCreated = customerstotype.getCustomer().get(0);
+        //create the new id as an url to retrive the customer
+        // http://host:port/webContext/servicePath/resourcePath
+        String newId = "http://" + mProvisioningServiceProperties.getHost() + ":" + mProvisioningServiceProperties.getPort()
+                + mProvisioningServiceProperties.getWebContext()
+                + mProvisioningServiceProperties.getServicePath()
+                + mProvisioningServiceProperties.getServiceInterface()
+                + mProvisioningServiceProperties.getResourcePath()
+                + "/"+newNumberId;
+
+        customerToBeCreated.setId(newId);
+        mCustomersTOType.getCustomer().add(customerToBeCreated);
+        mCustomersTOType.setTotalRecords(mCustomersTOType.getTotalRecords()+1);
+        return mCustomersTOType;
     }
 
     /**
@@ -92,25 +108,45 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @Override
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    @Path("/customers")
+    @Path(PATH_RESOURCE)
     @ApiOperation(value = "Get Customers filtering them by some parameters in AND condition",
             notes = "More notes about this method",
             response = CustomersTOType.class)
     public CustomersTOType getCustomerByQuery(@ApiParam(value = QUERY_PARAM_LIMIT, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LIMIT) Integer limit,
+                                              @ApiParam(value = QUERY_PARAM_ID, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_ID) String id,
                                               @ApiParam(value = QUERY_PARAM_CUSTOMERID, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_CUSTOMERID) String customerId,
                                               @ApiParam(value = QUERY_PARAM_FIRSTNAME, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_FIRSTNAME) String firstname,
+                                              @ApiParam(value = QUERY_PARAM_LASTNAME, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LASTNAME) String lastname,
                                               @ApiParam(value = QUERY_PARAM_CREATEDATE, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_CREATEDATE) String createDate,
                                               @ApiParam(value = QUERY_PARAM_LASTUPDATEDATE, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LASTUPDATEDATE) String lastUpdate) {
         //TODO: Implement the filter query
-        LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomers().size());
-        LOGGER.info("Customer : " + mCustomersTOType.getCustomers().get(0).getCustomerId() + " "
-                                  + mCustomersTOType.getCustomers().get(0).getFirstname()  + " "
-                                  + mCustomersTOType.getCustomers().get(0).getLastname()  );
+        LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomer().size());
+        LOGGER.info("Customer : " + mCustomersTOType.getCustomer().get(0).getCustomerId() + " "
+                                  + mCustomersTOType.getCustomer().get(0).getFirstname()  + " "
+                                  + mCustomersTOType.getCustomer().get(0).getLastname()  );
 
         return mCustomersTOType;
     }
 
-    private void initializeSampleData(){
+    @Override
+    @GET
+    @Path(PATH_RESOURCE + "/" + PATH_PARAM_ID)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @ApiOperation(value = "Get a Customers by its system id",
+                notes = "More notes about this method",
+                response = CustomersTOType.class)
+    public CustomersTOType getCustomerById(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("id") String id) {
+
+        CustomerTOType retrievedCustomer = mCustomersTOType.getCustomer().get(Integer.parseInt(id));
+        CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
+        customersTOType.getCustomer().add(retrievedCustomer);
+        return customersTOType;
+    }
+
+    public void initializeSampleData(){
+
+        this.mProvisioningServiceProperties.toString();
+
         //Create a customer to add to the Customer List
         CustomerTOType customerA = mCustomersObjectFactory.createCustomerTOType();
         customerA.setFirstname("Firstname 01");
@@ -120,7 +156,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         customerA.setLastUpdate(new GregorianCalendar());
 
         //Add the CustomerA to the Customer List
-        mCustomersTOType.getCustomers().add(customerA);
+        mCustomersTOType.getCustomer().add(customerA);
         mCustomersTOType.setTotalRecords(1L);
 
     }
