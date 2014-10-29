@@ -130,14 +130,33 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     @Override
     @GET
-    @Path(PATH_RESOURCE + "/" + PATH_PARAM_ID)
+    @Path("/customers/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @ApiOperation(value = "Get a Customers by its system id",
                 notes = "More notes about this method",
                 response = CustomersTOType.class)
     public CustomersTOType getCustomerById(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("id") String id) {
 
-        CustomerTOType retrievedCustomer = mCustomersTOType.getCustomer().get(Integer.parseInt(id));
+        LOGGER.info("Requested id :" + id);
+        CustomerTOType retrievedCustomer = null;
+        LOGGER.info("Customer List size: " + mCustomersTOType.getCustomer().size());
+
+        for (CustomerTOType customerTO : mCustomersTOType.getCustomer()) {
+            if (customerTO != null) {
+                LOGGER.info("Customer's full id: " + customerTO.getId());
+                String idValue = customerTO.getId().substring(customerTO.getId().lastIndexOf("/") + 1);
+                if (idValue != null) {
+                    LOGGER.info("Customer's full id: " + customerTO.getId() + " Customer's idValue: " + idValue);
+                    if (idValue.equals(id)) {
+                        retrievedCustomer = customerTO;
+                    }
+                }
+            }
+            else {
+                LOGGER.info("The customer is null");
+            }
+        }
+
         CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
         customersTOType.getCustomer().add(retrievedCustomer);
         return customersTOType;
@@ -149,6 +168,16 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
         //Create a customer to add to the Customer List
         CustomerTOType customerA = mCustomersObjectFactory.createCustomerTOType();
+        long totalrecord = mCustomersTOType.getTotalRecords();
+        long newNumberId = totalrecord + 1;
+
+        String newId = "http://" + mProvisioningServiceProperties.getHost() + ":" + mProvisioningServiceProperties.getPort()
+                        + mProvisioningServiceProperties.getWebContext()
+                        + mProvisioningServiceProperties.getServicePath()
+                        + mProvisioningServiceProperties.getServiceInterface()
+                        + mProvisioningServiceProperties.getResourcePath()
+                        + "/"+newNumberId;
+        customerA.setId(newId);
         customerA.setFirstname("Firstname 01");
         customerA.setLastname("Lastname 01");
         customerA.setCustomerId("SMPL-001");
