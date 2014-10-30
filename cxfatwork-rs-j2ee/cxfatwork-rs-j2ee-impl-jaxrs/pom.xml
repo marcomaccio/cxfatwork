@@ -92,13 +92,13 @@
                         <artifactId>logback-classic</artifactId>
                         <version>${logback.version}</version>
                     </dependency>
-
+                    <!--
                     <dependency>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-jsp</artifactId>
                         <version>${jetty.version}</version>
                     </dependency>
-
+                    -->
                 </dependencies>
 
                 <executions>
@@ -106,7 +106,7 @@
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>start</goal>
+                            <goal>run</goal>
                         </goals>
                         <configuration>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
@@ -176,11 +176,12 @@
         </dependency>
         <!-- INTERNAL PROJECT DEPENDENCIES - END -->
 
-        <!-- EXTERNAL PROJECT DEPENDENCIES - START -->
+    <!-- EXTERNAL PROJECT DEPENDENCIES - START -->
+        <!-- APACHE CXF DEPENDENCIES - START -->
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <version>${cxf.version}</version>
+        	<groupId>org.apache.cxf</groupId>
+        	<artifactId>cxf-rt-core</artifactId>
+        	<version>${cxf.version}</version>
         </dependency>
 
         <dependency>
@@ -192,6 +193,24 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-local</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-databinding-jaxb</artifactId>
             <version>${cxf.version}</version>
         </dependency>
 
@@ -227,6 +246,7 @@
             <version>${codehaus-jackson.version}</version>
         </dependency>
 
+        <!-- FASTERXML JACKSON Dependencies  - START -->
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -247,6 +267,7 @@
             <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>${fasterxml-jackson.version}</version>
         </dependency>
+        <!-- FASTERXML JACKSON Dependencies  - END -->
 
         <dependency>
             <groupId>com.wordnik</groupId>
@@ -260,7 +281,7 @@
             </exclusions>
         </dependency>
 
-        <!-- Springframework Dependencies -->
+        <!-- Springframework Dependencies  - START -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -292,7 +313,9 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- EXTERNAL PROJECT DEPENDENCIES - END -->
+        <!-- Springframework Dependencies  - END -->
+
+    <!-- EXTERNAL PROJECT DEPENDENCIES - END -->
     </dependencies>
 
 </project>

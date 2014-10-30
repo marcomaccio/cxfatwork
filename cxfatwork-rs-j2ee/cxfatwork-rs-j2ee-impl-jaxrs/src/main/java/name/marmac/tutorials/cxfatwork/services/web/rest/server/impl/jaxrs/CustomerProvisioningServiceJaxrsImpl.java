@@ -44,13 +44,13 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      * It inizialize the objectFactory to create Customer(s)TOType objects
      */
     public CustomerProvisioningServiceJaxrsImpl(){
-
+        LOGGER.info(this.getClass().getName() + " has been initialized ...");
         //initialization of the CustomersTOType ObjectFactory
             mCustomersObjectFactory = new ObjectFactory();
         //Create the CustomersTOType that contains a list of CustomerTOType objects
             mCustomersTOType = mCustomersObjectFactory.createCustomersTOType();
         //Initializing a Sample data
-        this.initializeSampleData();
+        //this.initializeSampleData();
     }
     /**
      *
@@ -77,7 +77,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     public CustomersTOType createCustomers(@ApiParam(value = "CustomersTOType", required = true, allowMultiple = true)
                                            CustomersTOType customerstotype) {
         //TODO: Implement the method
-
+        LOGGER.info("The createCustomers has been called ...");
         return null;
     }
 
@@ -104,6 +104,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                               @ApiParam(value = QUERY_PARAM_CREATEDATE, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_CREATEDATE) String createDate,
                                               @ApiParam(value = QUERY_PARAM_LASTUPDATEDATE, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LASTUPDATEDATE) String lastUpdate) {
         //TODO: Implement the filter query
+        LOGGER.info("The getCustomerByQuery has been called ...");
         LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomers().size());
         LOGGER.info("Customer : " + mCustomersTOType.getCustomers().get(0).getCustomerId() + " "
                                   + mCustomersTOType.getCustomers().get(0).getFirstname()  + " "
@@ -126,8 +127,9 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                 notes = "Update method",
                 response = CustomersTOType.class)
     public CustomersTOType updateCustomers(@ApiParam(value = "CustomersTOType", required = true, allowMultiple = true)
-                                               CustomersTOType customerstotype)
-    {
+                                               CustomersTOType customerstotype) {
+
+        LOGGER.info("The updateCustomers has been called ...");
         return null;
     }
 
@@ -145,12 +147,18 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                 notes = "Delete method",
                 response = CustomersTOType.class)
     public CustomersTOType deleteCustomers(@ApiParam(value = "CustomersTOType", required = true, allowMultiple = true)
-                                               CustomersTOType customerstotype)
-    {
+                                               CustomersTOType customerstotype) {
+
+        LOGGER.info("The deleteCustomers has been called ...");
         return null;
     }
 
-    private void initializeSampleData(){
+    /**
+     *
+     */
+    public void initializeSampleData(){
+
+        LOGGER.info("Initializing some sample data ...");
         //Create a customer to add to the Customer List
         CustomerTOType customerA = mCustomersObjectFactory.createCustomerTOType();
         customerA.setFirstname("Firstname 01");
@@ -159,9 +167,13 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         customerA.setCreateDate(new GregorianCalendar());
         customerA.setLastUpdate(new GregorianCalendar());
 
+        LOGGER.info("Customer A has been created " + customerA.getCustomerId() + "/" + customerA.getFirstname() + "/" +
+                customerA.getLastname() );
         //Add the CustomerA to the Customer List
         mCustomersTOType.getCustomers().add(customerA);
         mCustomersTOType.setTotalRecords(1L);
 
+        LOGGER.info("Customers list has size:" + mCustomersTOType.getCustomers().size()
+                +" and Total N. Records: " + mCustomersTOType.getTotalRecords());
     }
 }

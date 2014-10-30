@@ -61,7 +61,10 @@
 
     <!--  -->
     <bean id="customerService"
-              class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl" />
+        class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl"
+            init-method="initializeSampleData">
+
+  </bean>
 
 
     <!-- XML Provider with JAXB2 -->
