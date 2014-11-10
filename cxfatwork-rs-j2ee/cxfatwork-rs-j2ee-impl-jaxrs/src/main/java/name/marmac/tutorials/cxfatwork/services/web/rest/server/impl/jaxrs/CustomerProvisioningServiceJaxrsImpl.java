@@ -8,9 +8,12 @@ import name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType;
 import name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory;
 import name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice.CustomerProvisioningService;
 import name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties;
+
+import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.GregorianCalendar;
@@ -34,6 +37,10 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     private static final String QUERY_PARAM_LASTUPDATEDATE  = "lastUpdate";
 
     private static final String PATH_PARAM_ID			    = "id";
+
+    //JAX-RS and JAX-WS context
+    @javax.ws.rs.core.Context
+    private MessageContext response                         = null;
 
     private CustomerProvisioningServiceProperties provisioningServiceProperties;
     private ObjectFactory mCustomersObjectFactory;
@@ -62,7 +69,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     /**
      *
-     * @param customerstotype   the xml or json representation of the CustomersTOType
+     * @param customertotype   the xml or json representation of the CustomersTOType
      * @return                  the xml or json representation of the CustomersTOType
      * @see name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType
      */
@@ -71,14 +78,20 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/customers")
-    @ApiOperation(value = "Create Customers",
-                    notes = "It allows creating one or more Customer. In this version is enabled only the creation of One Customer per request",
-                    response = CustomersTOType.class)
-    public CustomersTOType createCustomers(@ApiParam(value = "CustomersTOType", required = true, allowMultiple = true)
-                                           CustomersTOType customerstotype) {
-        //TODO: Implement the method
+    @ApiOperation(value = "Create Customer",
+                    notes = "It allows creating one Customer",
+                    response = CustomerTOType.class)
+    public CustomerTOType createCustomer(@ApiParam(value = "CustomerTOType", required = true)
+                                           CustomerTOType customertotype) {
+
         LOGGER.info("The createCustomers has been called ...");
-        return null;
+        //Read the Customer from the request CustomerResource
+        int size = mCustomersTOType.getCustomers().size();
+
+        mCustomersTOType.setTotalRecords(mCustomersTOType.getCustomers().size());
+        setHTTPResponseCode(HttpServletResponse.SC_CREATED);
+
+        return customertotype;
     }
 
     /**
@@ -98,7 +111,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @ApiOperation(value = "Get Customers filtering them by some parameters in AND condition",
             notes = "Retrieve method",
             response = CustomersTOType.class)
-    public CustomersTOType getCustomerByQuery(@ApiParam(value = QUERY_PARAM_LIMIT, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LIMIT) Integer limit,
+    public CustomersTOType getCustomersByQuery(@ApiParam(value = QUERY_PARAM_LIMIT, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LIMIT) Integer limit,
                                               @ApiParam(value = QUERY_PARAM_CUSTOMERID, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_CUSTOMERID) String customerId,
                                               @ApiParam(value = QUERY_PARAM_FIRSTNAME, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_FIRSTNAME) String firstname,
                                               @ApiParam(value = QUERY_PARAM_CREATEDATE, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_CREATEDATE) String createDate,
@@ -175,5 +188,18 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
         LOGGER.info("Customers list has size:" + mCustomersTOType.getCustomers().size()
                 +" and Total N. Records: " + mCustomersTOType.getTotalRecords());
+    }
+
+    private void setHTTPResponseCode(int statusCode) {
+
+        // HttpServletResponse.SC_OK            --> Status code (201)
+        // HttpServletResponse.SC_CREATED       --> Status code (201)
+        // HttpServletResponse.SC_NO_CONTENT    --> Status code (204)
+        // HttpServletResponse.SC_BAD_REQUEST   --> Status code (400)
+        // HttpServletResponse.SC_UNAUTHORIZED  --> Status code (401)
+        // HttpServletResponse.SC_NOT_FOUND     --> Status code (404)
+        // HttpServletResponse.SC_CONFLICT      --> Status code (409)
+        HttpServletResponse httpResponseCode = response.getHttpServletResponse();
+        httpResponseCode.setStatus(statusCode);
     }
 }

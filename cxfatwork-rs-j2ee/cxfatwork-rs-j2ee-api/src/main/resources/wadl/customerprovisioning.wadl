@@ -16,40 +16,40 @@
         <resource  path="/customerprovisioning" id="CustomerProvisioningService">
 
             <resource  path="/customers">
-                <method name="POST" id="createCustomers">
+                <method name="POST" id="createCustomer">
                     <request>
-                        <representation mediaType="application/xml" element="customerns:customers" />
-                        <representation mediaType="application/json" element="customerns:customers"/>
+                        <representation mediaType="application/xml" element="customerns:customer" />
+                        <representation mediaType="application/json" element="customerns:customer"/>
                     </request>
 
                     <response status="201" description="Customers Created">
-                        <representation mediaType="application/xml" element="customerns:customers"/>
-                        <representation mediaType="application/json" element="customerns:customers"/>
+                        <representation mediaType="application/xml" element="customerns:customer"/>
+                        <representation mediaType="application/json" element="customerns:customer"/>
                     </response>
 
                     <response status="400" description="Bad Request">
-                        <representation mediaType="application/xml"     element="customerns:customers"/>
-                        <representation mediaType="application/json"    element="customerns:customers"/>
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
                     </response>
 
-                    <response status="500" description="PRI Adapter Internal Error">
-                        <representation mediaType="application/xml"     element="customerns:customers"/>
-                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    <response status="500" description="Service Internal Error">
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
                     </response>
 
                     <response status="501" description="Method Not Implemented">
-                        <representation mediaType="application/xml"     element="customerns:customers"/>
-                        <representation mediaType="application/json"    element="customerns:customers"/>
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
                     </response>
 
-                    <response status="504" description="Encoder Timeout">
-                        <representation mediaType="application/xml"     element="customerns:customers"/>
-                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    <response status="504" description="DB Timeout">
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
                     </response>
 
                 </method>
 
-                <method name="GET" id="getCustomerByQuery">
+                <method name="GET" id="getCustomersByQuery">
                     <request>
                         <param name="limit"        type="xsd:int"      style="query" required="false" />
                         <param name="customerId"   type="xsd:string"   style="query" required="false"/>
