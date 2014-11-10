@@ -10,6 +10,7 @@
             http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
             http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd">
 
+
     <!-- CXF SPECIFIC CONFIGURATION - START -->
     <cxf:bus>
         <cxf:features>

@@ -50,8 +50,22 @@
 
                     <method name="GET" id="getCustomerById">
                         <response status="200" description="Retrieve a Customer by its system id">
-                            <representation mediaType="application/xml"    element="customerns:customers"/>
-                            <representation mediaType="application/json"   element="customerns:customers"/>
+                            <representation mediaType="application/xml"    element="customerns:customer"/>
+                            <representation mediaType="application/json"   element="customerns:customer"/>
+                        </response>
+                    </method>
+
+                    <method name="PUT" id="updateCustomerById">
+                        <response status="200" description="Update a Customer by its system id">
+                            <representation mediaType="application/xml"    element="customerns:customer"/>
+                            <representation mediaType="application/json"   element="customerns:customer"/>
+                        </response>
+                    </method>
+
+                    <method name="DEL" id="deleteCustomerById">
+                        <response status="200" description="Delete a Customer by its system id">
+                            <representation mediaType="application/xml"    element="customerns:customer"/>
+                            <representation mediaType="application/json"   element="customerns:customer"/>
                         </response>
                     </method>
 

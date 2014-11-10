@@ -56,8 +56,8 @@
         <maven-site-plugin.version>3.4</maven-site-plugin.version>
         <maven-source-plugin.version>2.3</maven-source-plugin.version>
         <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
+        <maven-scm-providers-jgit.version>1.9.2</maven-scm-providers-jgit.version>
         <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
-
         <maven-graph-plugin.version>1.10</maven-graph-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
 
@@ -88,6 +88,10 @@
         <findbugs-maven-plugin.version>2.5.2</findbugs-maven-plugin.version>
         <jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
         <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
+
+        <geronimo-j2ee-connector_1.5_spec.version>2.0.0</geronimo-j2ee-connector_1.5_spec.version>
+        <geronimo-transaction.version>2.2.2</geronimo-transaction.version>
+        <geronimo-connector.version>2.2.2</geronimo-connector.version>
 
         <cxf.version>2.7.8</cxf.version>
         <cxf-xjc-dv.version>2.2.12</cxf-xjc-dv.version>
@@ -162,11 +166,13 @@
         <pmd.skip>false</pmd.skip>
 
         <sonar-maven-plugin.version>4.3</sonar-maven-plugin.version>
+
     </properties>
 
     <build>
         <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
         <defaultGoal>install</defaultGoal>
+
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
@@ -186,6 +192,7 @@
         </pluginManagement>
 
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -218,19 +225,18 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>${maven-scm-plugin.version}</version>
-                <dependencies>
-                    <!-- P4Maven
-                    <dependency>
-                        <groupId>com.perforce</groupId>
-                        <artifactId>p4maven</artifactId>
-                        <version>[2011,2012)</version>
-                    </dependency>
-                    -->
-                </dependencies>
-
                 <configuration>
-                    <connectionType>connection</connectionType>
+                    <providerImplementations>
+                        <git>jgit</git>
+                    </providerImplementations>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-providers-jgit</artifactId>
+                        <version>${maven-scm-providers-jgit.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
@@ -311,6 +317,7 @@
                 <artifactId>maven-graph-plugin</artifactId>
                 <version>${maven-graph-plugin.version}</version>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -330,6 +337,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -403,7 +411,7 @@
         </notifiers>
     </ciManagement>
 
-
+    <!-- DEPENDENCIES SECTION - START -->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -416,18 +424,22 @@
           <artifactId>slf4j-api</artifactId>
           <version>${slf4j.version}</version>
         </dependency>
+
         <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-log4j12</artifactId>
           <version>${slf4j-log4j12.version}</version>
         </dependency>
+
     </dependencies>
+    <!-- DEPENDENCIES SECTION - END -->
 
     <!-- REPORTING SECTION - START -->
     <reporting>
       <outputDirectory>${basedir}/target/site</outputDirectory>
       <plugins>
-        <!-- Java doc plugin -->
+
+        <!-- Java doc plugin with UML Diagram-->
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
@@ -436,15 +448,19 @@
                 <aggregate>true</aggregate>
                 <show>private</show>
                 <show>public</show>
+
+                <!-- Doclet Library to generate the UML Diagram -->
                 <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
                 <docletArtifact>
                     <groupId>org.umlgraph</groupId>
                     <artifactId>umlgraph</artifactId>
                     <version>${umlgraph.version}</version>
                 </docletArtifact>
+
+                <additionalparam>-views -all</additionalparam>
+                <useStandardDocletOptions>true</useStandardDocletOptions>
                 <failOnError>false</failOnError>
             </configuration>
-
         </plugin>
 
         <!-- Source Xref -->
@@ -463,7 +479,6 @@
                 <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
                 <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
             </configuration>
-
         </plugin>
 
         <!-- Unit Test plugin -->
@@ -472,7 +487,8 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>${maven-surefire-plugin.version}</version>
         </plugin>
-        <!-- -->
+
+        <!-- Test Report generator Plugin-->
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
@@ -485,18 +501,6 @@
             <artifactId>maven-changes-plugin</artifactId>
             <version>${maven-changes-plugin.version}</version>
         </plugin>
-
-        <!--
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-changelog-plugin</artifactId>
-          <version>${maven-changelog-plugin.version}</version>
-        </plugin>
-        -->
-
-        <!-- CodeHaus maven plugins -->
-
-
 
         <!-- taglist plugin to generate to do List -->
         <plugin>
@@ -511,31 +515,44 @@
             <version>${jdepend-maven-plugin.version}</version>
         </plugin>
 
-          <plugin>
+        <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>versions-maven-plugin</artifactId>
             <version>${versions-maven-plugin.version}</version>
             <reportSets>
-              <reportSet>
-                <reports>
-                  <report>dependency-updates-report</report>
-                  <report>plugin-updates-report</report>
-                  <report>property-updates-report</report>
-                </reports>
-              </reportSet>
+                <reportSet>
+                    <reports>
+                        <report>dependency-updates-report</report>
+                        <report>plugin-updates-report</report>
+                        <report>property-updates-report</report>
+                    </reports>
+                </reportSet>
             </reportSets>
-          </plugin>
-
+        </plugin>
        </plugins>
+
     </reporting>
 
     <profiles>
         <profile>
-            <id>osgi-depl-local</id>
+            <id>local-depl-osgi</id>
             <properties>
                 <deployment.host>localhost</deployment.host>
                 <deployment.port>8181</deployment.port>
                 <deployment.webContext>/cxf</deployment.webContext>
+                <deployment.servicePath>/crm/provisioning/v1</deployment.servicePath>
+                <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
+                <deployment.resourcePath>/customers</deployment.resourcePath>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>local-depl-j2se</id>
+            <properties>
+                <deployment.host>localhost</deployment.host>
+                <deployment.port>9191</deployment.port>
+                <deployment.webContext>/crm-web</deployment.webContext>
+                <deployment.servletPath>/cxf</deployment.servletPath>
                 <deployment.servicePath>/crm/provisioning/v1</deployment.servicePath>
                 <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
                 <deployment.resourcePath>/customers</deployment.resourcePath>

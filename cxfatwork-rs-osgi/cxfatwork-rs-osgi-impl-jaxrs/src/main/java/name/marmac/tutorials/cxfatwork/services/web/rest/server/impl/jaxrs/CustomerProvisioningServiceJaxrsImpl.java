@@ -1,19 +1,25 @@
 package name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.*;
 import name.marmac.tutorials.cxfatwork.model.to.customers.CustomerTOType;
 import name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType;
 import name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory;
 import name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice.CustomerProvisioningService;
 import name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties;
+import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.GregorianCalendar;
+
+//import javax.servlet.ServletContext;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by marcomaccio on 15/08/2014.
@@ -35,6 +41,10 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     private static final String PATH_RESOURCE               = "/customers";
     private static final String PATH_PARAM_ID			    = "id";
+
+    //JAX-RS and JAX-WS context
+    @Context
+    private MessageContext context;
 
     private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
     private ObjectFactory                           mCustomersObjectFactory;
@@ -73,8 +83,21 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @ApiOperation(value = "Create Customers",
                     notes = "It allows creating one or more Customer. In this version is enabled only the creation of One Customer per request",
                     response = CustomersTOType.class)
+    @ApiResponses(value = {
+                        @ApiResponse(code = 201, message = "Resource Created correctly"),
+                        @ApiResponse(code = 500, message = "")
+                    })
     public CustomersTOType createCustomers(@ApiParam(value = "CustomersTOType", required = true, allowMultiple = true)
                                            CustomersTOType customerstotype) {
+
+        if (context != null) {
+            HttpServletRequest httpRequest = context.getHttpServletRequest();
+            LOGGER.info("HTTP REQUEST METHOD: " + httpRequest.getMethod());
+        } else {
+            LOGGER.info("Servlet Context is null ");
+        }
+
+
         //get the current total record.
         long totalrecord = mCustomersTOType.getTotalRecords();
         long newNumberId = totalrecord + 1;
@@ -90,9 +113,15 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                 + mProvisioningServiceProperties.getResourcePath()
                 + "/"+newNumberId;
 
+
         customerToBeCreated.setId(newId);
         mCustomersTOType.getCustomer().add(customerToBeCreated);
         mCustomersTOType.setTotalRecords(mCustomersTOType.getTotalRecords()+1);
+
+        LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomer().size());
+
+        //setHTTPResponseCode(HttpServletResponse.SC_CREATED);
+
         return mCustomersTOType;
     }
 
@@ -135,7 +164,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @ApiOperation(value = "Get a Customers by its system id",
                 notes = "More notes about this method",
                 response = CustomersTOType.class)
-    public CustomersTOType getCustomerById(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("id") String id) {
+    public CustomerTOType getCustomerById(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("id") String id) {
 
         LOGGER.info("Requested id :" + id);
         CustomerTOType retrievedCustomer = null;
@@ -157,9 +186,17 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             }
         }
 
-        CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
-        customersTOType.getCustomer().add(retrievedCustomer);
-        return customersTOType;
+        return retrievedCustomer;
+    }
+
+    @Override
+    public CustomerTOType updateCustomerById(@PathParam("id") String id) {
+        return null;
+    }
+
+    @Override
+    public CustomerTOType deleteCustomerById(@PathParam("id") String id) {
+        return null;
     }
 
     public void initializeSampleData(){
@@ -177,6 +214,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                         + mProvisioningServiceProperties.getServiceInterface()
                         + mProvisioningServiceProperties.getResourcePath()
                         + "/"+newNumberId;
+
         customerA.setId(newId);
         customerA.setFirstname("Firstname 01");
         customerA.setLastname("Lastname 01");
@@ -188,5 +226,18 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         mCustomersTOType.getCustomer().add(customerA);
         mCustomersTOType.setTotalRecords(1L);
 
+    }
+
+    private void setHTTPResponseCode(int statusCode) {
+
+        // HttpServletResponse.SC_OK            --> Status code (201)
+        // HttpServletResponse.SC_CREATED       --> Status code (201)
+        // HttpServletResponse.SC_NO_CONTENT    --> Status code (204)
+        // HttpServletResponse.SC_BAD_REQUEST   --> Status code (400)
+        // HttpServletResponse.SC_UNAUTHORIZED  --> Status code (401)
+        // HttpServletResponse.SC_NOT_FOUND     --> Status code (404)
+        // HttpServletResponse.SC_CONFLICT      --> Status code (409)
+        HttpServletResponse httpResponse = context.getHttpServletResponse();
+        httpResponse.setStatus(statusCode);
     }
 }

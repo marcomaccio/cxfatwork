@@ -124,6 +124,8 @@
                                         <extraarg>-noTypes</extraarg>
                                         <extraarg>-tMap</extraarg>
                                         <extraarg>{http://marmac.name/tutorials/cxfatwork/model/to/customers/}customers=name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType</extraarg>
+                                        <extraarg>-tMap</extraarg>
+                                        <extraarg>{http://marmac.name/tutorials/cxfatwork/model/to/customers/}customer=name.marmac.tutorials.cxfatwork.model.to.customers.CustomerTOType</extraarg>
                                         <extraarg>-catalog</extraarg>
                                         <extraarg>${project.basedir}/src/main/resources/xsd/catalog.cat</extraarg>
                                     </extraargs>
