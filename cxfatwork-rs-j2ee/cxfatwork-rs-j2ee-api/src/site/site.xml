@@ -34,13 +34,20 @@
         </fluidoSkin>
     </custom>
 
-    <publishDate format="dd MMM yyyy"/>
+
 
     <version position="right"/>
+    <publishDate format="dd MMM yyyy"/>
 
     <body>
         <menu name="Documentation">
-            <item name="Home" href="/index.html"/>
+            <item name="Home"                   href="/index.html"/>
+            <item name="CRUD REST API Summary"  href="/crud-rest-api.html"/>
+            <item name=" - Create"              href="/crud-rest-api-create.html"/>
+            <item name=" - Retrieve"            href="/crud-rest-api-retrieve.html"/>
+            <item name=" - Update"              href="/crud-rest-api-update.html"/>
+            <item name=" - Delete"              href="/crud-rest-api-delete.html"/>
+            <item name="Transfer Objects"       href="/transfer-objects.html"/>
         </menu>
 
         <menu name="Modules" ref="modules" inherit="none"/>
