@@ -79,38 +79,50 @@
                         <Bundle-Blueprint>OSGI-INF/blueprint/*.xml</Bundle-Blueprint>
                         <Import-Package>
                             org.slf4j,
+                            javax.annotation,
+                            javax.management,
+                            javax.naming,
 
+                            javax.servlet;version="[2.5.0, 4.0.0)",
+                            javax.servlet.http;version="[2.5.0, 4.0.0)",
                             javax.ws.rs;version="[1.0,3)",
                             javax.ws.rs.core;version="[1.0,3)",
                             javax.ws.rs.ext;version="[1.0,3)",
+
                             javax.xml.bind;version="2.2.1",
                             javax.xml.bind.annotation;version="2.2.1",
                             javax.xml.bind.annotation.adapters,
                             javax.xml.namespace,
                             javax.xml.datatype,
-                            javax.management,
+
                             org.codehaus.jackson,
                             org.codehaus.jackson.map,
+                            org.codehaus.jackson.jaxrs;version="[1.9.0,2.0.0)",
+
+                            org.apache.cxf.jaxrs;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.jaxrs.servlet;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.jaxrs.utils;version="[2.7.0,3.0.0)",
+                            org.apache.cxf.jaxrs.utils.schemas;version="[2.7.0,3.0.0)",
                             org.apache.cxf.jaxrs.provider;version="[2.7.0,3.0.0)",
                             org.apache.cxf.jaxrs.provider.json;version="[2.7.0,3.0.0)",
                             org.apache.cxf.jaxrs.ext;version="[2.7.0,3.0.0)",
                             org.apache.cxf.jaxrs.model;version="[2.7.0,3.0.0)",
+
                             org.apache.cxf.message;version="[2.7.0,3.0.0)",
                             org.apache.cxf.transport.http;version="[2.7.0,3.0.0)",
 
-                            org.apache.cxf.jaxrs.utils.schemas;version="[2.7.0,3.0.0)",
-                            org.codehaus.jackson.jaxrs;version="[1.9.0,2.0.0)",
                             org.apache.commons.httpclient,
                             org.apache.commons.httpclient.methods,
                             org.osgi.service.blueprint,
+
                             com.wordnik.swagger.jaxrs.config,
                             com.wordnik.swagger.jaxrs.listing,
                             com.wordnik.swagger.annotations,
+
                             com.fasterxml.jackson.annotation,
                             com.fasterxml.jackson.core,
                             com.fasterxml.jackson.databind,
                             com.fasterxml.jackson.jaxrs.json,
-
                             com.fasterxml.jackson.module.jaxb,
 
                             name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice;version=${project.version},
