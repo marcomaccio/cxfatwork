@@ -36,7 +36,7 @@
             NEWER V. 8.1.14.v20131031
         -->
         <jetty-maven-plugin.version>7.4.0.RC0</jetty-maven-plugin.version>
-        <jetty.version>8.1.14.v20131031</jetty.version>
+        <jetty.version>8.1.10.v20130312</jetty.version>
     </properties>
 
     <dependencies>
