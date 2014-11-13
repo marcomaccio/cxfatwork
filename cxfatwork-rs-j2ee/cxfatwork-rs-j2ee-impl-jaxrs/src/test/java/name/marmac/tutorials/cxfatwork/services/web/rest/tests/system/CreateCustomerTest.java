@@ -1,6 +1,7 @@
-package name.marmac.tutorials.cxfatwork.services.web.rest.clients.webclient;
+package name.marmac.tutorials.cxfatwork.services.web.rest.tests.system;
 
 import name.marmac.tutorials.cxfatwork.model.to.customers.CustomerTOType;
+import name.marmac.tutorials.cxfatwork.services.web.rest.clients.webclient.CustomerWebClient;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,7 @@ import javax.ws.rs.core.Response;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration()
-public class CustomerProvisioningTest {
+public class CreateCustomerTest {
 
     @Resource
     public CustomerWebClient cpWebClient;
@@ -25,7 +26,7 @@ public class CustomerProvisioningTest {
     /**
      *
      */
-    public CustomerProvisioningTest(){}
+    public CreateCustomerTest(){}
 
     public void setWebClient(CustomerWebClient cpWebClient) {
         this.cpWebClient = cpWebClient;
@@ -56,18 +57,5 @@ public class CustomerProvisioningTest {
 
     }
 
-    @Test
-    public void testCreateCustomerXML() {
-        //Create the Customer
-        Response response = cpWebClient.createCustomer("00001",
-                "Marco",
-                "Maccio",
-                MediaType.APPLICATION_JSON_TYPE,
-                MediaType.APPLICATION_XML_TYPE);
 
-        //Check that the response status code is 201
-        Assert.assertEquals(HttpServletResponse.SC_CREATED, response.getStatus());
-        //Check that the Accept header is the expected one
-        //Assert.assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getFirst("Accept"));
-    }
 }

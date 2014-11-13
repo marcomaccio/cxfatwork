@@ -255,6 +255,7 @@
                 </configuration>
             </plugin>
 
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
@@ -267,6 +268,7 @@
                   </execution>
                 </executions>
             </plugin>
+            -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -338,6 +340,7 @@
                 </executions>
             </plugin>
 
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -351,7 +354,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+            -->
             <plugin>
                 <groupId>org.codehaus.sonar</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
@@ -553,7 +556,8 @@
                 <deployment.port>9191</deployment.port>
                 <deployment.webContext>/crm-web</deployment.webContext>
                 <deployment.servletPath>/cxf</deployment.servletPath>
-                <deployment.servicePath>/crm/provisioning/v1</deployment.servicePath>
+                <deployment.servicePath>/crm/provisioning</deployment.servicePath>
+                <deployment.version>/v1</deployment.version>
                 <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
                 <deployment.resourcePath>/customers</deployment.resourcePath>
             </properties>

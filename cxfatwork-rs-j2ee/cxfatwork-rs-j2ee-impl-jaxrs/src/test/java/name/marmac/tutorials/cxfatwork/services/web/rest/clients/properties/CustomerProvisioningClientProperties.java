@@ -9,6 +9,7 @@ public class CustomerProvisioningClientProperties {
     private String port;
     private String servletContext;
     private String servicePath;
+    private String version;
     private String serviceInterface;
     private String resourcePath;
 
@@ -80,6 +81,20 @@ public class CustomerProvisioningClientProperties {
      *
      * @return
      */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     *
+     * @param version
+     */
+    public void setVersion(String version) { this.version = version; }
+
+    /**
+     *
+     * @return
+     */
     public String getServiceInterface() {
         return serviceInterface;
     }
@@ -119,6 +134,7 @@ public class CustomerProvisioningClientProperties {
                 ", port='" + port + '\'' +
                 ", servletContext='" + servletContext + '\'' +
                 ", servicePath='" + servicePath + '\'' +
+                ", version='" + version + '\'' +
                 ", serviceInterface='" + serviceInterface + '\'' +
                 ", resourcePath='" + resourcePath + '\'' +
                 '}';
