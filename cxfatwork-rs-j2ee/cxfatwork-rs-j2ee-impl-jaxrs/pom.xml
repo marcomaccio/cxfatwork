@@ -17,7 +17,7 @@
     <url>${project.parent.artifactId}</url>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
 
         <resources>
             <resource>
@@ -26,8 +26,17 @@
                 <includes>
                   <include>**/*</include>
                 </includes>
-              </resource>
+            </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                  <include>**/*</include>
+                </includes>
+            </testResource>
+        </testResources>
 
         <plugins>
             <plugin>
@@ -156,6 +165,23 @@
                     </manifestEntries>
                   </archive>
                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>1.9.15</version>
+                <configuration>
+                    <enableJarClasses>false</enableJarClasses>
+                    <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
+                    <!-- address>0.0.0.0</address> -->
+                    <port>8182</port>
+                    <!-- Comment in the below snippet to enable local debugging with a remove debugger
+                         like those included with Eclipse or IntelliJ -->
+                    <jvmFlags>
+                      <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+                    </jvmFlags>
+                </configuration>
             </plugin>
 
         </plugins>
@@ -315,6 +341,13 @@
             <scope>test</scope>
         </dependency>
         <!-- Springframework Dependencies  - END -->
+
+        <!-- Compile/runtime dependencies -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>1.9.15</version>
+        </dependency>
 
     <!-- EXTERNAL PROJECT DEPENDENCIES - END -->
     </dependencies>
