@@ -32,9 +32,17 @@ CREATE REST API - Request Details
   Address: http://localhost:port/cxf/crm/provisioning/v1/customerprovisioning/customers
   Http-Method: POST
   Headers: {
-    Accept=application/xml
+    Accept=application/xml,
+    Content-Type: application/json,
+    Cache-Control: no-cache
     }
-  Body {... }
+  Body {
+            "firstname":"Firstname 03",
+            "lastname":"Lastname 03",
+            "customerId":"SMPL-003",
+            "createDate":"2014-11-06T12:54:17.132+01:00",
+            "lastUpdate":"2014-11-06T12:54:17.132+01:00"
+       }
 ----------------------------------------
 
   file: src/main/data/POST/xml/req-c-1-1.xml
