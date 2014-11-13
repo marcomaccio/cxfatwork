@@ -57,12 +57,15 @@
         </jaxrs:providers>
     </jaxrs:server>
 
-    <!--  -->
-    <bean id="customerService"
-        class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl"
-            init-method="initializeSampleData">
+    <!-- TO ObjectFactory  -->
+    <bean id="customerObjectFactory"
+          class="name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory"/>
 
-  </bean>
+    <!-- REST API IMPL - JAXRS  -->
+    <bean id="customerService"
+        class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
+        <constructor-arg ref="customerObjectFactory"/>
+    </bean>
 
 
     <!-- XML Provider with JAXB2 -->
@@ -71,8 +74,7 @@
     </bean>
 
     <!-- JSON Provider -->
-    <bean id="jsonjaxbProvider"
-            class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+    <bean id="jsonjaxbProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
 
 <!-- SWAGGER SPECIFIC CONFIGURATION - START -->
     <bean id="swaggerResourceJSON"
@@ -86,15 +88,15 @@
 
     <!-- Swagger configuration -->
     <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
-        <property name="resourcePackage" value="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs"/>
-        <property name="version" value="${project.version}"/>
-        <property name="basePath" value="/api-docs"/>
-        <property name="title" value="CUSTOMER PROVISIONING REST API"/>
-        <property name="description" value="This is the CUSTOMER PROVISIONING Interface"/>
-        <property name="contact" value="marco.maccio@marmac.name"/>
-        <property name="license" value="Apache 2.0 License"/>
-        <property name="licenseUrl" value="http://www.apache.org/licenses/LICENSE-2.0.html"/>
-        <property name="scan" value="true"/>
+        <property name="resourcePackage"    value="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs"/>
+        <property name="version"            value="${project.version}"/>
+        <property name="basePath"           value="/api-docs" />
+        <property name="title"              value="CUSTOMER PROVISIONING REST API"/>
+        <property name="description"        value="This is the CUSTOMER PROVISIONING Interface"/>
+        <property name="contact"            value="marco.maccio@marmac.name"/>
+        <property name="license"            value="Apache 2.0 License"/>
+        <property name="licenseUrl"         value="http://www.apache.org/licenses/LICENSE-2.0.html"/>
+        <property name="scan"               value="true"/>
     </bean>
 
     <!-- Exception mapper

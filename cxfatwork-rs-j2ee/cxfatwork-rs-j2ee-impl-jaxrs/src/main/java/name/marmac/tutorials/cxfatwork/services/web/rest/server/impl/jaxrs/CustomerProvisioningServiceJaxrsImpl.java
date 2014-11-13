@@ -8,7 +8,6 @@ import name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType;
 import name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory;
 import name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice.CustomerProvisioningService;
 import name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties;
-
 import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,36 +39,43 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     //JAX-RS and JAX-WS context
     @javax.ws.rs.core.Context
-    private MessageContext response                         = null;
+    private MessageContext  response                         = null;
 
-    private CustomerProvisioningServiceProperties provisioningServiceProperties;
-    private ObjectFactory mCustomersObjectFactory;
-    private CustomersTOType mCustomersTOType;
+    private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
+    private ObjectFactory                           mCustomersObjectFactory;
+
+    private CustomersTOType                         mCustomersTOType;
 
     /**
-     * Constructor method
-     * It inizialize the objectFactory to create Customer(s)TOType objects
+     *
+     * @param customersObjectFactory
      */
-    public CustomerProvisioningServiceJaxrsImpl(){
-        LOGGER.info(this.getClass().getName() + " has been initialized ...");
-        //initialization of the CustomersTOType ObjectFactory
-            mCustomersObjectFactory = new ObjectFactory();
-        //Create the CustomersTOType that contains a list of CustomerTOType objects
+    public CustomerProvisioningServiceJaxrsImpl(ObjectFactory customersObjectFactory) {
+
+        LOGGER.info(customersObjectFactory.toString() + " has been paased as constructor param ...");
+
+        if (customersObjectFactory != null) {
+            this.mCustomersObjectFactory = customersObjectFactory;
+            LOGGER.info("Initializing the CustomerList");
             mCustomersTOType = mCustomersObjectFactory.createCustomersTOType();
-        //Initializing a Sample data
-        //this.initializeSampleData();
+            LOGGER.info("CustomerList size=" + mCustomersTOType.getCustomers().size());
+            this.initializeSampleData();
+        } else {
+            LOGGER.info(customersObjectFactory + " is null");
+        }
     }
     /**
      *
      * @param provisioningServiceProperties
      */
     public void setProvisioningServiceProperties(CustomerProvisioningServiceProperties provisioningServiceProperties) {
-        this.provisioningServiceProperties = provisioningServiceProperties;
+        this.mProvisioningServiceProperties = provisioningServiceProperties;
     }
+
 
     /**
      *
-     * @param customertotype   the xml or json representation of the CustomersTOType
+     * @param customerToType   the xml or json representation of the CustomersTOType
      * @return                  the xml or json representation of the CustomersTOType
      * @see name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType
      */
@@ -81,17 +87,22 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @ApiOperation(value = "Create Customer",
                     notes = "It allows creating one Customer",
                     response = CustomerTOType.class)
-    public CustomerTOType createCustomer(@ApiParam(value = "CustomerTOType", required = true)
-                                           CustomerTOType customertotype) {
+    public CustomerTOType createCustomer(@ApiParam(value = "CustomerTOType", required = true) CustomerTOType customerToType) {
 
-        LOGGER.info("The createCustomers has been called ...");
+        LOGGER.info("The createCustomer has been called ...");
         //Read the Customer from the request CustomerResource
         int size = mCustomersTOType.getCustomers().size();
 
+        mCustomersTOType.getCustomers().add(customerToType);
         mCustomersTOType.setTotalRecords(mCustomersTOType.getCustomers().size());
-        setHTTPResponseCode(HttpServletResponse.SC_CREATED);
 
-        return customertotype;
+        //Set Location Header
+        response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getCustomerId());
+        //Set the HTTP Status Code to 201
+        response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
+
+        //return the CustomerToType to be serialized by the provider as requested by the client
+        return customerToType;
     }
 
     /**
@@ -199,7 +210,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         // HttpServletResponse.SC_UNAUTHORIZED  --> Status code (401)
         // HttpServletResponse.SC_NOT_FOUND     --> Status code (404)
         // HttpServletResponse.SC_CONFLICT      --> Status code (409)
-        HttpServletResponse httpResponseCode = response.getHttpServletResponse();
-        httpResponseCode.setStatus(statusCode);
+        HttpServletResponse httpServletResponse = response.getHttpServletResponse();
+        httpServletResponse.setStatus(statusCode);
     }
 }
