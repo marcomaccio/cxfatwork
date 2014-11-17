@@ -1,4 +1,4 @@
-package name.marmac.tutorials.cxfatwork.services.web.rest.tests.system;
+package name.marmac.tutorials.cxfatwork.services.web.rest.tests;
 
 import name.marmac.tutorials.cxfatwork.model.to.customers.CustomerTOType;
 import name.marmac.tutorials.cxfatwork.services.web.rest.clients.webclient.CustomerWebClient;
@@ -18,16 +18,15 @@ import javax.ws.rs.core.Response;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration()
-public class CreateCustomerTest {
+public class ITCreateCustomerTest {
 
     @Resource
     public CustomerWebClient cpWebClient;
 
     /**
      *
+     * @param cpWebClient
      */
-    public CreateCustomerTest(){}
-
     public void setWebClient(CustomerWebClient cpWebClient) {
         this.cpWebClient = cpWebClient;
     }

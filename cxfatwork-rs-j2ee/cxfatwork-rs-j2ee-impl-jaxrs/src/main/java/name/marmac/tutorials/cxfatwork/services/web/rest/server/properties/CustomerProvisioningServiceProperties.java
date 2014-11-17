@@ -1,4 +1,4 @@
-package name.marmac.tutorials.cxfatwork.services.web.rest.properties;
+package name.marmac.tutorials.cxfatwork.services.web.rest.server.properties;
 
 /**
  * Created by marcomaccio on 15/08/2014.

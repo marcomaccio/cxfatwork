@@ -27,15 +27,17 @@
 
 
 
-    <!--  REST Service Client definitions -->
-    <jaxrs:client id="webClient"
+    <!--  REST Service Client definitions
         address="http://${deployment.host}:${deployment.port}${deployment.servletPath}${deployment.servicePath}${deployment.version}${deployment.serviceInterface}"
+    -->
+    <jaxrs:client id="webClient"
+        address="http://localhost:9191/cxf/crm/provisioning/v1/customerprovisioning"
         serviceClass="org.apache.cxf.jaxrs.client.WebClient" >
 
         <jaxrs:schemaLocations>
-            <!-- -->
+            <!--
             <jaxrs:schemaLocation>classpath:xsd/customers.xsd</jaxrs:schemaLocation>
-
+            -->
         </jaxrs:schemaLocations>
 
         <jaxrs:providers>

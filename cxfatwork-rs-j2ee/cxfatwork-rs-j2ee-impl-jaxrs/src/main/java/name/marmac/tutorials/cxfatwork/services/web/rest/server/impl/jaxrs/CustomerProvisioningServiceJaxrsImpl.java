@@ -7,7 +7,7 @@ import name.marmac.tutorials.cxfatwork.model.to.customers.CustomerTOType;
 import name.marmac.tutorials.cxfatwork.model.to.customers.CustomersTOType;
 import name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory;
 import name.marmac.tutorials.cxfatwork.services.web.rest.api.customerservice.CustomerProvisioningService;
-import name.marmac.tutorials.cxfatwork.services.web.rest.properties.CustomerProvisioningServiceProperties;
+import name.marmac.tutorials.cxfatwork.services.web.rest.server.properties.CustomerProvisioningServiceProperties;
 import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
