@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- Load CXF modules from cxf.jar -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+
+    <!-- XML Provider with JAXB2 -->
+    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+        <property name="marshallAsJaxbElement" value="true"/>
+    </bean>
+
+    <!-- JSON Provider -->
+    <bean id="jsonjaxbProvider"
+            class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+
+    <!--  REST Service Client definitions
+        address="http://${deployment.host}:${deployment.port}${deployment.servletContext}${deployment.servicePath}${deployment.serviceVersion}${deployment.serviceInterface}"
+    -->
+    <jaxrs:client id="webClient"
+        address="http://${deployment.host}:${deployment.port}${deployment.servletContext}${deployment.servicePath}${deployment.serviceVersion}${deployment.serviceInterface}"
+        serviceClass="org.apache.cxf.jaxrs.client.WebClient" >
+
+        <jaxrs:schemaLocations>
+            <!--
+            <jaxrs:schemaLocation>classpath:xsd/customers.xsd</jaxrs:schemaLocation>
+            -->
+        </jaxrs:schemaLocations>
+
+        <jaxrs:providers>
+            <ref bean="jaxbProvider" />
+            <ref bean="jsonjaxbProvider" />
+        </jaxrs:providers>
+
+    </jaxrs:client>
+
+
+    <bean id="customerObjectFactory"
+            class="name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory"/>
+
+    <bean id="customerWebClient"
+            class="name.marmac.tutorials.cxfatwork.services.web.rest.clients.webclient.CustomerWebClient">
+        <property name="customerWebClient"      ref="webClient"   />
+        <property name="customerObjectFactory"  ref="customerObjectFactory"   />
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:rest-service-jaxrs-integrationtest.properties</value>
+                <value>classpath:dal-impl-jpa-integrationtest.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
+
+
+    <bean id="clientProperties"
+          class="name.marmac.tutorials.cxfatwork.services.web.rest.clients.properties.CustomerProvisioningClientProperties" >
+
+        <property name="host"               value="${host}" />
+        <property name="port"               value="${port}" />
+        <property name="servletContext"     value="${servletContext}" />
+        <property name="servicePath"        value="${servicePath}" />
+        <property name="serviceVersion"     value="${serviceVersion}" />
+        <property name="serviceInterface"   value="${serviceInterface}" />
+        <property name="resourcePath"       value="${resourcePath}" />
+
+    </bean>
+</beans>
+

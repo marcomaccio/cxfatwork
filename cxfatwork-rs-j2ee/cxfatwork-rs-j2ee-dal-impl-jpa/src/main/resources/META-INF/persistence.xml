@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+<persistence-unit name="customers-punit" transaction-type="RESOURCE_LOCAL">
+
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+    <class>name.marmac.tutorials.cxfatwork.model.impl.jpa.Customer</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+    <properties>
+        <property name="javax.persistence.jdbc.driver"      value="${deployment.jdbcDriverName}"/>
+        <property name="javax.persistence.jdbc.url"         value="${deployment.jdbcUrl}"/>
+        <property name="javax.persistence.jdbc.user"        value="${deployment.jdbcUserName}"/>
+        <property name="javax.persistence.jdbc.password"    value="${deployment.jdbcPassword}"/>
+
+        <property name="eclipselink.logging.level"                      value="FINEST"/>
+        <property name="eclipselink.logging.level.sql"                  value="FINEST"/>
+        <property name="eclipselink.ddl-generation"                     value="drop-and-create-tables"/>
+        <property name="eclipselink.ddl-generation.output-mode"         value="database"/>
+        <property name="eclipselink.weaving"                            value="false"/>
+
+        <!--
+        <property name="eclipselink.logging.parameters"                 value="true"/>
+        <property name="eclipselink.logging.timestamp"                  value="true"/>
+        <property name="eclipselink.logging.session"                    value="true"/>
+        <property name="eclipselink.logging.thread"                     value="true"/>
+        <property name="eclipselink.logging.exceptions"                 value="true"/>
+        <property name="eclipselink.session.include.descriptor.queries" value="true"/>
+
+
+        <property name="eclipselink.create-ddl-jdbc-file-name"          value="create-customers-tables.jdbc"/>
+        <property name="eclipselink.drop-ddl-jdbc-file-name"            value="drop-customers-tables.jdbc"/>
+
+        <property name="eclipselink.application-location"               value="${deployment.schemaFileName}"/>
+        <property name="eclipselink.target-server" 						value="org.apache.aries.jpa.eclipselink.adapter.platform.OSGiServerPlatform" />
+        -->
+    </properties>
+
+</persistence-unit>
+
+
+</persistence>

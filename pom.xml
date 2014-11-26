@@ -89,6 +89,8 @@
         <jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
         <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
 
+        <javax-persistence.version>2.0.0</javax-persistence.version>
+
         <geronimo-j2ee-connector_1.5_spec.version>2.0.0</geronimo-j2ee-connector_1.5_spec.version>
         <geronimo-transaction.version>2.2.2</geronimo-transaction.version>
         <geronimo-connector.version>2.2.2</geronimo-connector.version>
@@ -660,24 +662,58 @@
             <properties>
                 <deployment.host>localhost</deployment.host>
                 <deployment.port>8181</deployment.port>
-                <deployment.webContext>/cxf</deployment.webContext>
-                <deployment.servicePath>/crm/provisioning/v1</deployment.servicePath>
+                <deployment.webContext/>
+                <deployment.servletContext>/cxf</deployment.servletContext>
+                <deployment.servicePath>/crm/provisioning</deployment.servicePath>
+                <deployment.serviceVersion>/v1</deployment.serviceVersion>
                 <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
                 <deployment.resourcePath>/customers</deployment.resourcePath>
             </properties>
         </profile>
 
         <profile>
-            <id>local-depl-j2se</id>
+            <id>local-depl-j2se-hsqldb</id>
             <properties>
+                <!-- SERVICE LAYER PROPERTIES -->
                 <deployment.host>localhost</deployment.host>
                 <deployment.port>9191</deployment.port>
-                <deployment.webContext>/crm-web</deployment.webContext>
-                <deployment.servletPath>/cxf</deployment.servletPath>
+                <deployment.webContext/>
+                <deployment.servletContext>/cxf</deployment.servletContext>
                 <deployment.servicePath>/crm/provisioning</deployment.servicePath>
-                <deployment.version>/v1</deployment.version>
+                <deployment.serviceVersion>/v1</deployment.serviceVersion>
                 <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
                 <deployment.resourcePath>/customers</deployment.resourcePath>
+
+                <!-- DATA ACCESS LAYER PROPERTIES -->
+                <deployment.jdbcDriverName>org.hsqldb.jdbc.JDBCDriver</deployment.jdbcDriverName>
+                <deployment.jdbcUrl>jdbc:hsqldb:mem:gestimmo</deployment.jdbcUrl>
+                <deployment.jdbcUserName>sa</deployment.jdbcUserName>
+                <deployment.jdbcPassword></deployment.jdbcPassword>
+                <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
+                <deployment.schemaFileName>schema-hsqldb.sql</deployment.schemaFileName>
+            </properties>
+        </profile>
+        <profile>
+            <id>local-depl-j2se-mysql</id>
+            <properties>
+                <!-- SERVICE LAYER PROPERTIES -->
+                <deployment.host>localhost</deployment.host>
+                <deployment.port>9191</deployment.port>
+                <deployment.webContext/>
+                <deployment.servletContext>/cxf</deployment.servletContext>
+                <deployment.servicePath>/crm/provisioning</deployment.servicePath>
+                <deployment.serviceVersion>/v1</deployment.serviceVersion>
+                <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
+                <deployment.resourcePath>/customers</deployment.resourcePath>
+
+                <!-- DATA ACCESS LAYER PROPERTIES -->
+                <deployment.jdbcDriverName>com.mysql.jdbc.Driver</deployment.jdbcDriverName>
+                <deployment.jdbcUrl>jdbc:mysql://localhost:3306/gestimmo</deployment.jdbcUrl>
+                <deployment.jdbcUserName>gestimmo</deployment.jdbcUserName>
+                <deployment.jdbcPassword>Gestimmo@2013!</deployment.jdbcPassword>
+                <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
+                <deployment.schemaFileName>src/integration-test/data/schema-mysql.sql</deployment.schemaFileName>
+                <deployment.createCustomers>src/integration-test/data/create-customers.xml</deployment.createCustomers>
             </properties>
         </profile>
 

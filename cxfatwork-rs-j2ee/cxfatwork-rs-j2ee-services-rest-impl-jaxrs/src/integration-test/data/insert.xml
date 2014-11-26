@@ -1,0 +1,5 @@
+<dataset>
+  <Customer firstname="Bob"     lastname="Doe"      customerId="18"/>
+  <Customer firstname="Alice"   lastname="Doe"      customerId="18"/>
+  <Customer firstname="Charlie" lastname="Brown"    customerId="18"/>
+</dataset>

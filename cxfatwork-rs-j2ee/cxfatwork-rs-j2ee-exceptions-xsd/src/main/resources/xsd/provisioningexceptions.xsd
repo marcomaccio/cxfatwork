@@ -1,0 +1,18 @@
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:exns="http://marmac.name/tutorials/cxfatwork/model/to/exceptions/"
+        targetNamespace="http://marmac.name/tutorials/cxfatwork/model/to/exceptions/"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <xsd:complexType name="ProvisioningExceptionTOType">
+        <xsd:sequence>
+            <xsd:element name="errorCode"      type="xsd:string"   />
+            <xsd:element name="errorMessage"   type="xsd:string"   />
+            <xsd:element name="errorDetails"   type="xsd:string"   />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="provisioningexception"  type="exns:ProvisioningExceptionTOType"/>
+
+</xsd:schema>

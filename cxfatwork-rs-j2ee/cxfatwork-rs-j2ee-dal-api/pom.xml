@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cxfatwork-rs-j2ee</artifactId>
+        <groupId>name.marmac.tutorials</groupId>
+        <version>1.0.1444.BUILD-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cxfatwork-rs-j2ee-dal-api</artifactId>
+    <packaging>jar</packaging>
+
+    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: DAL API</name>
+    <description>This module exposes the Interfaces for CRUD DAL Service </description>
+    <url>${project.parent.artifactId}</url>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+
+        <filters>
+            <filter>profiles/${build.profile.id}/config.properties</filter>
+        </filters>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                  <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${source.java.compliancy.version}</source>
+                    <target>${target.java.compliancy.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

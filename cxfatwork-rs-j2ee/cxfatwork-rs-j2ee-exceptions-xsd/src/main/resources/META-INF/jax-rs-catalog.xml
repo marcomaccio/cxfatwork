@@ -1,0 +1,4 @@
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://marmac.name/tutorials/cxfatwork/model/to/exceptions/provisioningexceptions.xsd"
+            uri="classpath:xsd/provisioningexceptions.xsd"/>
+</catalog>
