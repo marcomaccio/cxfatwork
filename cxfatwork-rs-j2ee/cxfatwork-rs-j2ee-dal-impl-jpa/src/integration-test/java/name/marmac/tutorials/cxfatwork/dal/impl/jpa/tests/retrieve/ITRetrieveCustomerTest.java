@@ -85,22 +85,22 @@ public class ITRetrieveCustomerTest {
     /**
      * Test the getCustomerCount method
      */
-    //@Test
-    //@DatabaseSetup("retrieved-customers-totalCount.xml")
-    //public void testCustomerCount(){
-    //
-    //    int EXPECTED_SIZE = 7;
-    //
-    //    LOGGER.info("Method under test: getCustomerCount ...");
-    //    LOGGER.info("JDBC Connection Properties: " + jdbcProperties.getJdbcDriverName() + ", " +
-    //                                            jdbcProperties.getJdbcUserName() + ", " +
-    //                                            jdbcProperties.getJdbcPassword() + ", " +
-    //                                            jdbcProperties.getSchemaFileName());
-    //
-    //    int totalCustomer = customerPersistenceService.getCustomerCount();
-    //
-    //    Assert.assertEquals("It was expected " + EXPECTED_SIZE + " but retrieved: " + totalCustomer, EXPECTED_SIZE, totalCustomer);
-    //
-    //}
+    /*@Test
+    @DatabaseSetup("retrieved-customers-totalCount.xml")
+    public void testCustomerCount(){
+
+        int EXPECTED_SIZE = 7;
+
+        LOGGER.info("Method under test: getCustomerCount ...");
+        LOGGER.info("JDBC Connection Properties: " + jdbcProperties.getJdbcDriverName() + ", " +
+                                                jdbcProperties.getJdbcUserName() + ", " +
+                                                jdbcProperties.getJdbcPassword() + ", " +
+                                                jdbcProperties.getSchemaFileName());
+
+        int totalCustomer = customerPersistenceService.getCustomerCount();
+
+        Assert.assertEquals("It was expected " + EXPECTED_SIZE + " but retrieved: " + totalCustomer, EXPECTED_SIZE, totalCustomer);
+
+    }*/
 
 }

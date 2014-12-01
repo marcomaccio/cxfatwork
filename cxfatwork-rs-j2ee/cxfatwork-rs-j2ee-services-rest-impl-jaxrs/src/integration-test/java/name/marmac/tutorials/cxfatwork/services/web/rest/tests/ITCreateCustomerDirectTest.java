@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
  * Created by marcomaccio on 18/11/2014.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/rest-service-jaxrs-integrationtest-context.xml"})
+@ContextConfiguration(locations = {"classpath:/rest-client-integrationtest-context.xml"})
 public class ITCreateCustomerDirectTest {
 
     public static final transient Logger LOGGER = LoggerFactory.getLogger(ITCreateCustomerDirectTest.class);

@@ -5,6 +5,8 @@ import name.marmac.tutorials.cxfatwork.services.web.rest.clients.webclient.Custo
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,8 +19,10 @@ import javax.ws.rs.core.Response;
  * Created by marcomaccio on 06/11/2014.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/rest-service-jaxrs-integrationtest-context.xml"})
+@ContextConfiguration(locations = {"classpath:/rest-client-integrationtest-context.xml"})
 public class ITCreateCustomerTest {
+
+    public static final transient Logger LOGGER = LoggerFactory.getLogger(ITCreateCustomerTest.class);
 
     @Resource
     public CustomerWebClient cpWebClient;
@@ -48,7 +52,7 @@ public class ITCreateCustomerTest {
         //Check that the response status code is 201
         Assert.assertEquals(HttpServletResponse.SC_CREATED, response.getStatus());
         //Check that the Accept header is the expected one
-
+        LOGGER.debug("Response Header Location: " + response.getHeaderString("Location"));
         //Check that the passed value for create the customer are correctly returned
         Assert.assertEquals(customerId, response.readEntity(CustomerTOType.class).getCustomerId());
         Assert.assertEquals(firstName,  response.readEntity(CustomerTOType.class).getFirstname());

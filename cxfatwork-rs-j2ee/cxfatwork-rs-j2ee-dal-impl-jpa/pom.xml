@@ -17,7 +17,7 @@
 
     <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: DAL IMPL :: JPA</name>
     <description>This module implement the Interfaces for CRUD DAL Service with JPA</description>
-    <url>${project.parent.artifactId}</url>
+    <url>${project.artifactId}</url>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -164,7 +164,7 @@
                     <type>CLEAN_INSERT</type>
                     <src>${deployment.createCustomers}</src>
                     <schema>gestimmo</schema>
-                    <dataTypeFactoryName>org.dbunit.ext.mssql.MsSqlDataTypeFactory</dataTypeFactoryName>
+
                     <metadataHandlerName>org.dbunit.ext.mysql.MySqlMetadataHandler</metadataHandlerName>
                 </configuration>
 
@@ -175,17 +175,16 @@
                         <phase>pre-integration-test</phase>
                         <goals>
                           <goal>operation</goal>
-
                         </goals>
                         <configuration>
                             <driver>${deployment.jdbcDriverName}</driver>
                             <url>${deployment.jdbcUrl}</url>
                             <username>${deployment.jdbcUserName}</username>
                             <password>${deployment.jdbcPassword}</password>
-                            <type>CLEAN_INSERT</type>
+                            <!--<type>CLEAN_INSERT</type>
                             <format>xml</format>
                             <src>${deployment.createCustomers}</src>
-                            <dataTypeFactoryName>org.dbunit.ext.mssql.MsSqlDataTypeFactory</dataTypeFactoryName>
+                            -->
                             <metadataHandlerName>org.dbunit.ext.mysql.MySqlMetadataHandler</metadataHandlerName>
                         </configuration>
 
@@ -203,7 +202,7 @@
                             <username>${deployment.jdbcUserName}</username>
                             <password>${deployment.jdbcPassword}</password>
                             <dest>target/dbUnit/myexport.xml</dest>
-                            <dataTypeFactoryName>org.dbunit.ext.mssql.MsSqlDataTypeFactory</dataTypeFactoryName>
+
                             <metadataHandlerName>org.dbunit.ext.mysql.MySqlMetadataHandler</metadataHandlerName>
                         </configuration>
 

@@ -16,9 +16,19 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
     <import resource="classpath:/dal-impl-jpa-context.xml" />
 
-
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:rest-service-jaxrs.properties</value>
+                <!--<value>classpath:dal-impl-jpa.properties</value>-->
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
 
 	<cxf:bus>
 		<cxf:features>
@@ -69,11 +79,15 @@
     <bean id="customerObjectFactory"
           class="name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory"/>
 
+    <bean id="customerProvisioningServiceProperties"
+          class="name.marmac.tutorials.cxfatwork.services.web.rest.server.properties.CustomerProvisioningServiceProperties" />
+
     <!-- REST API IMPL - JAXRS  -->
     <bean id="customerService"
         class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
         <constructor-arg ref="customerObjectFactory"/>
         <property name="customerPersistenceService"    ref="customerPersistenceService"/>
+        <property name="provisioningServiceProperties" ref="customerProvisioningServiceProperties" />
     </bean>
 
 

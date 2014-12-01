@@ -111,6 +111,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         //Mapping the properties from the request to the persistence object
         customerPO.setCustomerId(customerToType.getCustomerId());
         customerPO.setFirstName(customerToType.getFirstname());
+        customerPO.setLastName(customerToType.getLastname());
         //Check that the persistence layer is available
         if (customerPersistenceService != null) {
             LOGGER.debug("Calling the persistence layer to save the customer " + customerPO.toString());

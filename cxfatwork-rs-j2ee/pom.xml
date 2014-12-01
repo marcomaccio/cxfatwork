@@ -32,7 +32,9 @@
         <module>cxfatwork-rs-j2ee-resources</module>
         <module>cxfatwork-rs-j2ee-services-rest-api</module>
         <module>cxfatwork-rs-j2ee-services-rest-impl-jaxrs</module>
-
+        <!--
+        <module>cxfatwork-rs-j2ee-dal-impl-neo4j</module>
+        -->
     </modules>
 
 
