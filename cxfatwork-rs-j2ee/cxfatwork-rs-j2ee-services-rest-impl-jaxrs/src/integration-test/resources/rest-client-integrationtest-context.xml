@@ -35,16 +35,15 @@
         serviceClass="org.apache.cxf.jaxrs.client.WebClient" >
 
         <jaxrs:schemaLocations>
-            <!--
+            <!--  -->
             <jaxrs:schemaLocation>classpath:xsd/customers.xsd</jaxrs:schemaLocation>
-            -->
+
         </jaxrs:schemaLocations>
 
         <jaxrs:providers>
             <ref bean="jaxbProvider" />
             <ref bean="jsonjaxbProvider" />
         </jaxrs:providers>
-
     </jaxrs:client>
 
 
@@ -61,18 +60,14 @@
         <property name="locations">
             <list>
                 <value>classpath:rest-client-integrationtest.properties</value>
-
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name="ignoreResourceNotFound" value="true"/>
     </bean>
 
-
-
     <bean id="clientProperties"
           class="name.marmac.tutorials.cxfatwork.services.web.rest.clients.properties.CustomerProvisioningClientProperties" >
-
         <property name="host"               value="${host}" />
         <property name="port"               value="${port}" />
         <property name="servletContext"     value="${servletContext}" />
@@ -80,7 +75,6 @@
         <property name="serviceVersion"     value="${serviceVersion}" />
         <property name="serviceInterface"   value="${serviceInterface}" />
         <property name="resourcePath"       value="${resourcePath}" />
-
     </bean>
 </beans>
 
