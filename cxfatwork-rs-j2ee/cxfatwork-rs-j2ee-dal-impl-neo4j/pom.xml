@@ -15,8 +15,8 @@
     <artifactId>cxfatwork-rs-j2ee-dal-impl-neo4j</artifactId>
     <packaging>jar</packaging>
 
-        <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: DAL IMPL :: JPA</name>
-        <description>This module implement the Interfaces for CRUD DAL Service with JPA</description>
+        <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: DAL IMPL :: NEO4J</name>
+        <description>This module implement the Interfaces for CRUD DAL Service towards a NEO4J GraphDb</description>
         <url>${project.artifactId}</url>
 
         <build>
