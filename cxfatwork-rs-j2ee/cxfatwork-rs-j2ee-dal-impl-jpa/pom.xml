@@ -164,7 +164,7 @@
                     <type>CLEAN_INSERT</type>
                     <src>${deployment.createCustomers}</src>
                     <schema>gestimmo</schema>
-
+                    <dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dataTypeFactoryName>
                     <metadataHandlerName>org.dbunit.ext.mysql.MySqlMetadataHandler</metadataHandlerName>
                 </configuration>
 
@@ -181,10 +181,12 @@
                             <url>${deployment.jdbcUrl}</url>
                             <username>${deployment.jdbcUserName}</username>
                             <password>${deployment.jdbcPassword}</password>
-                            <!--<type>CLEAN_INSERT</type>
+                            <type>CLEAN_INSERT</type>
                             <format>xml</format>
+                            <!--
                             <src>${deployment.createCustomers}</src>
                             -->
+                            <dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dataTypeFactoryName>
                             <metadataHandlerName>org.dbunit.ext.mysql.MySqlMetadataHandler</metadataHandlerName>
                         </configuration>
 
@@ -202,7 +204,7 @@
                             <username>${deployment.jdbcUserName}</username>
                             <password>${deployment.jdbcPassword}</password>
                             <dest>target/dbUnit/myexport.xml</dest>
-
+                            <dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dataTypeFactoryName>
                             <metadataHandlerName>org.dbunit.ext.mysql.MySqlMetadataHandler</metadataHandlerName>
                         </configuration>
 
