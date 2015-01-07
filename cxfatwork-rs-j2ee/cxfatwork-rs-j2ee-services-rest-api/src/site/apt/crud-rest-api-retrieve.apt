@@ -1,0 +1,122 @@
+RETRIEVE REST API - Documentation
+
+  The Retrieve Rest API allows retrieve:
+    * a single Customer per request or
+    * the entire Customer set or
+    * a filtered Customer set
+
+  and it consider the following answer scenarios:
+
+    * Successful Creation  (HTTP CODE = 200 ): The customer has been create and it's returned with the customerId
+
+    * Unsuccesful Creation (HTTP CODE = 400 ): due to a bad request.
+
+    * Unsuccesful Creation (HTTP CODE = 500 ): due to an internal error (Service Internal Error)
+
+    * Unsuccesful Creation (HTTP CODE = 501 ): due to a method not implemented
+    []
+
+* Request Details
+
+
+*---------*---------------------------------+-----------*------------------------------+-------------+-------------+---------------+-----------+--------------------------+
+| ReqID   | FuncID                          | HTTP VERB | HTTP Headers                 | Url         | Path Params | Query Params  | Body      |  Description             |
+*---------*---------------------------------+-----------+------------------------------+-------------+-------------+---------------+-----------+--------------------------+
+| {R1.1}  | {{{./crud-rest-api.html#C1}C1}} | POST      | Accept=application/xml       | /customers  | -           | -             | customer  | Create a Single Customer |
+|         |                                 |           | Content-Type=application/xml |             |             |               |           |                          |
+*---------*---------------------------------+-----------+------------------------------+-------------+-------------+---------------+-----------+--------------------------+
+RETRIEVE REST API - Request Details
+
+
+** Request Example
+
+*** {{{R1.1}R1.1}} Retrieve a Single Customer
+
+**** XML
+
+----------------------------------------
+  Address: http://localhost:port/cxf/crm/provisioning/v1/customerprovisioning/customers
+  Http-Method: GET
+  Headers: {
+    Accept=application/json,
+    Cache-Control: no-cache
+    }
+  Body {
+
+  }
+  ----------------------------------------
+
+    file: src/main/data/GET/xml/req-r-1-1.xml
+
+**** JSON
+
+----------------------------------------
+  Address: http://localhost:port/cxf/crm/provisioning/v1/customerprovisioning/customers
+  Http-Method: POST
+  Headers: {
+    Accept=application/json,
+    Cache-Control: no-cache
+    }
+  Body {}
+----------------------------------------
+
+  file: src/main/data/GET/xml/req-r-1-1.json
+
+* Response Details
+
+*----------*----------------*-----------*------------+------------+--------------------------------+---------------+
+| ResID    | ReqID          | HTTP Code | HTTP Headers            | Description                    | Response Body |
+*----------*----------------*-----------*------------+------------+--------------------------------+---------------+
+| {R1.1.1} | {{{CR.1}R1.1}} | 201       | Accept=application/xml  | Create a Customer successfully | Customer      |
+*----------*----------------*-----------*------------+------------+--------------------------------+---------------+
+| {R1.1.2} | {{{R1.1}R1.1}} | 400       | Accept=application/xml  | Bad Request                    | ErrorMessage  |
+*----------*----------------*-----------*------------+------------+--------------------------------+---------------+
+| {R1.1.3} | {{{R1.1}R1.1}} | 500       | Accept=application/xml  | Internal Service Error         | ErrorMessage  |
+*----------*----------------*-----------*------------+------------+--------------------------------+---------------+
+| {R1.1.4} | {{{R1.1}R1.1}} | 501       | Accept=application/xml  | Method Not Implemented         | ErrorMessage  |
+*----------*----------------*-----------*------------+------------+--------------------------------+---------------+
+RETRIEVE REST API Summary for All Response Scenarios (Successful and Unsuccessful)
+
+
+** Response Examples
+
+*** {{{R1.1.1}R1.1.1}} Retrieve a Single Customer successfully
+
+----------------------------------------
+  Address: http://localhost:port/cxf/crm/provisioning/v1/customerprovisioning/customers
+  Headers: {
+    Accept=application/xml
+    }
+  Body {... }
+----------------------------------------
+
+**** JSON
+
+----------------------------------------
+  Address: http://localhost:port/cxf/crm/provisioning/v1/customerprovisioning/customers
+  Headers: {
+    Accept=application/json
+    }
+  Body {... }
+----------------------------------------
+
+*** {{{C1.1.2}C1.1.2}} Bad Request
+
+
+** Request Example
+
+*** {{{R1.2}R1.2}} Retrieve all Customers
+
+**** XML
+
+<customersTOType xmlns="http://marmac.name/tutorials/cxfatwork/model/to/customers/">
+<total_records>1</total_records>
+<customers>
+<id>0</id>
+<firstname>Firstname 01</firstname>
+<lastname>Lastname 01</lastname>
+<customerId>SMPL-001</customerId>
+<createDate>2014-12-19T16:24:11.401+01:00</createDate>
+<lastUpdate>2014-12-19T16:24:11.401+01:00</lastUpdate>
+</customers>
+</customersTOType>
