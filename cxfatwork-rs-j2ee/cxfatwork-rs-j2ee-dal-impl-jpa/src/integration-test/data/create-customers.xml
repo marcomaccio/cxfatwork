@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <Customers pkId="1" firstname="Marco" lastname="Maccio" customerId="001"  appUser="mm" version="1" />
+  <Customers pkId="2" firstname="Marco" lastname="Maccio" customerId="001"  appUser="mm" version="1" />
+  <Customers pkId="3" firstname="Marco" lastname="Maccio" customerId="001"  appUser="mm" version="1" />
+</dataset>

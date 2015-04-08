@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/DECORATION/1.3.0"
+<project xmlns="http://maven.apache.org/DECORATION/1.4.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
          name="${project.artifactId}">
 
     <skin>
@@ -17,6 +17,7 @@
     <custom>
         <fluidoSkin>
             <topBarEnabled>true</topBarEnabled>
+            <sideBarEnabled>true</sideBarEnabled>
             <topBarIcon>
                 <name>MarMac</name>
                 <alt>MarMac Homepage</alt>
@@ -24,6 +25,9 @@
                 <href>http://www.marmac.name</href>
             </topBarIcon>
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+            <googleSearch>
+                <siteSearch/>
+            </googleSearch>
             <facebookLike/>
             <googlePlusOne/>
             <twitter>
@@ -31,6 +35,11 @@
                 <showUser>true</showUser>
                 <showFollowers>true</showFollowers>
             </twitter>
+            <gitHub>
+                <projectId>marcomaccio/cxfatwork</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>green</ribbonColor>
+            </gitHub>
         </fluidoSkin>
     </custom>
 
@@ -48,11 +57,11 @@
 
         <menu name="Links" inherit="none" inheritAsRef="true">
             <item name="Marco's Blog"           href="http://integration360.blogspot.com/"/>
-            <item name="Marco's Google Plus"    href="http://integration360.blogspot.com/"/>
+            <item name="Marco's Google Plus"    href="https://plus.google.com/u/0/+MarcoMacci%C3%B2/about"/>
             <item name="Github Homepage"        href="http://www.github.com/marcomaccio"/>
             <item name="Linked In Profile"      href="http://www.linkedin.com/in/marmac"/>
             <item name="Resumup"                href="http://resumup.com/14751661"/>
-            <item name="AboutMe"                href="http://integration360.blogspot.com/"/>
+            <item name="AboutMe"                href="http://about.me/marco.maccio"/>
         </menu>
 
     </body>

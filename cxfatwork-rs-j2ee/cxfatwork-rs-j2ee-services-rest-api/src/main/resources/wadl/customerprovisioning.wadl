@@ -1,0 +1,162 @@
+<application xmlns="http://wadl.dev.java.net/2009/02"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:servicens="http://marmac.name/tutorials/cxfatwork/services/web/rest/api/customerservice/"
+            xmlns:customerns="http://marmac.name/tutorials/cxfatwork/model/to/customers/">
+
+    <grammars>
+        <include href="http://marmac.name/tutorials/cxfatwork/model/to/customers/customers.xsd"
+                 xml:space="http://marmac.name/tutorials/cxfatwork/model/to/customers/" />
+
+    </grammars>
+
+    <resources base="http://localhost:9091/cxf/crm/provisioning/v1">
+
+        <!-- This will generate the Interface -->
+        <resource  path="/customerprovisioning" id="CustomerProvisioningService">
+
+            <resource  path="/customers">
+                <method name="POST" id="createCustomer">
+                    <request>
+                        <representation mediaType="application/xml" element="customerns:customer" />
+                        <representation mediaType="application/json" element="customerns:customer"/>
+                    </request>
+
+                    <response status="201" description="Customers Created">
+                        <representation mediaType="application/xml" element="customerns:customer"/>
+                        <representation mediaType="application/json" element="customerns:customer"/>
+                    </response>
+
+                    <response status="400" description="Bad Request">
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
+                    </response>
+
+                    <response status="500" description="Service Internal Error">
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
+                    </response>
+
+                    <response status="501" description="Method Not Implemented">
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
+                    </response>
+
+                    <response status="504" description="DB Timeout">
+                        <representation mediaType="application/xml"     element="customerns:customer"/>
+                        <representation mediaType="application/json"    element="customerns:customer"/>
+                    </response>
+
+                </method>
+
+                <method name="GET" id="getCustomersByQuery">
+                    <request>
+                        <param name="limit"        type="xsd:int"      style="query" required="false" />
+                        <param name="customerId"   type="xsd:string"   style="query" required="false"/>
+                        <param name="firstname"    type="xsd:string"   style="query" required="false"/>
+                        <param name="lastname"    type="xsd:string"   style="query" required="false"/>
+                        <param name="createDate"   type="xsd:string"   style="query" required="false"/>
+                        <param name="lastUpdate"   type="xsd:string"   style="query" required="false"/>
+                    </request>
+
+                    <response status="200" description="Retireved Successfully a Customer List">
+                        <representation mediaType="application/xml"    element="customerns:customers"/>
+                        <representation mediaType="application/json"   element="customerns:customers"/>
+                    </response>
+
+                    <response status="400" description="Bad Request">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="500" description="Provisioning Internal Error">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="501" description="Method Not Implemented">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="504" description="Timeout">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                </method>
+
+                <method name="PUT" id="updateCustomers">
+                    <request>
+                        <representation mediaType="application/xml" element="customerns:customers" />
+                        <representation mediaType="application/json" element="customerns:customers"/>
+                    </request>
+
+                    <response status="201" description="Customers Created">
+                        <representation mediaType="application/xml" element="customerns:customers"/>
+                        <representation mediaType="application/json" element="customerns:customers"/>
+                    </response>
+
+                    <response status="400" description="Bad Request">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="500" description="PRI Adapter Internal Error">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="501" description="Method Not Implemented">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="504" description="Encoder Timeout">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                </method>
+
+                <method name="DELETE" id="deleteCustomers">
+                    <request>
+                        <representation mediaType="application/xml" element="customerns:customers" />
+                        <representation mediaType="application/json" element="customerns:customers"/>
+                    </request>
+
+                    <response status="201" description="Customers Created">
+                        <representation mediaType="application/xml" element="customerns:customers"/>
+                        <representation mediaType="application/json" element="customerns:customers"/>
+                    </response>
+
+                    <response status="400" description="Bad Request">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="500" description="PRI Adapter Internal Error">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="501" description="Method Not Implemented">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                    <response status="504" description="Encoder Timeout">
+                        <representation mediaType="application/xml"     element="customerns:customers"/>
+                        <representation mediaType="application/json"    element="customerns:customers"/>
+                    </response>
+
+                </method>
+
+            </resource>
+
+        </resource>
+
+
+    </resources>
+
+</application>

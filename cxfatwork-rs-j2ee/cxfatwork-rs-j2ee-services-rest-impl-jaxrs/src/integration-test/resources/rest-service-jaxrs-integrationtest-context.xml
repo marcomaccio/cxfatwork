@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- Load CXF modules from cxf.jar -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+    <import resource="classpath:/dal-impl-jpa-context.xml" />
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:rest-service-jaxrs-integrationtest.properties</value>
+                <!--<value>classpath:dal-impl-jpa-integrationtest.properties</value>-->
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
+	<cxf:bus>
+		<cxf:features>
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+
+    <!-- REST SERVICE ENDPOINT CONFIGURATION - START -->
+        <!-- To browse:
+            - the services go to: http://host:port/cxf/crm/provisioning/v1
+            - the wadl go to: http://host:port/cxf/crm/provisioning/v1?_wadl
+            - the swagger api: http://host:port/cxf/crm/provisioning/v1/api-docs (as basepath set below)
+
+            where for default karaf installation:
+            - host: karaf_host_ip or karaf_host_name
+            - port: 8181
+        -->
+    <jaxrs:server id="customerProvisioningService"
+            address="/crm/provisioning/v1"
+            bus="cxf">
+
+        <jaxrs:serviceBeans>
+            <ref bean="customerService"/>
+        </jaxrs:serviceBeans>
+
+        <jaxrs:schemaLocations>
+            <!--
+            <jaxrs:schemaLocation>classpath:WEB-INF/wadl/customerprovisioning.wadl</jaxrs:schemaLocation>
+
+            <jaxrs:schemaLocation>classpath:xsd/customers.xsd</jaxrs:schemaLocation>
+            -->
+        </jaxrs:schemaLocations>
+
+        <jaxrs:providers>
+            <ref bean="jaxbProvider"/>
+            <ref bean="jsonjaxbProvider" />
+
+            <ref bean="resourceWriter"/>
+            <ref bean="apiWriter"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <!-- Persistence Object  -->
+    <bean id="customerPersistenceService"
+          class="name.marmac.tutorials.cxfatwork.dal.impl.jpa.CustomerPersistenceServiceImplJPA"/>
+
+    <!-- TO ObjectFactory  -->
+    <bean id="customerObjectFactory"
+          class="name.marmac.tutorials.cxfatwork.model.to.customers.ObjectFactory"/>
+
+    <bean id="customerProvisioningServiceProperties"
+              class="name.marmac.tutorials.cxfatwork.services.web.rest.server.properties.CustomerProvisioningServiceProperties" />
+
+    <!-- REST API IMPL - JAXRS  -->
+    <bean id="customerService"
+        class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
+        <constructor-arg ref="customerObjectFactory"/>
+        <property name="customerPersistenceService"    ref="customerPersistenceService"/>
+        <property name="provisioningServiceProperties" ref="customerProvisioningServiceProperties" />
+    </bean>
+
+
+    <!-- XML Provider with JAXB2 -->
+    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+        <property name="marshallAsJaxbElement" value="true"/>
+    </bean>
+
+    <!-- JSON Provider -->
+    <bean id="jsonjaxbProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+
+<!-- SWAGGER SPECIFIC CONFIGURATION - START -->
+    <bean id="swaggerResourceJSON"
+          class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />
+
+
+    <!-- Swagger writers -->
+    <bean id="resourceWriter" class="com.wordnik.swagger.jaxrs.listing.ResourceListingProvider" />
+    <bean id="apiWriter" class="com.wordnik.swagger.jaxrs.listing.ApiDeclarationProvider" />
+
+
+    <!-- Swagger configuration -->
+    <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
+        <property name="resourcePackage"    value="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs"/>
+        <property name="version"            value="${project.version}"/>
+        <property name="basePath"           value="/api-docs" />
+        <property name="title"              value="CUSTOMER PROVISIONING REST API"/>
+        <property name="description"        value="This is the CUSTOMER PROVISIONING Interface"/>
+        <property name="contact"            value="marco.maccio@marmac.name"/>
+        <property name="license"            value="Apache 2.0 License"/>
+        <property name="licenseUrl"         value="http://www.apache.org/licenses/LICENSE-2.0.html"/>
+        <property name="scan"               value="true"/>
+    </bean>
+
+    <!-- Exception mapper
+    <bean id="exceptionMapper" class="com.wordnik.swagger.sample.resource.SampleExceptionMapper" />
+    -->
+
+<!-- SWAGGER SPECIFIC CONFIGURATION - END -->
+
+
+
+</beans>
+

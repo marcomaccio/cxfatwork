@@ -17,9 +17,23 @@
     <url>cxf-rs-j2ee</url>
 
     <modules>
+        <!-- DAL LAYER MODULES: -->
+        <module>cxfatwork-rs-j2ee-dal-api</module>
+        <module>cxfatwork-rs-j2ee-dal-impl-jpa</module>
+
+        <module>cxfatwork-rs-j2ee-dal-impl-neo4j</module>
+
+        <!-- BUSINESS LOGIC LAYER MODULES:
+        <module>cxfatwork-rs-j2ee-bll-api</module>
+        <module>cxfatwork-rs-j2ee-bll-impl-simple-java</module>
+        <module>cxfatwork-rs-j2ee-bll-impl-camel-routes</module>
+        <module>cxfatwork-rs-j2ee-bll-impl-drool-rules</module>
+        -->
+        <!-- SERVICE LAYER MODULES: -->
+        <module>cxfatwork-rs-j2ee-exceptions-xsd</module>
         <module>cxfatwork-rs-j2ee-resources</module>
-        <module>cxfatwork-rs-j2ee-api</module>
-        <module>cxfatwork-rs-j2ee-impl-jaxrs</module>
+        <module>cxfatwork-rs-j2ee-services-rest-api</module>
+        <module>cxfatwork-rs-j2ee-services-rest-impl-jaxrs</module>
 
     </modules>
 

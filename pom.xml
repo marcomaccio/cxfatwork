@@ -8,7 +8,7 @@
 
     <name>CXF @ WORK :: CXF TUTORIALS</name>
     <description>Various Tutorials to present various aspect of Apache CXF to create SOAP Web Services and REST Web Services</description>
-    <url>http://docs.maccio-ch.homelinux.net/tutorials/cxfatwork</url>
+    <url>http://marcomaccio.github.io/cxfatwork/</url>
 
     <modules>
         <module>cxfatwork-rs-osgi</module>
@@ -66,7 +66,7 @@
         <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
         <maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
         <maven-surefire-report-plugin.version>2.16</maven-surefire-report-plugin.version>
-        <maven-failsafe-plugin.version>2.14</maven-failsafe-plugin.version>
+        <maven-failsafe-plugin.version>2.15</maven-failsafe-plugin.version>
 
         <maven-jaxb2-plugin.version>0.8.3</maven-jaxb2-plugin.version>
         <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
@@ -89,11 +89,13 @@
         <jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
         <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
 
+        <javax-persistence.version>2.0.0</javax-persistence.version>
+
         <geronimo-j2ee-connector_1.5_spec.version>2.0.0</geronimo-j2ee-connector_1.5_spec.version>
         <geronimo-transaction.version>2.2.2</geronimo-transaction.version>
         <geronimo-connector.version>2.2.2</geronimo-connector.version>
 
-        <cxf.version>2.7.8</cxf.version>
+        <cxf.version>2.7.15</cxf.version>
         <cxf-xjc-dv.version>2.2.12</cxf-xjc-dv.version>
         <cxf.dosgi.version>1.6.0</cxf.dosgi.version>
         <spring.version>3.2.4.RELEASE</spring.version>
@@ -142,6 +144,12 @@
         <log4j.version>1.2.17</log4j.version>
         <logback.version>1.0.13</logback.version>
         <junit.version>4.11</junit.version>
+
+        <build.profile.id>dev</build.profile.id>
+        <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
+        <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
+        <skip.integration.tests>true</skip.integration.tests>
+        <skip.unit.tests>false</skip.unit.tests>
 
         <site.url>file://${env.HOME}/sitedocs/${project.artifactId}</site.url>
         <!-- GitHub Changelog Parameters -->
@@ -225,6 +233,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>${maven-scm-plugin.version}</version>
+                <!--
                 <configuration>
                     <providerImplementations>
                         <git>jgit</git>
@@ -237,6 +246,7 @@
                         <version>${maven-scm-providers-jgit.version}</version>
                     </dependency>
                 </dependencies>
+                -->
             </plugin>
 
             <plugin>
@@ -255,20 +265,132 @@
                 </configuration>
             </plugin>
 
-            <!--
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>${cobertura-maven-plugin.version}</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.2.201409121644</version>
                 <executions>
-                  <execution>
-                    <goals>
-                      <goal>clean</goal>
-                    </goals>
-                  </execution>
+                    <!--
+                        Prepares the property pointing to the JaCoCo runtime agent which
+                        is passed as VM argument when Maven the Surefire plugin is executed.
+                    -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <!--
+                                Sets the name of the property containing the settings
+                                for JaCoCo runtime agent.
+                            -->
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <!--
+                        Ensures that the code coverage report for unit tests is created after
+                        unit tests have been run.
+                    -->
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <!--
+                        Prepares the property pointing to the JaCoCo runtime agent which
+                        is passed as VM argument when Maven the Failsafe plugin is executed.
+                    -->
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <!--
+                                Sets the name of the property containing the settings
+                                for JaCoCo runtime agent.
+                            -->
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <!--
+                        Ensures that the code coverage report for integration tests after
+                        integration tests have been run.
+                    -->
+                    <execution>
+                        <id>post-integration-test</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
-            -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <!-- Sets the VM argument line used when unit tests are run. -->
+                    <argLine>${surefireArgLine}</argLine>
+                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- Excludes integration tests when unit tests are run. -->
+                    <excludes>
+                        <exclude>**/system/*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <executions>
+                    <!--
+                        Ensures that both integration-test and verify goals of the Failsafe Maven
+                        plugin are executed.
+                    -->
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the VM argument line used when integration tests are run. -->
+                            <argLine>${failsafeArgLine}</argLine>
+                            <!--
+                                Skips integration tests if the value of skip.integration.tests property
+                                is true
+                            -->
+                            <skipTests>${skip.integration.tests}</skipTests>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -505,6 +627,17 @@
             <version>${maven-changes-plugin.version}</version>
         </plugin>
 
+          <!-- ChangeLog Report Plugin -->
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-changelog-plugin</artifactId>
+              <version>${maven-changelog-plugin.version}</version>
+              <configuration>
+                <type>range</type>
+                <range>90</range>
+              </configuration>
+          </plugin>
+
         <!-- taglist plugin to generate to do List -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -532,6 +665,13 @@
                 </reportSet>
             </reportSets>
         </plugin>
+
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.2.201409121644</version>
+        </plugin>
+
        </plugins>
 
     </reporting>
@@ -542,24 +682,81 @@
             <properties>
                 <deployment.host>localhost</deployment.host>
                 <deployment.port>8181</deployment.port>
-                <deployment.webContext>/cxf</deployment.webContext>
-                <deployment.servicePath>/crm/provisioning/v1</deployment.servicePath>
+                <deployment.webContext/>
+                <deployment.servletContext>/cxf</deployment.servletContext>
+                <deployment.servicePath>/crm/provisioning</deployment.servicePath>
+                <deployment.serviceVersion>/v1</deployment.serviceVersion>
                 <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
                 <deployment.resourcePath>/customers</deployment.resourcePath>
             </properties>
         </profile>
 
         <profile>
-            <id>local-depl-j2se</id>
+            <id>local-depl-j2se-hsqldb</id>
             <properties>
+                <!-- SERVICE LAYER PROPERTIES -->
                 <deployment.host>localhost</deployment.host>
                 <deployment.port>9191</deployment.port>
-                <deployment.webContext>/crm-web</deployment.webContext>
-                <deployment.servletPath>/cxf</deployment.servletPath>
+                <deployment.webContext/>
+                <deployment.servletContext>/cxf</deployment.servletContext>
                 <deployment.servicePath>/crm/provisioning</deployment.servicePath>
-                <deployment.version>/v1</deployment.version>
+                <deployment.serviceVersion>/v1</deployment.serviceVersion>
                 <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
                 <deployment.resourcePath>/customers</deployment.resourcePath>
+
+                <!-- DATA ACCESS LAYER PROPERTIES -->
+                <deployment.jdbcDriverName>org.hsqldb.jdbc.JDBCDriver</deployment.jdbcDriverName>
+                <deployment.jdbcUrl>jdbc:hsqldb:mem:gestimmo</deployment.jdbcUrl>
+                <deployment.jdbcUserName>sa</deployment.jdbcUserName>
+                <deployment.jdbcPassword></deployment.jdbcPassword>
+                <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
+                <deployment.schemaFileName>schema-hsqldb.sql</deployment.schemaFileName>
+            </properties>
+        </profile>
+        <profile>
+            <id>local-depl-j2se-mysql</id>
+            <properties>
+                <!-- SERVICE LAYER PROPERTIES -->
+                <deployment.host>localhost</deployment.host>
+                <deployment.port>9191</deployment.port>
+                <deployment.webContext/>
+                <deployment.servletContext>/cxf</deployment.servletContext>
+                <deployment.servicePath>/crm/provisioning</deployment.servicePath>
+                <deployment.serviceVersion>/v1</deployment.serviceVersion>
+                <deployment.serviceInterface>/customerprovisioning</deployment.serviceInterface>
+                <deployment.resourcePath>/customers</deployment.resourcePath>
+
+                <!-- DATA ACCESS LAYER PROPERTIES -->
+                <deployment.jdbcDriverName>com.mysql.jdbc.Driver</deployment.jdbcDriverName>
+                <deployment.jdbcUrl>jdbc:mysql://localhost:3306/gestimmo</deployment.jdbcUrl>
+                <deployment.jdbcUserName>gestimmo</deployment.jdbcUserName>
+                <deployment.jdbcPassword>Gestimmo@2013!</deployment.jdbcPassword>
+                <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
+                <deployment.schemaFileName>src/integration-test/data/schema-mysql.sql</deployment.schemaFileName>
+                <deployment.createCustomers>src/integration-test/data/create-customers.xml</deployment.createCustomers>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>all-tests</id>
+            <properties>
+                <build.profile.id>all-tests</build.profile.id>
+                <!-- All tests are run. -->
+                <skip.integration.tests>false</skip.integration.tests>
+                <skip.unit.tests>false</skip.unit.tests>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+        </profile>
+        <profile>
+            <id>integration-test</id>
+            <properties>
+                <!-- Used to locate the profile specific configuration file. -->
+                <build.profile.id>integration-test</build.profile.id>
+                <!-- Only integration tests are run. -->
+                <skip.integration.tests>false</skip.integration.tests>
+                <skip.unit.tests>true</skip.unit.tests>
             </properties>
         </profile>
     </profiles>
