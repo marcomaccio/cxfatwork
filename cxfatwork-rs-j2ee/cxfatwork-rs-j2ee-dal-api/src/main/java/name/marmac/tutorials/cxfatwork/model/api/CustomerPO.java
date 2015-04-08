@@ -1,4 +1,4 @@
-package name.marmac.tutorials.cxfatwork.model.impl.jpa;
+package name.marmac.tutorials.cxfatwork.model.api;
 
 import java.io.Serializable;
 import java.util.Date;

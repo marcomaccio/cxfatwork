@@ -1,6 +1,6 @@
-package name.marmac.tutorials.cxfatwork.dal.impl.jpa;
+package name.marmac.tutorials.cxfatwork.dal.api;
 
-import name.marmac.tutorials.cxfatwork.model.impl.jpa.CustomerPO;
+import name.marmac.tutorials.cxfatwork.model.api.CustomerPO;
 
 import java.util.List;
 
