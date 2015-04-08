@@ -102,7 +102,7 @@
                                 <feature>cxf-tools</feature>
 
                             </features>
-                            <repository>${project.build.directory}/system-ml-pri-adapter</repository>
+                            <repository>${project.build.directory}/system-cxfatwork</repository>
                         </configuration>
                     </execution>
                     <execution>
