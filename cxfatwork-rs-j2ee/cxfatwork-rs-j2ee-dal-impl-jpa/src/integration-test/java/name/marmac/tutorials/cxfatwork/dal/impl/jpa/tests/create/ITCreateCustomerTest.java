@@ -3,7 +3,8 @@ package name.marmac.tutorials.cxfatwork.dal.impl.jpa.tests.create;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import name.marmac.tutorials.cxfatwork.dal.impl.jpa.CustomerPersistenceServiceImplJPA;
 import name.marmac.tutorials.cxfatwork.dal.impl.properties.DataStoreProperties;
-import name.marmac.tutorials.cxfatwork.model.impl.jpa.CustomerPO;
+import name.marmac.tutorials.cxfatwork.model.api.CustomerPO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -79,7 +80,7 @@ public class ITCreateCustomerTest {
 
         //Verify the values
 
-        //Assert.assertTrue(true);
+        Assert.assertTrue(customer.getId() != null);
     }
 
 

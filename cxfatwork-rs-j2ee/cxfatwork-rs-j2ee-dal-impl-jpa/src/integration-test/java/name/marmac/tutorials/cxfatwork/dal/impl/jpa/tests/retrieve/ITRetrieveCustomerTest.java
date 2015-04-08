@@ -5,7 +5,7 @@ import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import name.marmac.tutorials.cxfatwork.dal.impl.jpa.CustomerPersistenceServiceImplJPA;
 import name.marmac.tutorials.cxfatwork.dal.impl.properties.DataStoreProperties;
-import name.marmac.tutorials.cxfatwork.model.impl.jpa.CustomerPO;
+import name.marmac.tutorials.cxfatwork.model.api.CustomerPO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

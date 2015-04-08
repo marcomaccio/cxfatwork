@@ -95,7 +95,7 @@
         <geronimo-transaction.version>2.2.2</geronimo-transaction.version>
         <geronimo-connector.version>2.2.2</geronimo-connector.version>
 
-        <cxf.version>2.7.8</cxf.version>
+        <cxf.version>2.7.15</cxf.version>
         <cxf-xjc-dv.version>2.2.12</cxf-xjc-dv.version>
         <cxf.dosgi.version>1.6.0</cxf.dosgi.version>
         <spring.version>3.2.4.RELEASE</spring.version>
@@ -233,6 +233,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>${maven-scm-plugin.version}</version>
+                <!--
                 <configuration>
                     <providerImplementations>
                         <git>jgit</git>
@@ -245,6 +246,7 @@
                         <version>${maven-scm-providers-jgit.version}</version>
                     </dependency>
                 </dependencies>
+                -->
             </plugin>
 
             <plugin>
@@ -624,6 +626,17 @@
             <artifactId>maven-changes-plugin</artifactId>
             <version>${maven-changes-plugin.version}</version>
         </plugin>
+
+          <!-- ChangeLog Report Plugin -->
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-changelog-plugin</artifactId>
+              <version>${maven-changelog-plugin.version}</version>
+              <configuration>
+                <type>range</type>
+                <range>90</range>
+              </configuration>
+          </plugin>
 
         <!-- taglist plugin to generate to do List -->
         <plugin>

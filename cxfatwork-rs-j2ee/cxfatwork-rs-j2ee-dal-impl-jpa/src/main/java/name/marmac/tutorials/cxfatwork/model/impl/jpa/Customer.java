@@ -1,5 +1,7 @@
 package name.marmac.tutorials.cxfatwork.model.impl.jpa;
 
+import name.marmac.tutorials.cxfatwork.model.api.CustomerPO;
+
 import javax.persistence.*;
 import java.util.Date;
 

@@ -1,7 +1,8 @@
 package name.marmac.tutorials.cxfatwork.dal.impl.jpa;
 
+import name.marmac.tutorials.cxfatwork.dal.api.CustomerPersistenceService;
 import name.marmac.tutorials.cxfatwork.model.impl.jpa.Customer;
-import name.marmac.tutorials.cxfatwork.model.impl.jpa.CustomerPO;
+import name.marmac.tutorials.cxfatwork.model.api.CustomerPO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Transactional
 @Repository("CustomerPersistenceService")
-public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceService{
+public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceService {
 
     private static final transient Logger LOGGER = LoggerFactory.getLogger(CustomerPersistenceServiceImplJPA.class);
 
