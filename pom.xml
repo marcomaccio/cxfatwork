@@ -52,9 +52,9 @@
         <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>2.10</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-site-plugin.version>3.4</maven-site-plugin.version>
-        <maven-source-plugin.version>2.3</maven-source-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
         <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
         <maven-scm-providers-jgit.version>1.9.2</maven-scm-providers-jgit.version>
         <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
@@ -478,6 +478,34 @@
             </plugin>
             -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                      <id>attach-sources</id>
+                      <goals>
+                        <goal>jar</goal>
+                      </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.codehaus.sonar</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar-maven-plugin.version}</version>
@@ -495,14 +523,14 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>marmac-m2-repository-snapshot</id>
+            <id>marmac-m2-rms</id>
             <name>MARMAC Maven 2 Repository Snapshot</name>
             <url>http://repo.maccio-ch.homelinux.net/content/repositories/snapshots/</url>
             <uniqueVersion>false</uniqueVersion>
             <layout>default</layout>
         </snapshotRepository>
         <repository>
-            <id>marmac-m2-repository-release</id>
+            <id>marmac-m2-rms</id>
             <name>MARMAC Maven 2 Repository Release</name>
             <url>http://repo.maccio-ch.homelinux.net/content/repositories/releases/</url>
             <uniqueVersion>false</uniqueVersion>
