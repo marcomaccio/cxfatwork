@@ -711,6 +711,7 @@
                 <deployment.jdbcPassword></deployment.jdbcPassword>
                 <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
                 <deployment.schemaFileName>schema-hsqldb.sql</deployment.schemaFileName>
+                <deployment.createCustomers>src/integration-test/data/create-customers.xml</deployment.createCustomers>
             </properties>
         </profile>
         <profile>
