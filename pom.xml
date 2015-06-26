@@ -173,7 +173,7 @@
         <maven-pmd-plugin.configLocation>${project.basedir}/code-analysis/pmd.xml</maven-pmd-plugin.configLocation>
         <pmd.skip>false</pmd.skip>
 
-        <sonar-maven-plugin.version>4.3</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>2.6</sonar-maven-plugin.version>
 
     </properties>
 
@@ -195,6 +195,11 @@
                   <groupId>org.codehaus.mojo</groupId>
                   <artifactId>versions-maven-plugin</artifactId>
                   <version>${versions-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -477,10 +482,10 @@
                 </executions>
             </plugin>
             -->
+
             <plugin>
-                <groupId>org.codehaus.sonar</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar-maven-plugin.version}</version>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>sonar-maven-plugin</artifactId>
             </plugin>
 
         </plugins>
@@ -672,6 +677,11 @@
             <version>0.7.2.201409121644</version>
         </plugin>
 
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+        </plugin>
+
        </plugins>
 
     </reporting>
@@ -750,6 +760,7 @@
         <profile>
             <id>dev</id>
         </profile>
+
         <profile>
             <id>integration-test</id>
             <properties>
@@ -758,6 +769,27 @@
                 <!-- Only integration tests are run. -->
                 <skip.integration.tests>false</skip.integration.tests>
                 <skip.unit.tests>true</skip.unit.tests>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.jdbc.url>jdbc:mysql://192.168.10.15:3306/sonarqube?useUnicode=true</sonar.jdbc.url>
+                <sonar.jdbc.username>sonarqube</sonar.jdbc.username>
+                <sonar.jdbc.password>Sonar@2014!</sonar.jdbc.password>
+                <sonar.host.url>http://192.168.10.201:9000/sonarqube</sonar.host.url>
+                <!-- <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>  Ensure you run mvn install before sonar:sonar -->
+                <sonar.language>java</sonar.language>
+                <sonar.scm.disabled>true</sonar.scm.disabled>
+                <sonar.scm-stats.enabled>false</sonar.scm-stats.enabled>
+                <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
+                <sonar.surefire.reportsPath>/target/surefire-reports</sonar.surefire.reportsPath>
+                <sonar.jacoco.reportPath>${project.build.directory}/jacoco-reports/jacoco-ut.execc</sonar.jacoco.reportPath>    <!-- This is the default, put here to be explicit -->
+                <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
             </properties>
         </profile>
     </profiles>
