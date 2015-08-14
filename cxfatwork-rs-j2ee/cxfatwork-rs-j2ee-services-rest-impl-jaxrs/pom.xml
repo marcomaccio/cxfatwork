@@ -225,27 +225,37 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>dbunit-maven-plugin</artifactId>
                 <version>1.0-beta-3</version>
+
                 <!-- JDBC Driver dependency-->
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.18</version>
+                        <version>${mysql-connector-java.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.hsqldb</groupId>
                         <artifactId>hsqldb</artifactId>
-                        <version>2.2.9</version>
+                        <version>${hsqldb.version}</version>
                     </dependency>
-
                 </dependencies>
+
                 <!-- Common Configuration -->
                 <configuration>
-                    <driver>org.hsqldb.jdbc.JDBCDriver</driver>
-                    <url>jdbc:hsqldb:mem:gestimmo</url>
-                    <username>sa</username>
-                    <password></password>
+                    <driver>${deployment.jdbcDriverName}</driver>
+                    <url>${deployment.jdbcUrl}</url>
+                    <username>${deployment.jdbcUserName}</username>
+                    <password>${deployment.jdbcPassword}</password>
+                    <src>${deployment.createCustomers}</src>
+                    <!--
+                    <type>CLEAN_INSERT</type>
+                    <src>${deployment.createCustomers}</src>
+                    <schema>gestimmo</schema>
+                    <dataTypeFactoryName>${deployment.dataTypeFactory}</dataTypeFactoryName>
+                    <metadataHandlerName>${deployment.metadataHandler}</metadataHandlerName>
+                    -->
                 </configuration>
+
                 <!-- Executions-->
                 <executions>
                     <execution>
@@ -255,9 +265,33 @@
                         </goals>
                         <!-- specific configurations -->
                         <configuration>
-                          <type>CLEAN_INSERT</type>
-                          <src>src/integration-test/data/insert.xml</src>
+                            <driver>${deployment.jdbcDriverName}</driver>
+                            <url>${deployment.jdbcUrl}</url>
+                            <username>${deployment.jdbcUserName}</username>
+                            <password>${deployment.jdbcPassword}</password>
+                            <type>CLEAN_INSERT</type>
+                            <format>xml</format>
+                            <!--
+                            <src>${deployment.createCustomers}</src>
+                            -->
+                            <dataTypeFactoryName>${deployment.dataTypeFactory}</dataTypeFactoryName>
+                            <metadataHandlerName>${deployment.metadataHandler}</metadataHandlerName>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>display-dependency-updates</goal>
+                            <goal>display-plugin-updates</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -302,39 +336,10 @@
     <!-- EXTERNAL PROJECT DEPENDENCIES - START -->
 
         <!-- APACHE CXF DEPENDENCIES - START -->
-        <dependency>
-        	<groupId>org.apache.cxf</groupId>
-        	<artifactId>cxf-rt-core</artifactId>
-        	<version>${cxf.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-local</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-databinding-jaxb</artifactId>
             <version>${cxf.version}</version>
         </dependency>
 

@@ -47,7 +47,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @Autowired
     private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
     private ObjectFactory                           mCustomersObjectFactory;
-
+    @Autowired
     private CustomerPersistenceService              customerPersistenceService;
 
 
@@ -155,10 +155,24 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         LOGGER.info("The getCustomerByQuery has been called ...");
         LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomers().size());
         LOGGER.info("Customer : " + mCustomersTOType.getCustomers().get(0).getCustomerId() + " "
-                                  + mCustomersTOType.getCustomers().get(0).getFirstname()  + " "
-                                  + mCustomersTOType.getCustomers().get(0).getLastname()  );
+                + mCustomersTOType.getCustomers().get(0).getFirstname() + " "
+                + mCustomersTOType.getCustomers().get(0).getLastname());
 
-        return mCustomersTOType;
+        CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
+
+        for (CustomerPO customer : customerPersistenceService.getAll())
+        {
+            LOGGER.debug("Customer found in the DB " + customer.toString());
+            //Create the CustomerTOType
+            CustomerTOType customerTO = mCustomersObjectFactory.createCustomerTOType();
+            customerTO.setId(customer.getId());
+            customerTO.setFirstname(customer.getFirstName());
+            customerTO.setLastname(customer.getLastName());
+            customerTO.setCustomerId(customer.getCustomerId());
+            customersTOType.getCustomers().add(customerTO);
+            customersTOType.setTotalRecords(+1);
+        }
+        return customersTOType;
     }
 
     /**
@@ -178,7 +192,19 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                                CustomersTOType customerstotype) {
 
         LOGGER.info("The updateCustomers has been called ...");
-        return null;
+        CustomerPO customerPO = customerPersistenceService.createNewCustomer();
+        if (customerstotype.getTotalRecords() == 1) {
+            CustomerTOType customerTO = customerstotype.getCustomers().get(0);
+            customerPO.setId(customerTO.getId());
+            customerPO.setFirstName(customerTO.getFirstname());
+            customerPO.setLastName(customerTO.getLastname());
+            customerPO.setCustomerId(customerTO.getCustomerId());
+
+            customerPersistenceService.save(customerPO);
+            //customerstotype.getCustomers().get(0).setCreateDate(new GregorianCalendar());
+            customerstotype.getCustomers().get(0).setId(customerPO.getId());
+        }
+        return customerstotype;
     }
 
     /**
