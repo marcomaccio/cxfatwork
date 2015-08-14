@@ -20,9 +20,12 @@
 
         <property name="eclipselink.logging.level"                      value="FINEST"/>
         <property name="eclipselink.logging.level.sql"                  value="FINEST"/>
-        <property name="eclipselink.ddl-generation"                     value="drop-and-create-tables"/>
+        <property name="eclipselink.ddl-generation"                     value="${deployment.ddl-generation}"/>
         <property name="eclipselink.ddl-generation.output-mode"         value="database"/>
         <property name="eclipselink.weaving"                            value="false"/>
+
+        <property name="eclipselink.create-ddl-jdbc-file-name"          value="${deployment.createSchemaFilename}"/>
+        <property name="eclipselink.drop-ddl-jdbc-file-name"            value="${deployment.dropSchemaFilename}"/>
 
         <!--
         <property name="eclipselink.logging.parameters"                 value="true"/>
