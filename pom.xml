@@ -548,13 +548,13 @@
 
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.maccio-ch.homelinux.net/view/TUTORIALS-cxfatwork/</url>
+        <url>http://cis.maccio-ch.homelinux.net/jenkins/job/TUTORIALS-CXFAtWork/</url>
         <notifiers>
           <notifier>
             <type>mail</type>
             <sendOnError>true</sendOnError>
             <sendOnFailure>true</sendOnFailure>
-            <sendOnSuccess>false</sendOnSuccess>
+            <sendOnSuccess>true</sendOnSuccess>
             <sendOnWarning>false</sendOnWarning>
             <configuration>
               <address>marco.maccio@marmac.name</address>
