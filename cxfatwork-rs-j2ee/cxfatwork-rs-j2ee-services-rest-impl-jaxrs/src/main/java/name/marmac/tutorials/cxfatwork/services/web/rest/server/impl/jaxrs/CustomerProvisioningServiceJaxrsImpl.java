@@ -59,17 +59,9 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      */
     public CustomerProvisioningServiceJaxrsImpl(ObjectFactory customersObjectFactory) {
 
-        LOGGER.info(customersObjectFactory.toString() + " has been paased as constructor param ...");
-
-        if (customersObjectFactory != null) {
-            this.mCustomersObjectFactory = customersObjectFactory;
-            LOGGER.info("Initializing the CustomerList");
-            mCustomersTOType = mCustomersObjectFactory.createCustomersTOType();
-            LOGGER.info("CustomerList size=" + mCustomersTOType.getCustomers().size());
-            this.initializeSampleData();
-        } else {
-            LOGGER.info(customersObjectFactory + " is null");
-        }
+        LOGGER.info("Initializing the CustomerList");
+        this.initializeSampleData();
+        LOGGER.info("CustomerList size=" + mCustomersTOType.getCustomers().size());
     }
     /**
      *
@@ -112,18 +104,17 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         customerPO.setCustomerId(customerToType.getCustomerId());
         customerPO.setFirstName(customerToType.getFirstname());
         customerPO.setLastName(customerToType.getLastname());
-        //Check that the persistence layer is available
-        if (customerPersistenceService != null) {
-            LOGGER.debug("Calling the persistence layer to save the customer " + customerPO.toString());
-            //Call the persistence manager to periste the object
-            customerPersistenceService.save(customerPO);
-            //Remap the id assigned by the DB to the customerTO
-            customerToType.setId(customerPO.getId());
-            //Set Location Header
-            response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getId());
-            //Set the HTTP Status Code to 201
-            response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
-        }
+
+        LOGGER.debug("Calling the persistence layer to save the customer " + customerPO.toString());
+        //Call the persistence manager to periste the object
+        customerPersistenceService.save(customerPO);
+        //Remap the id assigned by the DB to the customerTO
+        customerToType.setId(customerPO.getId());
+        //Set Location Header
+        response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getId());
+        //Set the HTTP Status Code to 201
+        response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
+
         //return the CustomerToType to be serialized by the provider as requested by the client
         return customerToType;
     }
