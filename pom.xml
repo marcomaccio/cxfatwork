@@ -522,14 +522,14 @@
         <snapshotRepository>
             <id>marmac-m2-rms</id>
             <name>MARMAC Maven 2 Repository Snapshot</name>
-            <url>http://rms.maccio-ch.homelinux.net/content/repositories/snapshots/</url>
+            <url>http://rms.maccio-ch.homelinux.net/nexus/content/repositories/mm-m2-snapshots</url>
             <uniqueVersion>false</uniqueVersion>
             <layout>default</layout>
         </snapshotRepository>
         <repository>
             <id>marmac-m2-rms</id>
             <name>MARMAC Maven 2 Repository Release</name>
-            <url>http://rms.maccio-ch.homelinux.net/content/repositories/releases/</url>
+            <url>http://rms.maccio-ch.homelinux.net/nexus/content/repositories/mm-m2-releases</url>
             <uniqueVersion>false</uniqueVersion>
             <layout>default</layout>
         </repository>
