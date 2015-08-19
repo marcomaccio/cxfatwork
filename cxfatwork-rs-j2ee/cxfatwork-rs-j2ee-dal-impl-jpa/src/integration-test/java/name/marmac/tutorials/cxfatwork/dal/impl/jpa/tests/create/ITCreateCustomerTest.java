@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by marcomaccio on 06/11/2014.
@@ -69,7 +70,7 @@ public class ITCreateCustomerTest {
         //set its mandatory properties
         customer.setFirstName("Marco");
         customer.setLastName("Maccio");
-        customer.setCustomerId("001");
+        customer.setCustomerId(new Random().toString());
         customer.setUser("mm");
         customer.setVersion(1L);
         customer.setCreateDate(new Date());
@@ -77,7 +78,7 @@ public class ITCreateCustomerTest {
 
         //Call the persistence layer with save(Customer) method
         customerPersistenceService.save(customer);
-
+        LOGGER.info("Customer Id " + customer.getId());
         //Verify the values
 
         Assert.assertTrue(customer.getId() != null);

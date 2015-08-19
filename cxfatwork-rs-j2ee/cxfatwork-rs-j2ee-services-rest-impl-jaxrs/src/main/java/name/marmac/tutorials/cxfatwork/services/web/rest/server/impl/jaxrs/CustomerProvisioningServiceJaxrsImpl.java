@@ -47,7 +47,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @Autowired
     private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
     private ObjectFactory                           mCustomersObjectFactory;
-
+    @Autowired
     private CustomerPersistenceService              customerPersistenceService;
 
 
@@ -59,17 +59,9 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      */
     public CustomerProvisioningServiceJaxrsImpl(ObjectFactory customersObjectFactory) {
 
-        LOGGER.info(customersObjectFactory.toString() + " has been paased as constructor param ...");
-
-        if (customersObjectFactory != null) {
-            this.mCustomersObjectFactory = customersObjectFactory;
-            LOGGER.info("Initializing the CustomerList");
-            mCustomersTOType = mCustomersObjectFactory.createCustomersTOType();
-            LOGGER.info("CustomerList size=" + mCustomersTOType.getCustomers().size());
-            this.initializeSampleData();
-        } else {
-            LOGGER.info(customersObjectFactory + " is null");
-        }
+        LOGGER.info("Initializing the CustomerList");
+        this.initializeSampleData();
+        LOGGER.info("CustomerList size=" + mCustomersTOType.getCustomers().size());
     }
     /**
      *
@@ -112,18 +104,17 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         customerPO.setCustomerId(customerToType.getCustomerId());
         customerPO.setFirstName(customerToType.getFirstname());
         customerPO.setLastName(customerToType.getLastname());
-        //Check that the persistence layer is available
-        if (customerPersistenceService != null) {
-            LOGGER.debug("Calling the persistence layer to save the customer " + customerPO.toString());
-            //Call the persistence manager to periste the object
-            customerPersistenceService.save(customerPO);
-            //Remap the id assigned by the DB to the customerTO
-            customerToType.setId(customerPO.getId());
-            //Set Location Header
-            response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getId());
-            //Set the HTTP Status Code to 201
-            response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
-        }
+
+        LOGGER.debug("Calling the persistence layer to save the customer " + customerPO.toString());
+        //Call the persistence manager to periste the object
+        customerPersistenceService.save(customerPO);
+        //Remap the id assigned by the DB to the customerTO
+        customerToType.setId(customerPO.getId());
+        //Set Location Header
+        response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getId());
+        //Set the HTTP Status Code to 201
+        response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
+
         //return the CustomerToType to be serialized by the provider as requested by the client
         return customerToType;
     }
@@ -155,10 +146,24 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         LOGGER.info("The getCustomerByQuery has been called ...");
         LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomers().size());
         LOGGER.info("Customer : " + mCustomersTOType.getCustomers().get(0).getCustomerId() + " "
-                                  + mCustomersTOType.getCustomers().get(0).getFirstname()  + " "
-                                  + mCustomersTOType.getCustomers().get(0).getLastname()  );
+                + mCustomersTOType.getCustomers().get(0).getFirstname() + " "
+                + mCustomersTOType.getCustomers().get(0).getLastname());
 
-        return mCustomersTOType;
+        CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
+
+        for (CustomerPO customer : customerPersistenceService.getAll())
+        {
+            LOGGER.debug("Customer found in the DB " + customer.toString());
+            //Create the CustomerTOType
+            CustomerTOType customerTO = mCustomersObjectFactory.createCustomerTOType();
+            customerTO.setId(customer.getId());
+            customerTO.setFirstname(customer.getFirstName());
+            customerTO.setLastname(customer.getLastName());
+            customerTO.setCustomerId(customer.getCustomerId());
+            customersTOType.getCustomers().add(customerTO);
+            customersTOType.setTotalRecords(+1);
+        }
+        return customersTOType;
     }
 
     /**
@@ -178,7 +183,19 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                                CustomersTOType customerstotype) {
 
         LOGGER.info("The updateCustomers has been called ...");
-        return null;
+        CustomerPO customerPO = customerPersistenceService.createNewCustomer();
+        if (customerstotype.getTotalRecords() == 1) {
+            CustomerTOType customerTO = customerstotype.getCustomers().get(0);
+            customerPO.setId(customerTO.getId());
+            customerPO.setFirstName(customerTO.getFirstname());
+            customerPO.setLastName(customerTO.getLastname());
+            customerPO.setCustomerId(customerTO.getCustomerId());
+
+            customerPersistenceService.save(customerPO);
+            //customerstotype.getCustomers().get(0).setCreateDate(new GregorianCalendar());
+            customerstotype.getCustomers().get(0).setId(customerPO.getId());
+        }
+        return customerstotype;
     }
 
     /**

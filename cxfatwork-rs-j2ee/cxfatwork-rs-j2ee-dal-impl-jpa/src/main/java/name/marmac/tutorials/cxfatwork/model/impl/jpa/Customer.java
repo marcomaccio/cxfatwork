@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by marcomaccio on 21/11/2014.
  */
 @Entity
-@Table(name = "Customers")
+@Table(name = "Customers", uniqueConstraints=@UniqueConstraint(columnNames="customerId"))
 @NamedQueries({
         @NamedQuery(name = "Customers.findAll",             query = "SELECT c from Customer c "),
         @NamedQuery(name = "Customers.Count",               query = "SELECT COUNT(c) FROM Customer c"),
@@ -35,7 +35,7 @@ public class Customer implements CustomerPO {
      */
     @Id
     @Column(name = "pkId", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return this.id;
     }

@@ -89,7 +89,7 @@
         <jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
         <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
 
-        <javax-persistence.version>2.0.0</javax-persistence.version>
+        <javax-persistence.version>2.1.0</javax-persistence.version>
 
         <geronimo-j2ee-connector_1.5_spec.version>2.0.0</geronimo-j2ee-connector_1.5_spec.version>
         <geronimo-transaction.version>2.2.2</geronimo-transaction.version>
@@ -173,7 +173,10 @@
         <maven-pmd-plugin.configLocation>${project.basedir}/code-analysis/pmd.xml</maven-pmd-plugin.configLocation>
         <pmd.skip>false</pmd.skip>
 
-        <sonar-maven-plugin.version>4.3</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>2.6</sonar-maven-plugin.version>
+
+        <mysql-connector-java.version>5.1.18</mysql-connector-java.version>
+        <hsqldb.version>2.3.2</hsqldb.version>
 
     </properties>
 
@@ -196,6 +199,11 @@
                   <artifactId>versions-maven-plugin</artifactId>
                   <version>${versions-maven-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -216,16 +224,17 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
                 <executions>
-                  <execution>
-                    <id>stage-for-scm-publish</id>
-                    <phase>post-site</phase>
-                    <goals>
-                      <goal>stage</goal>
-                    </goals>
-                    <configuration>
-                      <skipDeploy>true</skipDeploy><!-- MSITE-652: configuration won't be necessary with m-site-p 3.2 -->
-                    </configuration>
-                  </execution>
+                    <execution>
+                        <id>stage-for-scm-publish</id>
+                        <phase>post-site</phase>
+                        <goals>
+                            <goal>stage</goal>
+                        </goals>
+                        <configuration>
+                            <!-- MSITE-652: configuration won't be necessary with m-site-p 3.2 -->
+                            <skipDeploy>true</skipDeploy>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -454,35 +463,6 @@
                 <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
-                    <id>attach-sources</id>
-                    <goals>
-                        <goal>jar-no-fork</goal>
-                    </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <executions>
-                    <execution>
-                    <id>attach-javadocs</id>
-                    <goals>
-                        <goal>jar</goal>
-                    </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin.version}</version>
-                <executions>
-                    <execution>
                       <id>attach-sources</id>
                       <goals>
                         <goal>jar</goal>
@@ -506,9 +486,26 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.sonar</groupId>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.12</version>
+                <configuration>
+                    <message>Creating site for ${project.artifactId}-${project.version}</message>
+                    <server>github-marcomaccio</server>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
@@ -518,21 +515,21 @@
         <connection>scm:git:git@github.com:marcomaccio/cxfatwork.git</connection>
         <developerConnection>scm:git:git@github.com:marcomaccio/cxfatwork.git</developerConnection>
         <url>https://github.com/marcomaccio/cxfatwork</url>
-        <tag>HEAD</tag>
+
     </scm>
 
     <distributionManagement>
         <snapshotRepository>
             <id>marmac-m2-rms</id>
             <name>MARMAC Maven 2 Repository Snapshot</name>
-            <url>http://repo.maccio-ch.homelinux.net/content/repositories/snapshots/</url>
+            <url>http://rms.maccio-ch.homelinux.net/content/repositories/snapshots/</url>
             <uniqueVersion>false</uniqueVersion>
             <layout>default</layout>
         </snapshotRepository>
         <repository>
             <id>marmac-m2-rms</id>
             <name>MARMAC Maven 2 Repository Release</name>
-            <url>http://repo.maccio-ch.homelinux.net/content/repositories/releases/</url>
+            <url>http://rms.maccio-ch.homelinux.net/content/repositories/releases/</url>
             <uniqueVersion>false</uniqueVersion>
             <layout>default</layout>
         </repository>
@@ -549,13 +546,13 @@
 
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.maccio-ch.homelinux.net/view/TUTORIALS-cxfatwork/</url>
+        <url>http://cis.maccio-ch.homelinux.net/jenkins</url>
         <notifiers>
           <notifier>
             <type>mail</type>
             <sendOnError>true</sendOnError>
             <sendOnFailure>true</sendOnFailure>
-            <sendOnSuccess>false</sendOnSuccess>
+            <sendOnSuccess>true</sendOnSuccess>
             <sendOnWarning>false</sendOnWarning>
             <configuration>
               <address>marco.maccio@marmac.name</address>
@@ -700,6 +697,11 @@
             <version>0.7.2.201409121644</version>
         </plugin>
 
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+        </plugin>
+
        </plugins>
 
     </reporting>
@@ -739,11 +741,22 @@
                 <deployment.jdbcPassword></deployment.jdbcPassword>
                 <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
                 <deployment.schemaFileName>schema-hsqldb.sql</deployment.schemaFileName>
+
+                <deployment.ddl-generation>create-tables</deployment.ddl-generation>
+                <deployment.createSchemaFilename>create-tables-hsqldb.sql</deployment.createSchemaFilename>
+                <deployment.dropSchemaFilename>drop-tables-hsqldb.sql</deployment.dropSchemaFilename>
+                <deployment.dataTypeFactory>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</deployment.dataTypeFactory>
+                <deployment.metadataHandler/>
+
+                <deployment.createCustomers>src/integration-test/data/create-customers.xml</deployment.createCustomers>
+                <liquibase.contexts>test</liquibase.contexts>
             </properties>
         </profile>
+
         <profile>
             <id>local-depl-j2se-mysql</id>
             <properties>
+                <application.log.level>DEBUG</application.log.level>
                 <!-- SERVICE LAYER PROPERTIES -->
                 <deployment.host>localhost</deployment.host>
                 <deployment.port>9191</deployment.port>
@@ -761,7 +774,15 @@
                 <deployment.jdbcPassword>Gestimmo@2013!</deployment.jdbcPassword>
                 <deployment.jdbcEncoding>UTF8</deployment.jdbcEncoding>
                 <deployment.schemaFileName>src/integration-test/data/schema-mysql.sql</deployment.schemaFileName>
+
+                <deployment.ddl-generation>create-tables</deployment.ddl-generation>
+                <deployment.createSchemaFilename>create-tables-mysql.sql</deployment.createSchemaFilename>
+                <deployment.dropSchemaFilename>drop-tables-mysql.sql</deployment.dropSchemaFilename>
+                <deployment.dataTypeFactory>org.dbunit.ext.mysql.MySqlDataTypeFactory</deployment.dataTypeFactory>
+                <deployment.metadataHandler>org.dbunit.ext.mysql.MySqlMetadataHandler</deployment.metadataHandler>
+
                 <deployment.createCustomers>src/integration-test/data/create-customers.xml</deployment.createCustomers>
+                <liquibase.contexts>test</liquibase.contexts>
             </properties>
         </profile>
 
@@ -777,6 +798,7 @@
         <profile>
             <id>dev</id>
         </profile>
+
         <profile>
             <id>integration-test</id>
             <properties>
@@ -787,5 +809,7 @@
                 <skip.unit.tests>true</skip.unit.tests>
             </properties>
         </profile>
+
+
     </profiles>
 </project>
