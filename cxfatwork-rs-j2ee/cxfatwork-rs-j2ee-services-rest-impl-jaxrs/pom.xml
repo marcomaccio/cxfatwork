@@ -328,7 +328,7 @@
 
         <dependency>
             <groupId>name.marmac.tutorials</groupId>
-            <artifactId>cxfatwork-rs-j2ee-service-rest-api</artifactId>
+            <artifactId>cxfatwork-rs-j2ee-services-rest-api</artifactId>
             <version>${project.version}</version>
         </dependency>
     <!-- INTERNAL PROJECT DEPENDENCIES - END -->
