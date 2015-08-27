@@ -13,7 +13,6 @@ import name.marmac.tutorials.cxfatwork.services.web.rest.server.properties.Custo
 import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -43,12 +42,12 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     @javax.ws.rs.core.Context
     private MessageContext  response                         = null;
 
-    @Autowired
+    //@Autowired
     private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
-    @Autowired
+    //@Autowired
     private ObjectFactory                           mCustomersObjectFactory;
-    @Autowired
-    private CustomerPersistenceService              customerPersistenceService;
+    //@Autowired
+    private CustomerPersistenceService              mCustomerPersistenceService;
 
     /**
      *
@@ -71,7 +70,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      *
      */
     public void setCustomerPersistenceService(CustomerPersistenceService persistenceService){
-        this.customerPersistenceService = persistenceService;
+        this.mCustomerPersistenceService = persistenceService;
     }
 
     /**
@@ -102,7 +101,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         //Read the Customer from the request CustomerResource
 
         //Reference a CustomerPO object
-        CustomerPO customerPO = customerPersistenceService.createNewCustomer();
+        CustomerPO customerPO = mCustomerPersistenceService.createNewCustomer();
         //Mapping the properties from the request to the persistence object
         customerPO.setCustomerId(customerToType.getCustomerId());
         customerPO.setFirstName(customerToType.getFirstname());
@@ -110,7 +109,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
         LOGGER.debug("Calling the persistence layer to save the customer " + customerPO.toString());
         //Call the persistence manager to periste the object
-        customerPersistenceService.save(customerPO);
+        mCustomerPersistenceService.save(customerPO);
         //Remap the id assigned by the DB to the customerTO
         customerToType.setId(customerPO.getId());
         //Set Location Header
@@ -151,7 +150,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
         CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
 
-        for (CustomerPO customer : customerPersistenceService.getAll())
+        for (CustomerPO customer : mCustomerPersistenceService.getAll())
         {
             LOGGER.debug("Customer found in the DB " + customer.toString());
             //Create the CustomerTOType
@@ -184,7 +183,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                                CustomersTOType customerstotype) {
 
         LOGGER.info("The updateCustomers has been called ...");
-        CustomerPO customerPO = customerPersistenceService.createNewCustomer();
+        CustomerPO customerPO = mCustomerPersistenceService.createNewCustomer();
         if (customerstotype.getTotalRecords() == 1) {
             CustomerTOType customerTO = customerstotype.getCustomers().get(0);
             customerPO.setId(customerTO.getId());
@@ -192,8 +191,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             customerPO.setLastName(customerTO.getLastname());
             customerPO.setCustomerId(customerTO.getCustomerId());
 
-            customerPersistenceService.save(customerPO);
-            //customerstotype.getCustomers().get(0).setCreateDate(new GregorianCalendar());
+            mCustomerPersistenceService.save(customerPO);
             customerstotype.getCustomers().get(0).setId(customerPO.getId());
         }
         response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
@@ -221,6 +219,47 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         return null;
     }
 
+    @Override
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Path("/customers/{id}")
+    @ApiOperation(value = "Get a single Customer by its internal Id",
+                    notes = "The requested id is the customerId",
+                    response = CustomerTOType.class)
+    public CustomerTOType getCustomerByNativeId(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("id") String id) {
+        LOGGER.debug("getCustomerById Method: search for Customer with ID=" + id);
+        CustomerPO customerPO = mCustomerPersistenceService.getCustomerByNativeId(id);
+        if (customerPO != null) {
+            CustomerTOType customerTOType = this.toCustomerTO(customerPO);
+            response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+            return customerTOType;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    @PUT
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+        @Path("/customers/{id}")
+        @ApiOperation(value = "Update a single Customer by its internal Id",
+                        notes = "The requested id is the customerId",
+                        response = CustomerTOType.class)
+    public CustomerTOType updateCustomerByNativeId(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("customerId") String customerId, CustomerTOType customertotype) {
+        CustomerPO customerPO = this.toCustomerPO(customertotype);
+        CustomerPO updatedCustomerPO = mCustomerPersistenceService.save(customerPO);
+        CustomerTOType updatedCustomerTO = this.toCustomerTO(updatedCustomerPO);
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        return updatedCustomerTO;
+    }
+
+    @Override
+    public CustomerTOType deleteCustomerByNativeId(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("customerId") String customerId) {
+
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        return null;
+    }
+
 
     /**
      *
@@ -237,5 +276,40 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         // HttpServletResponse.SC_CONFLICT      --> Status code (409)
         HttpServletResponse httpServletResponse = response.getHttpServletResponse();
         httpServletResponse.setStatus(statusCode);
+    }
+
+    /**
+     *
+     * @param customerPO
+     * @return
+     */
+    private CustomerTOType toCustomerTO(CustomerPO customerPO){
+        CustomerTOType customerTOType = mCustomersObjectFactory.createCustomerTOType();
+
+        customerTOType.setId(customerPO.getId());
+        customerTOType.setFirstname(customerPO.getFirstName());
+        customerTOType.setLastname(customerPO.getLastName());
+        customerTOType.setCustomerId(customerPO.getCustomerId());
+        //TODO: transform java.util.date to Calendar
+        // customerTOType.setCreateDate(customerPO.getCreateDate());
+        // customerTOType.setLastUpdate(customerPO.getLastUpdate());
+        return customerTOType;
+    }
+
+    /**
+     *
+     * @param customerTOType
+     * @return
+     */
+    private CustomerPO toCustomerPO(CustomerTOType customerTOType){
+        CustomerPO customerPO = mCustomerPersistenceService.createNewCustomer();
+        customerPO.setId(customerTOType.getId());
+        customerPO.setFirstName(customerTOType.getFirstname());
+        customerPO.setLastName(customerTOType.getLastname());
+        customerPO.setCustomerId(customerTOType.getCustomerId());
+        //TODO: transform java.util.date to Calendar
+        // customerTOType.setCreateDate(customerPO.getCreateDate());
+        // customerTOType.setLastUpdate(customerPO.getLastUpdate());
+        return customerPO;
     }
 }

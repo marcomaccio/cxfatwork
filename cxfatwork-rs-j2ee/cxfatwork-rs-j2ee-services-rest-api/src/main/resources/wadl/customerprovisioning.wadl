@@ -69,7 +69,7 @@
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
 
-                    <response status="500" description="Provisioning Internal Error">
+                    <response status="500" description="Generic Internal Error">
                         <representation mediaType="application/xml"     element="customerns:customers"/>
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
@@ -92,7 +92,7 @@
                         <representation mediaType="application/json" element="customerns:customers"/>
                     </request>
 
-                    <response status="201" description="Customers Created">
+                    <response status="201" description="Customers Updated">
                         <representation mediaType="application/xml" element="customerns:customers"/>
                         <representation mediaType="application/json" element="customerns:customers"/>
                     </response>
@@ -102,7 +102,7 @@
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
 
-                    <response status="500" description="PRI Adapter Internal Error">
+                    <response status="500" description="Generic Internal Error">
                         <representation mediaType="application/xml"     element="customerns:customers"/>
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
@@ -112,7 +112,7 @@
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
 
-                    <response status="504" description="Encoder Timeout">
+                    <response status="504" description="Internal Timeout">
                         <representation mediaType="application/xml"     element="customerns:customers"/>
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
@@ -125,7 +125,7 @@
                         <representation mediaType="application/json" element="customerns:customers"/>
                     </request>
 
-                    <response status="201" description="Customers Created">
+                    <response status="200" description="Customers Delete">
                         <representation mediaType="application/xml" element="customerns:customers"/>
                         <representation mediaType="application/json" element="customerns:customers"/>
                     </response>
@@ -135,7 +135,7 @@
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
 
-                    <response status="500" description="PRI Adapter Internal Error">
+                    <response status="500" description="Generic Internal Error">
                         <representation mediaType="application/xml"     element="customerns:customers"/>
                         <representation mediaType="application/json"    element="customerns:customers"/>
                     </response>
@@ -151,6 +151,36 @@
                     </response>
 
                 </method>
+
+                <resource  path="/{id}">
+                    <param name="id" type="xsd:string" style="template" required="true" />
+
+                    <method name="GET" id="getCustomerByNativeId">
+                        <response status="200" description="Customer Found">
+                            <representation mediaType="application/xml" element="customerns:customer"/>
+                            <representation mediaType="application/json" element="customerns:customer"/>
+                        </response>
+                    </method>
+
+                    <method name="PUT" id="updateCustomerByNativeId">
+                        <request>
+                            <representation mediaType="application/xml" element="customerns:customer"/>
+                            <representation mediaType="application/json" element="customerns:customer"/>
+                        </request>
+                        <response status="200" description="Successfully Updated the Customer">
+                            <representation mediaType="application/xml" element="customerns:customer"/>
+                            <representation mediaType="application/json" element="customerns:customer"/>
+                        </response>
+                    </method>
+
+                    <method name="DEL" id="deleteCustomerByNativeId">
+                        <response status="200" description="Successfully Deleted the Customer">
+                            <representation mediaType="application/xml" element="customerns:customer"/>
+                            <representation mediaType="application/json" element="customerns:customer"/>
+                        </response>
+                    </method>
+
+                </resource>
 
             </resource>
 
