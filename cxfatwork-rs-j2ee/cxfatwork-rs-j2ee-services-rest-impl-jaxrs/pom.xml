@@ -14,7 +14,7 @@
     <artifactId>cxfatwork-rs-j2ee-services-rest-impl-jaxrs</artifactId>
     <packaging>war</packaging>
 
-    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: IMPL JAXRS</name>
+    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: SERVICES :: REST IMPL JAXRS</name>
     <description>This module implement the Contract First Interface for CRUD REST Service  with a JAXRS Implementation</description>
     <url>${project.parent.artifactId}</url>
 

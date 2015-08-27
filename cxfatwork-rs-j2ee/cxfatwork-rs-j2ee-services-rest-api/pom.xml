@@ -12,7 +12,7 @@
     <artifactId>cxfatwork-rs-j2ee-services-rest-api</artifactId>
     <packaging>jar</packaging>
 
-    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: API</name>
+    <name>CXF @ WORK :: CXF-RS J2EE EXAMPLES :: SERVICES :: REST API</name>
     <description></description>
     <url>${project.parent.artifactId}</url>
 
