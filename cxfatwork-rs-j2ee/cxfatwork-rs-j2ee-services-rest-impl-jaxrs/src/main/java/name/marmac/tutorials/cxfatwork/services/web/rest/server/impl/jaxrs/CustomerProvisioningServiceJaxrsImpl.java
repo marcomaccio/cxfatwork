@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.GregorianCalendar;
 
 /**
  * Created by marcomaccio on 15/08/2014.
@@ -50,9 +49,6 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     private ObjectFactory                           mCustomersObjectFactory;
     @Autowired
     private CustomerPersistenceService              customerPersistenceService;
-
-
-    private CustomersTOType                         mCustomersTOType;  //will be gone after the link to the persistence layer
 
     /**
      *
@@ -104,7 +100,6 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
         LOGGER.info("The createCustomer has been called ...");
         //Read the Customer from the request CustomerResource
-        int size = mCustomersTOType.getCustomers().size();
 
         //Reference a CustomerPO object
         CustomerPO customerPO = customerPersistenceService.createNewCustomer();
@@ -226,30 +221,11 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         return null;
     }
 
+
     /**
      *
+     * @param statusCode
      */
-    public void initializeSampleData(){
-
-        LOGGER.info("Initializing some sample data ...");
-        //Create a customer to add to the Customer List
-        CustomerTOType customerA = mCustomersObjectFactory.createCustomerTOType();
-        customerA.setFirstname("Firstname 01");
-        customerA.setLastname("Lastname 01");
-        customerA.setCustomerId("SMPL-001");
-        customerA.setCreateDate(new GregorianCalendar());
-        customerA.setLastUpdate(new GregorianCalendar());
-
-        LOGGER.info("Customer A has been created " + customerA.getCustomerId() + "/" + customerA.getFirstname() + "/" +
-                customerA.getLastname() );
-        //Add the CustomerA to the Customer List
-        mCustomersTOType.getCustomers().add(customerA);
-        mCustomersTOType.setTotalRecords(1L);
-
-        LOGGER.info("Customers list has size:" + mCustomersTOType.getCustomers().size()
-                +" and Total N. Records: " + mCustomersTOType.getTotalRecords());
-    }
-
     private void setHTTPResponseCode(int statusCode) {
 
         // HttpServletResponse.SC_OK            --> Status code (201)
