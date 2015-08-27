@@ -45,9 +45,11 @@ public class ITCreateCustomerTest {
         String firstName    = "Marco";
         String lastName     = "Maccio";
 
-        Response response = cpWebClient.createCustomer(customerId, firstName, lastName,
-                MediaType.APPLICATION_JSON_TYPE,
-                MediaType.APPLICATION_JSON_TYPE);
+        Response response = cpWebClient.createCustomer(customerId,
+                                                        firstName,
+                                                        lastName,
+                                                        MediaType.APPLICATION_JSON_TYPE,
+                                                        MediaType.APPLICATION_JSON_TYPE);
 
         //Check that the response status code is 201
         Assert.assertEquals(HttpServletResponse.SC_CREATED, response.getStatus());
