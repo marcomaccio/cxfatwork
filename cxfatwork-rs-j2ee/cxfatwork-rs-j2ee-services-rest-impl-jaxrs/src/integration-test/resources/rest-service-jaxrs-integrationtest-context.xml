@@ -85,9 +85,9 @@
     <!-- REST API IMPL - JAXRS  -->
     <bean id="customerService"
         class="name.marmac.tutorials.cxfatwork.services.web.rest.server.impl.jaxrs.CustomerProvisioningServiceJaxrsImpl">
-        <constructor-arg ref="customerObjectFactory"/>
-        <property name="customerPersistenceService"    ref="customerPersistenceService"/>
-        <property name="provisioningServiceProperties" ref="customerProvisioningServiceProperties" />
+        <property name="customersObjectFactory"         ref="customerObjectFactory"/>
+        <property name="customerPersistenceService"     ref="customerPersistenceService"/>
+        <property name="provisioningServiceProperties"  ref="customerProvisioningServiceProperties" />
     </bean>
 
 

@@ -46,6 +46,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     @Autowired
     private CustomerProvisioningServiceProperties   mProvisioningServiceProperties;
+    @Autowired
     private ObjectFactory                           mCustomersObjectFactory;
     @Autowired
     private CustomerPersistenceService              customerPersistenceService;
@@ -55,13 +56,12 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
 
     /**
      *
-     * @param customersObjectFactory
+     *
      */
-    public CustomerProvisioningServiceJaxrsImpl(ObjectFactory customersObjectFactory) {
+    public CustomerProvisioningServiceJaxrsImpl() {
 
         LOGGER.info("Initializing the CustomerList");
-        this.initializeSampleData();
-        LOGGER.info("CustomerList size=" + mCustomersTOType.getCustomers().size());
+
     }
     /**
      *
@@ -76,6 +76,14 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      */
     public void setCustomerPersistenceService(CustomerPersistenceService persistenceService){
         this.customerPersistenceService = persistenceService;
+    }
+
+    /**
+     *
+     * @param customersObjectFactory
+     */
+    public void setCustomersObjectFactory(ObjectFactory customersObjectFactory) {
+        this.mCustomersObjectFactory=customersObjectFactory;
     }
 
     /**
@@ -112,6 +120,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         customerToType.setId(customerPO.getId());
         //Set Location Header
         response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getId());
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
         //Set the HTTP Status Code to 201
         response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
 
@@ -144,10 +153,6 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                               @ApiParam(value = QUERY_PARAM_LASTUPDATEDATE, required = false, allowMultiple = true) @QueryParam(QUERY_PARAM_LASTUPDATEDATE) String lastUpdate) {
         //TODO: Implement the filter query
         LOGGER.info("The getCustomerByQuery has been called ...");
-        LOGGER.info("Customers list returned: " + mCustomersTOType.getCustomers().size());
-        LOGGER.info("Customer : " + mCustomersTOType.getCustomers().get(0).getCustomerId() + " "
-                + mCustomersTOType.getCustomers().get(0).getFirstname() + " "
-                + mCustomersTOType.getCustomers().get(0).getLastname());
 
         CustomersTOType customersTOType = mCustomersObjectFactory.createCustomersTOType();
 
@@ -163,6 +168,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             customersTOType.getCustomers().add(customerTO);
             customersTOType.setTotalRecords(+1);
         }
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
         return customersTOType;
     }
 
@@ -195,6 +201,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             //customerstotype.getCustomers().get(0).setCreateDate(new GregorianCalendar());
             customerstotype.getCustomers().get(0).setId(customerPO.getId());
         }
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
         return customerstotype;
     }
 
@@ -215,6 +222,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                                CustomersTOType customerstotype) {
 
         LOGGER.info("The deleteCustomers has been called ...");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
         return null;
     }
 
