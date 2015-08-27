@@ -33,6 +33,7 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Id
     @Column(name = "pkId", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +45,7 @@ public class Customer implements CustomerPO {
      *
      * @param id
      */
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -52,6 +54,7 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Version
     @Column(name = "version", nullable = true)
     public Long getVersion() {
@@ -62,6 +65,7 @@ public class Customer implements CustomerPO {
      *
      * @param version
      */
+    @Override
     public void setVersion(Long version) {
         this.version = version;
     }
@@ -70,6 +74,7 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Column(name = "firstname", nullable = false)
     public String getFirstName() {
         return firstName;
@@ -79,6 +84,7 @@ public class Customer implements CustomerPO {
      *
      * @param firstName
      */
+    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -87,6 +93,7 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Column(name = "lastname", nullable = false)
     public String getLastName() {
         return lastName;
@@ -96,6 +103,7 @@ public class Customer implements CustomerPO {
      *
      * @param lastName
      */
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -104,19 +112,26 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Column(name = "customerId", nullable = false)
-    public String getCustomerId() { return customerId; }
+    public String getCustomerId() {
+        return customerId;
+    }
 
     /**
      *
      * @param customerId
      */
-    public void setCustomerId(String customerId) { this.customerId = customerId; }
+    @Override
+    public void setCustomerId(String customerId){
+        this.customerId = customerId;
+    }
 
     /**
      *
      * @return
      */
+    @Override
     @Column(name = "createDate", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getCreateDate() {
@@ -127,6 +142,7 @@ public class Customer implements CustomerPO {
      *
      * @param createDate
      */
+    @Override
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
@@ -135,6 +151,7 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Column(name = "lastUpdate", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
@@ -145,6 +162,7 @@ public class Customer implements CustomerPO {
      *
      * @param lastUpdate
      */
+    @Override
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
@@ -153,8 +171,9 @@ public class Customer implements CustomerPO {
      *
      * @return
      */
+    @Override
     @Column(name = "appUser", nullable = true)
-    public String getUser() {
+    public String getUser(){
         return user;
     }
 
@@ -162,7 +181,10 @@ public class Customer implements CustomerPO {
      *
      * @param user
      */
-    public void setUser(String user) { this.user = user; }
+    @Override
+    public void setUser(String user){
+        this.user = user;
+    }
 
     @Override
     public String toString() {

@@ -47,6 +47,7 @@ public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceSer
     /**
      * Create a new Empty Customer
      */
+    @Override
     public CustomerPO createNewCustomer(){
         LOGGER.debug("Method new Customer has been called ");
         Customer newCustomer = new Customer();
@@ -62,6 +63,7 @@ public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceSer
      * if the customer.getId is not null it will perform an update
      * if the customer.getId is null it will persist it for the first time (create in db)
      */
+    @Override
     public CustomerPO save(CustomerPO customer){
         LOGGER.debug("method save Customer has been called ");
 
@@ -84,9 +86,10 @@ public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceSer
      * @param nativeId
      * @return
      */
+    @Override
     public CustomerPO getCustomerByNativeId(String nativeId) {
 
-        LOGGER.debug("Method getCustomerByNativeId has been called ");
+        LOGGER.debug("Method getCustomerByNativeId has been called with customerId="+ nativeId);
 
         Customer customer = null;
 
@@ -95,7 +98,7 @@ public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceSer
 
         List<Customer> resultList = query.getResultList();
         LOGGER.debug("The PL has found N. " + resultList.size());
-        if (resultList.size() > 0)
+        if (!resultList.isEmpty())
         {
             customer = resultList.get(0);
         }
@@ -106,6 +109,7 @@ public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceSer
      *
      * @return
      */
+    @Override
     public List<CustomerPO> getAll() {
 
         LOGGER.debug("Method getAll has been called ");
@@ -119,10 +123,10 @@ public class CustomerPersistenceServiceImplJPA implements CustomerPersistenceSer
      * This method retrieve the total number of customers present in the db
      * @return
      */
+    @Override
     public int getCustomerCount() {
-        String jpnlQuery = "SELECT COUNT(c) FROM Customer c";
         int totalCount = entityManager.createNamedQuery("Customers.Count").getResultList().size();
-        //Number count = (Number)query.getResultList().size();
+        LOGGER.debug("Total Count: " + totalCount);
         return totalCount;
     }
 }
