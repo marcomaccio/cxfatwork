@@ -554,7 +554,7 @@
 
     <ciManagement>
         <system>jenkins</system>
-        <url>http://cis.maccio-ch.homelinux.net/jenkins</url>
+        <url>http://cis.maccio-ch.homelinux.net/jenkins/job/TUTORIALS-CXFAtWork/</url>
         <notifiers>
           <notifier>
             <type>mail</type>
