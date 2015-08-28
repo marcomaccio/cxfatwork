@@ -26,7 +26,7 @@ import javax.ws.rs.core.MediaType;
 @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisioningService {
 
-    private static final transient Logger LOGGER = LoggerFactory.getLogger(CustomerProvisioningServiceJaxrsImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerProvisioningServiceJaxrsImpl.class);
 
     private static final String QUERY_PARAM_LIMIT           = "limit";
     private static final String QUERY_PARAM_ID              = "id";
@@ -37,6 +37,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
     private static final String QUERY_PARAM_LASTUPDATEDATE  = "lastUpdate";
 
     private static final String PATH_PARAM_ID			    = "id";
+    private static final String ACCESS_CONTROL_ALLOW_ORIGIN_ALL = "*";
 
     //JAX-RS and JAX-WS context
     @javax.ws.rs.core.Context
@@ -64,6 +65,14 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
      */
     public void setProvisioningServiceProperties(CustomerProvisioningServiceProperties provisioningServiceProperties) {
         this.mProvisioningServiceProperties = provisioningServiceProperties;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CustomerProvisioningServiceProperties getmProvisioningServiceProperties() {
+        return mProvisioningServiceProperties;
     }
 
     /**
@@ -114,7 +123,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         customerToType.setId(customerPO.getId());
         //Set Location Header
         response.getHttpServletResponse().setHeader("Location", "/customers/" + customerToType.getId());
-        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
         //Set the HTTP Status Code to 201
         response.getHttpServletResponse().setStatus(HttpServletResponse.SC_CREATED);
 
@@ -162,7 +171,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             customersTOType.getCustomers().add(customerTO);
             customersTOType.setTotalRecords(+1);
         }
-        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
         return customersTOType;
     }
 
@@ -194,7 +203,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
             mCustomerPersistenceService.save(customerPO);
             customerstotype.getCustomers().get(0).setId(customerPO.getId());
         }
-        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
         return customerstotype;
     }
 
@@ -215,7 +224,7 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
                                                CustomersTOType customerstotype) {
 
         LOGGER.info("The deleteCustomers has been called ...");
-        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
         return null;
     }
 
@@ -231,9 +240,10 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         CustomerPO customerPO = mCustomerPersistenceService.getCustomerByNativeId(id);
         if (customerPO != null) {
             CustomerTOType customerTOType = this.toCustomerTO(customerPO);
-            response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+            response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
             return customerTOType;
         }else {
+            response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
             return null;
         }
     }
@@ -249,34 +259,17 @@ public class CustomerProvisioningServiceJaxrsImpl implements CustomerProvisionin
         CustomerPO customerPO = this.toCustomerPO(customertotype);
         CustomerPO updatedCustomerPO = mCustomerPersistenceService.save(customerPO);
         CustomerTOType updatedCustomerTO = this.toCustomerTO(updatedCustomerPO);
-        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
         return updatedCustomerTO;
     }
 
     @Override
     public CustomerTOType deleteCustomerByNativeId(@ApiParam(value = PATH_PARAM_ID, required = true) @PathParam("customerId") String customerId) {
 
-        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", "*");
+        response.getHttpServletResponse().setHeader("Access-Control-Allow-Origin", ACCESS_CONTROL_ALLOW_ORIGIN_ALL);
         return null;
     }
 
-
-    /**
-     *
-     * @param statusCode
-     */
-    private void setHTTPResponseCode(int statusCode) {
-
-        // HttpServletResponse.SC_OK            --> Status code (201)
-        // HttpServletResponse.SC_CREATED       --> Status code (201)
-        // HttpServletResponse.SC_NO_CONTENT    --> Status code (204)
-        // HttpServletResponse.SC_BAD_REQUEST   --> Status code (400)
-        // HttpServletResponse.SC_UNAUTHORIZED  --> Status code (401)
-        // HttpServletResponse.SC_NOT_FOUND     --> Status code (404)
-        // HttpServletResponse.SC_CONFLICT      --> Status code (409)
-        HttpServletResponse httpServletResponse = response.getHttpServletResponse();
-        httpServletResponse.setStatus(statusCode);
-    }
 
     /**
      *
